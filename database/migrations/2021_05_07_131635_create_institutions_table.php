@@ -17,6 +17,7 @@ class CreateInstitutionsTable extends Migration
             $table->id();
             $table->foreignId('institution_type_id')->unsigned()->index()->references('id')->on('institution_types');
             $table->string('name');
+            $table->string('siglas')->nullable();
             $table->string('image_url')->nullable();
             $table->string('image_ext')->nullable();
             $table->string('image_size')->nullable();
