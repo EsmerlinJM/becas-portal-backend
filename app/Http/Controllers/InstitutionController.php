@@ -72,6 +72,7 @@ class InstitutionController extends Controller
 
             $institucion = new Institution;
             $institucion->institution_type_id = $request->institution_type_id;
+            $institucion->siglas = $request->siglas;
             $institucion->name = $request->name;
             $institucion->image_url = $image['url'];
             $institucion->image_ext = $image['ext'];
@@ -149,6 +150,7 @@ class InstitutionController extends Controller
         }
 
             $institucion->institution_type_id = $request->institution_type_id;
+            $institucion->siglas = $request->siglas;
             $institucion->name = $request->name;
             $institucion->image_url = $image['url'];
             $institucion->image_ext = $image['ext'];

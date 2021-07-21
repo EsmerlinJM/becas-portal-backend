@@ -19,6 +19,7 @@ class InstitutionResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'siglas' => $this->siglas,
             'image_url' => $this->image_url,
             'image_ext' => $this->image_ext,
             'image_size' => $this->image_size,
