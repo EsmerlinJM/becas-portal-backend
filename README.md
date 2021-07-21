@@ -13,9 +13,24 @@ Instalar localmente:
 
 -   Composer Install
 -   cp .env.example .env
+-   asignar base de datos
+-   asignar usuario al motor de base de datos
+-   asignar clave para motor de base de datos
 -   php artisan key:generate
 -   php artisan migrate
 -   Ver UML de las Clases: http://localhost/uml
+
+Deploy on Server:<br>
+Asumiendo deploy de la app en nginx, en /var/www/html:<br>
+
+-   sudo chmod -R 777 /var/www/html
+-   sudo chown -R www-data:www-data /var/www/html
+-   sudo usermod -a -G www-data root
+-   sudo find /var/www/html -type f -exec chmod 644 {} \;
+-   sudo find /var/www/html -type d -exec chmod 755 {} \;
+-   cd /var/www/html
+-   sudo chgrp -R www-data storage bootstrap/cache
+-   sudo chmod -R ug+rwx storage bootstrap/cache
 
 Documentacion API:
 
