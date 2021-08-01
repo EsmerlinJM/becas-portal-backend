@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Evaluator;
+use App\Models\AplicationDetail;
 use App\Models\Coordinator;
 use Illuminate\Http\Request;
 
@@ -186,15 +187,17 @@ class EvaluatorController extends Controller
         $request->validate([
             'evaluator_id' => 'required',
         ]);
-
         $evaluator = Evaluator::findOrFail($request->evaluator_id);
 
-        try {
-            $evaluator->delete();
-            return Tools::deleted();
-        } catch (\Throwable $th) {
-            throw new SomethingWentWrong($th);
+        if(AplicationDetail::where('evaluator_id',$evaluator->id)->get()->count() > 0) {
+            return Tools::notAllowed();
+        } else {
+            try {
+                $evaluator->delete();
+                return Tools::deleted();
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
         }
-
     }
 }
