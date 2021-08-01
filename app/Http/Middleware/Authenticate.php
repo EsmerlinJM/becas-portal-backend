@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use App\Tools\ResponseCodes;
 
 class Authenticate extends Middleware
 {
@@ -14,6 +15,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        // return response()->json(['status' => 'error', 'message' => 'No Autenticado'], ResponseCodes::UNPROCESSABLE_ENTITY);
         if (! $request->expectsJson()) {
             return route('login');
         }

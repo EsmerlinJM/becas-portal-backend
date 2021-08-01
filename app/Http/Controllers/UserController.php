@@ -7,6 +7,7 @@ use App\Models\Evaluator;
 use App\Models\Coordinator;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 use Hash;
 use App\Tools\ResponseCodes;
@@ -66,6 +67,8 @@ class UserController extends Controller
             $user->role_id = $role->id;
             $user->password = Hash::make($request->password);
             $user->save();
+
+            event(new Registered($user));
 
             if ( $role->name == 'Evaluador') {
                 //Hacer un Evaluador

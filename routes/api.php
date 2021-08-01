@@ -32,6 +32,7 @@ use App\Http\Controllers\DevelopmentAreaController;
 use App\Http\Controllers\EducationLevelController;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 
@@ -45,6 +46,10 @@ use App\Http\Controllers\ProfileController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// Verify email
+Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify'); // Make sure to keep this as your route name
+Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
 
 Route::get('/paises/getAll', [CountryController::class, 'index']);
@@ -124,7 +129,7 @@ Route::post('ofertas/academicas/byEducationLevel', [AcademicOfferController::cla
 Route::post('ofertas/academicas/byOfferType', [AcademicOfferController::class, 'byOfferType']);
 Route::post('ofertas/academicas/show', [AcademicOfferController::class, 'show']);
 
-Route::group(['middleware' => 'auth:api'], function()
+Route::group(['middleware' => ['auth:api', 'verified']], function()
     {
         Route::post('/profile/logout', [AuthController::class, 'logout']);
         Route::post('/profile/changepassword', [ProfileController::class, 'changePassword']);
