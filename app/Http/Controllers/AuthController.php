@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Candidate;
+use App\Exceptions\SomethingWentWrong;
 use App\Tools\ResponseCodes;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\RegisterResource;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -37,9 +39,15 @@ class AuthController extends Controller
         $candidate->last_name = $request->last_name;
         $candidate->save();
 
-        $accessToken = $user->createToken('authToken')->accessToken;
+        // $accessToken = $user->createToken('authToken')->accessToken;
 
-        return response([ 'user' => new RegisterResource($user), 'access_token' => $accessToken]);
+        try {
+            event(new Registered($user));
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+
+        return response([ 'user' => new RegisterResource($user), 'status' => 'Por favor verificar su email'], ResponseCodes::OK);
     }
 
     public function login(Request $request)
@@ -50,20 +58,23 @@ class AuthController extends Controller
         ]);
 
         if (!auth()->attempt($loginData)) {
-            return response(['status' => 'error', 'message' => 'Invalid Credentials'], ResponseCodes::UNAUTHORIZED);
+            return response(['status' => 'error', 'message' => 'Credenciales Invalidas'], ResponseCodes::UNAUTHORIZED);
         }
 
         $user = auth()->user();
 
-        $accessToken = auth()->user()->createToken('authToken')->accessToken;
-
-        return response(['user' => new UserResource($user), 'access_token' => $accessToken], ResponseCodes::OK);
+        if ($user->hasVerifiedEmail()) {
+            $accessToken = auth()->user()->createToken('authToken')->accessToken;
+            return response(['user' => new UserResource($user), 'access_token' => $accessToken], ResponseCodes::OK);
+        } else {
+            return response()->json(['status' => 'error' ,'message' => 'El email no ha sido verificado, por favor verificar su email'], ResponseCodes::UNPROCESSABLE_ENTITY);
+        }
     }
 
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return response()->json(['status' => 'ok','message' => 'User has been logged out'], ResponseCodes::OK);
+        return response()->json(['status' => 'ok','message' => 'Usuario has sido deslogeado del sistema'], ResponseCodes::OK);
     }
 
 
