@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
         // User::factory()->count(100)->usuario()->create();
 
         // Candidates
-        Candidate::factory()->count(1000)->create();
+        Candidate::factory()->count(20)->create();
 
         // Audiences
         $this->call(AudiencesSeeder::class);

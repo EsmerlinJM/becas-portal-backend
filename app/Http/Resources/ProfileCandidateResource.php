@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 
-class CandidateResource extends JsonResource
+class ProfileCandidateResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -28,9 +27,10 @@ class CandidateResource extends JsonResource
             'contact_phone' => $this->contact_phone,
             'contact_email' => $this->contact_email,
             'address' => $this->address,
-            'municipality_id' => $this->municipality_id,
-            'province_id' => $this->province_id,
-            'country_id' => $this->country_id,
+            'municipality' => new MunicipalityResource($this->municipality),
+            'province' => new ProvinceResource($this->province),
+            'country' => new CountryResource($this->country),
+            'user'  => new UserResource($this->user),
         ];
     }
 }
