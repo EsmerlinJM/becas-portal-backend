@@ -26,6 +26,7 @@ class EvaluatorResource extends JsonResource
             'name' => $this->name,
             'contact_phone' => $this->contact_phone,
             'contact_email' => $this->contact_email,
+            'institutions' => InstitutionEvaluatorResource::collection($this->institutions)
         ];
     }
 }

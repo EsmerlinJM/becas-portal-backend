@@ -38,6 +38,7 @@ use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\EvaluatorController;
 use App\Http\Controllers\CoordinatorController;
+use App\Http\Controllers\InstitutionEvaluatorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -156,6 +157,9 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/coordinators/create', [CoordinatorController::class, 'store']);
         Route::post('/coordinators/update', [CoordinatorController::class, 'update']);
         Route::post('/coordinators/delete', [CoordinatorController::class, 'destroy']);
+
+        Route::post('/ievaluators/add', [InstitutionEvaluatorController::class, 'add']);
+        Route::post('/ievaluators/remove', [InstitutionEvaluatorController::class, 'remove']);
 
         Route::post('convocatorias/tipos/create', [ConvocatoriaTypeController::class, 'store']);
         Route::post('convocatorias/tipos/update', [ConvocatoriaTypeController::class, 'update']);
