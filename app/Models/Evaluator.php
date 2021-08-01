@@ -20,4 +20,9 @@ class Evaluator extends Model
     {
         return $this->hasOne(Coordinator::class, 'id', 'coordinator_id');
     }
+
+    public function institutions()
+    {
+        return $this->hasmany(InstitutionEvaluator::class, 'evaluator_id', 'id');
+    }
 }
