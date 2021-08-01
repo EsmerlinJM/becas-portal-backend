@@ -12,8 +12,6 @@ use Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Resources\EvaluatorResource;
 use App\Exceptions\SomethingWentWrong;
-use App\Exceptions\AlreadyActive;
-use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
