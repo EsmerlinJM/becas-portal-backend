@@ -14,6 +14,15 @@ class FormularioDetailResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'formulario_id' => $this->formulario_id,
+            'required' => $this->required ? true : false,
+            'type' => $this->type,
+            'name' => $this->name,
+            'description' => $this->description,
+            'data' => $this->data
+        ];
     }
 }
