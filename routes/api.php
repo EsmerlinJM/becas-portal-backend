@@ -39,6 +39,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EvaluatorController;
 use App\Http\Controllers\CoordinatorController;
 use App\Http\Controllers\InstitutionEvaluatorController;
+use App\Http\Controllers\FormularioController;
+use App\Http\Controllers\FormularioDetailController;
+use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\EvaluationRequirementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +56,7 @@ use App\Http\Controllers\InstitutionEvaluatorController;
 */
 
 // Verify email
-Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify'); // Make sure to keep this as your route name
+Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
 
@@ -151,6 +155,31 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/evaluators/create', [EvaluatorController::class, 'store']);
         Route::post('/evaluators/update', [EvaluatorController::class, 'update']);
         Route::post('/evaluators/delete', [EvaluatorController::class, 'destroy']);
+
+        Route::post('/formularios/getAll', [FormularioController::class, 'index']);
+        Route::post('/formularios/show', [FormularioController::class, 'show']);
+        Route::post('/formularios/create', [FormularioController::class, 'store']);
+        Route::post('/formularios/update', [FormularioController::class, 'update']);
+        Route::post('/formularios/delete', [FormularioController::class, 'destroy']);
+
+        Route::post('/formularios/details/byFormulario', [FormularioDetailController::class, 'byFormulario']);
+        Route::post('/formularios/details/show', [FormularioDetailController::class, 'show']);
+        Route::post('/formularios/details/create', [FormularioDetailController::class, 'store']);
+        Route::post('/formularios/details/update', [FormularioDetailController::class, 'update']);
+        Route::post('/formularios/details/delete', [FormularioDetailController::class, 'destroy']);
+
+        Route::post('/evaluaciones/getAll', [EvaluationController::class, 'index']);
+        Route::post('/evaluaciones/show', [EvaluationController::class, 'show']);
+        Route::post('/evaluaciones/create', [EvaluationController::class, 'store']);
+        Route::post('/evaluaciones/update', [EvaluationController::class, 'update']);
+        Route::post('/evaluaciones/delete', [EvaluationController::class, 'destroy']);
+
+        Route::post('/evaluaciones/requerimientos/byEvaluacion', [EvaluationRequirementController::class, 'byEvaluacion']);
+        Route::post('/evaluaciones/requerimientos/show', [EvaluationRequirementController::class, 'show']);
+        Route::post('/evaluaciones/requerimientos/create', [EvaluationRequirementController::class, 'store']);
+        Route::post('/evaluaciones/requerimientos/update', [EvaluationRequirementController::class, 'update']);
+        Route::post('/evaluaciones/requerimientos/delete', [EvaluationRequirementController::class, 'destroy']);
+
 
         Route::post('/coordinators/getAll', [CoordinatorController::class, 'index']);
         Route::post('/coordinators/show', [CoordinatorController::class, 'show']);
@@ -257,7 +286,7 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
     });
 
 
-    //FALL BACK ROUTE FOR NO URL FOUND
+//FALL BACK ROUTE FOR NO URL FOUND
 Route::fallback(function () {
     return response()->json([
         'status' => 'error', 'message' => 'Incorrect Route'], ResponseCodes::NOT_FOUND);
