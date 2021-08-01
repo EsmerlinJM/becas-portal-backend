@@ -37,18 +37,18 @@ class ProfileController extends Controller
         try {
             $user = auth()->user();
 
-            if($user->role->id = Tools::ADMIN || $user->role->id = Tools::INSTITUCION || $user->role->id = Tools::OFERTANTE) {
+            if($user->role->id == Tools::ADMIN || $user->role->id == Tools::INSTITUCION || $user->role->id == Tools::OFERTANTE) {
                 return new ProfileUserResource($user);
 
-            } elseif($user->role->id = Tools::EVALUADOR) {
+            } elseif($user->role->id == Tools::EVALUADOR) {
                 $evaluator = Evaluator::where('user_id', $user->id)->first();
                 return new ProfileEvaluatorResource($evaluator);
 
-            } elseif($user->role->id = Tools::COORDINADOR) {
+            } elseif($user->role->id == Tools::COORDINADOR) {
                 $coordinator = Coordinator::where('user_id', $user->id)->first();
                 return new ProfileCoordinatorResource($coordinator);
 
-            } elseif($user->role->id = Tools::USUARIO) {
+            } elseif($user->role->id == Tools::USUARIO) {
                 $candidate = Candidate::where('user_id', $user->id)->first();
                 return new ProfileCandidateResource($candidate);
 
@@ -87,7 +87,7 @@ class ProfileController extends Controller
         //Tomamos el Usuario Logeado
         $user = auth()->user();
 
-        if($user->role->id = Tools::ADMIN || $user->role->id = Tools::INSTITUCION || $user->role->id = Tools::OFERTANTE) { //Profile
+        if($user->role->id == Tools::ADMIN || $user->role->id == Tools::INSTITUCION || $user->role->id == Tools::OFERTANTE) { //Profile
 
             $request->validate([
                 'name' => 'required',
@@ -115,7 +115,7 @@ class ProfileController extends Controller
             }
 
 
-        } elseif($user->role->id = Tools::EVALUADOR) { //Evaluator
+        } elseif($user->role->id == Tools::EVALUADOR) { //Evaluator
 
             try {
                 $evaluator = Evaluator::where('user_id', $user->id)->first();
@@ -136,7 +136,7 @@ class ProfileController extends Controller
             }
 
 
-        } elseif($user->role->id = Tools::COORDINADOR) { //Coordinator
+        } elseif($user->role->id == Tools::COORDINADOR) { //Coordinator
             try {
                 $coordinator = Coordinator::where('user_id', $user->id)->first();
                 if($coordinator) {
@@ -155,7 +155,7 @@ class ProfileController extends Controller
                 throw new SomethingWentWrong($th);
             }
 
-        } elseif($user->role->id = Tools::USUARIO) {//Candidate
+        } elseif($user->role->id == Tools::USUARIO) {//Candidate
             $request->validate([
                 'name' => 'required',
                 'last_name' => 'required',
