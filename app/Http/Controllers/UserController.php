@@ -12,7 +12,6 @@ use Illuminate\Auth\Events\Registered;
 use Hash;
 use App\Tools\ResponseCodes;
 use App\Http\Resources\UserResource;
-use App\Http\Resources\UserResource2;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
 use App\Exceptions\AlreadyDeActivated;
@@ -25,7 +24,7 @@ class UserController extends Controller
         User::isAdmin();
         try {
             $user = User::all();
-            return UserResource2::collection($user);
+            return UserResource::collection($user);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -41,7 +40,7 @@ class UserController extends Controller
         // return $user;
 
         try {
-            return new UserResource2($user);
+            return new UserResource($user);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -70,7 +69,15 @@ class UserController extends Controller
 
             event(new Registered($user));
 
-            if ( $role->name == 'Evaluador') {
+            //Roles Usuarios
+            // const ADMIN = 1; Profile
+            // const EVALUADOR = 2; Evaluador
+            // const COORDINADOR = 3; Coordinador
+            // const INSTITUCION = 4; Profile
+            // const OFERTANTE = 5; Profile
+            // const USUARIO = 6; Candidato
+
+            if ( $role->id == Tools::EVALUADOR) {
                 //Hacer un Evaluador
                 $request->validate([
                     'coordinator_id' => 'required',
@@ -84,7 +91,7 @@ class UserController extends Controller
                 $evaluator->contact_email = "pending";
                 $evaluator->save();
 
-            } elseif ( $role->name == 'Coordinador') {
+            } elseif ( $role->id == Tools::COORDINADOR) {
                 //Hacer un Coordinador
                 $coordinador = new Coordinator;
                 $coordinador->user_id = $user->id;
@@ -93,7 +100,7 @@ class UserController extends Controller
                 $coordinador->contact_email = "pending";
                 $coordinador->save();
 
-            } elseif ( $role->name == 'Usuario') {
+            } elseif ( $role->id == Tools::USUARIO) {
                 //Hacer un Candidato
                 $request->validate([
                     'last_name'=>'required',
@@ -118,7 +125,7 @@ class UserController extends Controller
             }
 
 
-            return new UserResource2($user);
+            return new UserResource($user);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -149,7 +156,7 @@ class UserController extends Controller
             $user->email = $request->email;
             // $user->role_id = $request->role_id;
             $user->save();
-            return new UserResource2($user);
+            return new UserResource($user);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
