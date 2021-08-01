@@ -36,6 +36,9 @@ use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\EvaluatorController;
+use App\Http\Controllers\CoordinatorController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -141,6 +144,18 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/users/create', [UserController::class, 'store']);
         Route::post('/users/update', [UserController::class, 'update']);
         Route::post('/users/resetpassword', [UserController::class, 'resetPassword']);
+
+        Route::post('/evaluators/getAll', [EvaluatorController::class, 'index']);
+        Route::post('/evaluators/show', [EvaluatorController::class, 'show']);
+        Route::post('/evaluators/create', [EvaluatorController::class, 'store']);
+        Route::post('/evaluators/update', [EvaluatorController::class, 'update']);
+        Route::post('/evaluators/delete', [EvaluatorController::class, 'destroy']);
+
+        Route::post('/coordinators/getAll', [CoordinatorController::class, 'index']);
+        Route::post('/coordinators/show', [CoordinatorController::class, 'show']);
+        Route::post('/coordinators/create', [CoordinatorController::class, 'store']);
+        Route::post('/coordinators/update', [CoordinatorController::class, 'update']);
+        Route::post('/coordinators/delete', [CoordinatorController::class, 'destroy']);
 
         Route::post('convocatorias/tipos/create', [ConvocatoriaTypeController::class, 'store']);
         Route::post('convocatorias/tipos/update', [ConvocatoriaTypeController::class, 'update']);

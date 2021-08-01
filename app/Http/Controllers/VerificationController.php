@@ -41,7 +41,5 @@ class VerificationController extends Controller
         } else {
             return response()->json(['status' => 'error' ,'message' => 'Email no se encuentra registrado con nosotros'], ResponseCodes::UNPROCESSABLE_ENTITY);
         }
-
-
     }
 }
