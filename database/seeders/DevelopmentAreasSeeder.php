@@ -19,13 +19,32 @@ class DevelopmentAreasSeeder extends Seeder
     public function run()
     {
         DB::table('development_areas')->insert([
-            ['name' => 'Medicina', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Arquitectura', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Cultura', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Biología', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Administración', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Química', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Comunicación', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Ciencias de la Computación', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Análisis de datos y estadísticas', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Diseño', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Economía y Finanzas', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Educación', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Electrónica', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Energía', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Ingenieria', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Ética', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Salud', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Historia', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Humanidades', 'active' => '1', 'created_at' => Carbon::now()],
             ['name' => 'Leyes', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Tecnologia', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Mercadeo', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Mecanica', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Fisica Aplicada', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Biologia & Quimica', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Literatura', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Matemáticas', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Música', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Filosofía y Ética', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Física', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Ciencias', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'Ciencias Sociales', 'active' => '1', 'created_at' => Carbon::now()],
         ]);
     }
 }
