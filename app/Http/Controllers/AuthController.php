@@ -9,6 +9,7 @@ use App\Models\Candidate;
 use App\Exceptions\SomethingWentWrong;
 use App\Tools\ResponseCodes;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\ProfileUserResource;
 use App\Http\Resources\RegisterResource;
 use Illuminate\Auth\Events\Registered;
 
@@ -65,7 +66,7 @@ class AuthController extends Controller
 
         if ($user->hasVerifiedEmail()) {
             $accessToken = auth()->user()->createToken('authToken')->accessToken;
-            return response(['user' => new UserResource($user), 'access_token' => $accessToken], ResponseCodes::OK);
+            return response(['user' => new ProfileUserResource($user), 'access_token' => $accessToken], ResponseCodes::OK);
         } else {
             return response()->json(['status' => 'error' ,'message' => 'El email no ha sido verificado, por favor verificar su email'], ResponseCodes::UNPROCESSABLE_ENTITY);
         }
