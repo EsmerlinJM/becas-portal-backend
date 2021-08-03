@@ -1,0 +1,40 @@
+version: "2.0"
+services:
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ifirestone/laravel:laravel8
+    container_name: app_backend
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html/
+    volumes:
+      - ./:/var/www/html/
+      - ./php/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
+    networks:
+      - becas-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver_backend
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html/
+      - ./nginx/:/etc/nginx/conf.d/
+    networks:
+      - becas-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
