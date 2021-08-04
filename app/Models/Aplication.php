@@ -11,6 +11,16 @@ class Aplication extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function convocatoria()
+    {
+        return $this->hasOne(Convocatoria::class, 'id', 'convocatoria_id');
+    }
+
+    public function institution()
+    {
+        return $this->hasOne(Institution::class, 'id', 'institution_id');
+    }
+
     public function convocatoria_detail()
     {
         return $this->hasOne(ConvocatoriaDetail::class, 'id', 'convocatoria_detail_id');

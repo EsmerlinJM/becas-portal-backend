@@ -25,4 +25,27 @@ class Evaluator extends Model
     {
         return $this->hasmany(InstitutionEvaluator::class, 'evaluator_id', 'id');
     }
+
+    public function aplications()
+    {
+
+
+        return $this->hasManyThrough(
+            Aplication::class ,
+            InstitutionEvaluator::class,
+            'institution_id', //Foreign key on the InstitutionEvaluator table...
+            'institution_id', //Foreign key on the Aplication table...
+            'id',
+            'id'
+        );
+
+        // return $this->hasManyThrough(
+        //     Deployment::class,
+        //     Environment::class,
+        //     'project_id', // Foreign key on the environments table...
+        //     'environment_id', // Foreign key on the deployments table...
+        //     'id', // Local key on the projects table...
+        //     'id' // Local key on the environments table...
+        // );
+    }
 }
