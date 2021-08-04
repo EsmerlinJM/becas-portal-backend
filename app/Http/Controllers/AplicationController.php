@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Evaluator;
 use App\Models\Aplication;
 use App\Models\AplicationDetail;
 use App\Models\AplicationForm;
@@ -39,6 +40,57 @@ class AplicationController extends Controller
             return AplicationResource::collection($solicitudes);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getByEvaluator(Request $request)
+    {
+        $request->validate([
+            'evaluator_id' => 'required',
+        ]);
+
+        $paginar = 25;
+        if(isset($request->paginar)) {
+            $paginar = $request->paginar;
+        }
+
+        if(isset($request->estado)) {
+            $estado = false;
+            if($request->estado == 'abiertas') {
+                $estado = false;
+            } elseif($request->estado == 'cerradas') {
+                $estado = true;
+            }
+        }
+
+        $evaluator = Evaluator::findOrFail($request->evaluator_id);
+        $order = [];
+        $counter = 0;
+        foreach ($evaluator->institutions as $item) {
+            $order[$counter] = $item->id;
+            $counter =+ 1;
+        }
+        if($order) {
+            if(isset($request->estado)) {
+                return AplicationResource::collection(
+                    Aplication::whereIn('institution_id', $order)
+                                 ->where('sent', true)
+                                 ->where('closed', $estado)
+                                 ->paginate($paginar));
+            } else {
+                return AplicationResource::collection(
+                    Aplication::whereIn('institution_id', $order)
+                                 ->where('sent', true)
+                                 ->paginate($paginar));
+            }
+        } else {
+            return Aplication::whereIn('institution_id', ['none'])->get();
         }
     }
 
@@ -130,6 +182,8 @@ class AplicationController extends Controller
             $this->isCandidate();
 
             $convocatoria_detail = ConvocatoriaDetail::findOrFail($request->convocatoria_detail_id);
+            $convocatoria = $convocatoria_detail->convocatoria;
+            $institution = $convocatoria_detail->institution;
             $candidate = auth()->user()->candidate;
             $evaluation = $convocatoria_detail->convocatoria->evaluation;
             $formulario = $convocatoria_detail->convocatoria->formulario;
@@ -140,8 +194,9 @@ class AplicationController extends Controller
 
         try {
             $solicitud = new Aplication;
-            $solicitud->convocatoria_id = $convocatoria_detail->convocatoria->id;
+            $solicitud->convocatoria_id = $convocatoria->id;
             $solicitud->convocatoria_detail_id = $convocatoria_detail->id;
+            $solicitud->institution_id = $institution->id;
             $solicitud->candidate_id = $candidate->id;
             $solicitud->aplication_status_id = Tools::SOLICITUD_INICIADA;
             $solicitud->score = 0;
