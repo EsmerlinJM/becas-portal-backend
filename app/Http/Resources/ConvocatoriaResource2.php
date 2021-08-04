@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 
-class ConvocatoriaDetailResource extends JsonResource
+class ConvocatoriaResource2 extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,15 +17,16 @@ class ConvocatoriaDetailResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'convocatoria_id' => $this->convocatoria_id,
-            'coverage' => $this->coverage,
+            'name' => $this->name,
+            'status' => $this->status,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
             'image_url' => $this->image_url,
             'image_ext' => $this->image_ext,
             'image_size' => $this->image_size,
-            'schedule'  => new ScheduleResource($this->schedule),
-            'offerer'   => new OffererResource($this->offerer),
-            'oferta' => new InstitutionOfferResource($this->oferta),
-
+            'evaluation' => new EvaluationResource($this->evaluation),
+            'audience'  => new AudienceResource($this->audience),
+            'type'  => new ConvocatoriaTypeResource($this->type),
         ];
     }
 }

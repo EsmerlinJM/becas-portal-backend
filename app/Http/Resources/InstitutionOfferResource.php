@@ -23,7 +23,7 @@ class InstitutionOfferResource extends JsonResource
             'institution_image' => $this->institution->image_url,
             'academic_offer_id' => $this->academic_offer->id,
             'academic_offer_name' => $this->academic_offer->career,
-            'academic_offer_type' => $this->academic_offer->type->description,
+            'academic_offer_type' => $this->academic_offer->type->name,
             'education_level_id' => $this->academic_offer->education_level->id,
             'education_level_name' => $this->academic_offer->education_level->name,
             'development_area_id' => $this->academic_offer->education_level->development_area->id,

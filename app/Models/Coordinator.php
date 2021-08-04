@@ -16,6 +16,11 @@ class Coordinator extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function convocatorias()
+    {
+        return $this->hasmany(Convocatoria::class);
+    }
+
     public function evaluators()
     {
         return $this->hasmany(Evaluator::class);

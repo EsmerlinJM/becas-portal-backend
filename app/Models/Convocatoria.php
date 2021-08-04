@@ -11,6 +11,11 @@ class Convocatoria extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function coordinator()
+    {
+        return $this->hasOne(Coordinator::class, 'id', 'coordinator_id');
+    }
+
     public function audience()
     {
         return $this->hasOne(Audience::class, 'id', 'audience_id');

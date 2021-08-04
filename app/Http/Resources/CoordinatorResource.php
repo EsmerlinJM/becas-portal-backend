@@ -24,6 +24,7 @@ class CoordinatorResource extends JsonResource
             'name' => $this->name,
             'contact_phone' => $this->contact_phone,
             'contact_email' => $this->contact_email,
+            'convocatorias' => ConvocatoriaResource2::collection($this->convocatorias),
             'evaluators' => EvaluatorResource::collection($this->evaluators)
         ];
     }
