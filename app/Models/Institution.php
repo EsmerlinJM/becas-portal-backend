@@ -15,4 +15,9 @@ class Institution extends Model
     {
         return $this->hasOne(InstitutionType::class, 'id', 'institution_type_id');
     }
+
+    public function ofertas()
+    {
+        return $this->hasmany(InstitutionOffer::class, 'institution_id', 'id');
+    }
 }

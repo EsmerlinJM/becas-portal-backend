@@ -24,6 +24,7 @@ class InstitutionResource extends JsonResource
             'image_ext' => $this->image_ext,
             'image_size' => $this->image_size,
             'type'  => new InstitutionTypeResource($this->type),
+            'ofertas' => InstitutionOfferResource::collection($this->ofertas)
         ];
     }
 }
