@@ -95,6 +95,7 @@ class ConvocatoriaController extends Controller
         User::isAdmin();
 
         $request->validate([
+            'coordinator_id' => 'required',
             'convocatoria_type_id' => 'required',
             'evaluation_id' => 'required',
             'formulario_id' => 'required',
@@ -130,7 +131,7 @@ class ConvocatoriaController extends Controller
         }
 
             $convocatoria = new Convocatoria;
-
+            $convocatoria->coordinator_id = $request->coordinator_id;
             $convocatoria->convocatoria_type_id = $request->convocatoria_type_id;
             $convocatoria->audience_id = $request->audience_id;
             $convocatoria->evaluation_id = $request->evaluation_id;
@@ -186,6 +187,7 @@ class ConvocatoriaController extends Controller
         User::isAdmin();
 
         $request->validate([
+            'coordinator_id' => 'required',
             'convocatoria_id' => 'required',
             'evaluation_id' => 'required',
             'formulario_id' => 'required',
@@ -219,6 +221,7 @@ class ConvocatoriaController extends Controller
                 "size" => $convocatoria->image_size,
             );
         }
+            $convocatoria->coordinator_id = $request->coordinator_id;
             $convocatoria->convocatoria_type_id = $request->convocatoria_type_id;
             $convocatoria->audience_id = $request->audience_id;
             $convocatoria->evaluation_id = $request->evaluation_id;

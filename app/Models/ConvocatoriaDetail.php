@@ -16,19 +16,9 @@ class ConvocatoriaDetail extends Model
         return $this->belongsTo(Convocatoria::class, 'convocatoria_id', 'id');
     }
 
-    public function institution()
+    public function oferta()
     {
-        return $this->hasOne(Institution::class, 'id', 'institution_id');
-    }
-
-    public function campus()
-    {
-        return $this->hasOne(Campus::class, 'id', 'campus_id');
-    }
-
-    public function academic_offer()
-    {
-        return $this->hasOne(AcademicOffer::class, 'id', 'academic_offer_id');
+        return $this->hasOne(InstitutionOffer::class, 'id', 'institution_offer_id');
     }
 
     public function offerer()

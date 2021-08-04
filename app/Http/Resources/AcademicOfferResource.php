@@ -24,7 +24,6 @@ class AcademicOfferResource extends JsonResource
             'pensum' => $this->pensum,
             'status'   => $this->active ? "Active" : "Inactive",
             'education_level' => new EducationLevelResource($this->education_level),
-            // 'development_area' => new DevelopmentAreaResource($this->development_area),
             'type'  => new AcademicOfferTypeResource($this->type)
         ];
     }

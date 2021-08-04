@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\ConvocatoriaType;
 use App\Models\Convocatoria;
+use App\Models\Coordinator;
 use App\Models\Audience;
 use App\Models\Evaluation;
 use App\Models\Formulario;
@@ -30,6 +31,7 @@ class ConvocatoriaFactory extends Factory
         $convocatoriaDate = $this->faker->dateTimeBetween($startDate = '-20 years', $endDate = 'now', $timezone = 'America/Santo_Domingo');
 
         return [
+            'coordinator_id' => Coordinator::all()->random(),
             'convocatoria_type_id' => ConvocatoriaType::all()->random(),
             'audience_id'   => Audience::all()->random(),
             'evaluation_id'     => Evaluation::all()->random(),
