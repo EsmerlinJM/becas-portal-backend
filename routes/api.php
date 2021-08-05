@@ -165,7 +165,6 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/formularios/details/byFormulario', [FormularioDetailController::class, 'byFormulario']);
         Route::post('/formularios/details/show', [FormularioDetailController::class, 'show']);
         Route::post('/formularios/details/create', [FormularioDetailController::class, 'store']);
-        Route::post('/formularios/details/createMultiple', [FormularioDetailController::class, 'createMultiple']);
         Route::post('/formularios/details/update', [FormularioDetailController::class, 'update']);
         Route::post('/formularios/details/delete', [FormularioDetailController::class, 'destroy']);
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Resources\FormularioDetailResource;
 use App\Exceptions\SomethingWentWrong;
+use App\Exceptions\ArrayEmpty;
 use App\Tools\ResponseCodes;
 use App\Tools\Tools;
 
@@ -42,52 +43,13 @@ class FormularioDetailController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'formulario_id' => 'required',
-            'type' => 'required',
-            'required' => 'boolean|required',
-            'name' => 'required',
-            'description' => 'required',
-        ]);
-
-        if($request->type == 'checkbox' || $request->type == 'radio' || $request->type == 'select') {
-            $request->validate([
-                'data' => 'required',
-            ]);
-        }
-
-        try {
-            $detalle = new FormularioDetail;
-            $detalle->formulario_id = $request->formulario_id;
-            $detalle->type = $request->type;
-            $detalle->required = $request->required ? 1 : 0;
-            $detalle->name = $request->name;
-            $detalle->description = $request->description;
-            $detalle->data = $request->data;
-            $detalle->save();
-            return new FormularioDetailResource($detalle);
-        } catch (\Throwable $th) {
-            throw new SomethingWentWrong($th);
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function createMultiple(Request $request)
-    {
         $preguntas =  json_decode($request->getContent());
 
-
-        $formulario_id = null;
+        $counter = 0;
+        $detalles = null;
 
         if($preguntas) {
             foreach ($preguntas as $item) {
-
-                $formulario_id = $item->formulario_id;
 
                 if($item->type == 'checkbox' || $item->type == 'radio' || $item->type == 'select') {
                     if(!isset($item->data)) {
@@ -103,11 +65,13 @@ class FormularioDetailController extends Controller
                     $detalle->description = $item->description;
                     $detalle->data = isset($item->data) ? $item->data : null;
                     $detalle->save();
+
+                    $detalles[$counter] = $detalle;
+                    $counter ++;
                 } catch (\Throwable $th) {
                     throw new SomethingWentWrong($th);
                 }
             }
-            $detalles = FormularioDetail::where('formulario_id',$formulario_id)->get();
             return FormularioDetailResource::collection($detalles);
         } else {
             throw new ArrayEmpty;
