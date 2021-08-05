@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Resources\FormularioDetailResource;
 use App\Exceptions\SomethingWentWrong;
+use App\Tools\ResponseCodes;
 use App\Tools\Tools;
 
 class FormularioDetailController extends Controller
@@ -67,6 +68,49 @@ class FormularioDetailController extends Controller
             return new FormularioDetailResource($detalle);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function createMultiple(Request $request)
+    {
+        $preguntas =  json_decode($request->getContent());
+
+
+        $formulario_id = null;
+
+        if($preguntas) {
+            foreach ($preguntas as $item) {
+
+                $formulario_id = $item->formulario_id;
+
+                if($item->type == 'checkbox' || $item->type == 'radio' || $item->type == 'select') {
+                    if(!isset($item->data)) {
+                        return response()->json(['status' => 'error', 'message' => 'Se necesita el campo data para este tipo de pregunta/input'], ResponseCodes::UNPROCESSABLE_ENTITY);
+                    }
+                }
+                try {
+                    $detalle = new FormularioDetail;
+                    $detalle->formulario_id = $item->formulario_id;
+                    $detalle->type = $item->type;
+                    $detalle->required = $item->required ? 1 : 0;
+                    $detalle->name = $item->name;
+                    $detalle->description = $item->description;
+                    $detalle->data = isset($item->data) ? $item->data : null;
+                    $detalle->save();
+                } catch (\Throwable $th) {
+                    throw new SomethingWentWrong($th);
+                }
+            }
+            $detalles = FormularioDetail::where('formulario_id',$formulario_id)->get();
+            return FormularioDetailResource::collection($detalles);
+        } else {
+            throw new ArrayEmpty;
         }
     }
 
