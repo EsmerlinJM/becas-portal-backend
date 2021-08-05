@@ -24,6 +24,7 @@ class CandidateResource extends JsonResource
             'image_size' => $this->image_size,
             'name' => $this->name,
             'last_name' => $this->last_name,
+            'genero'    => $this->genero,
             'born_date' => isset($this->born_date) ? Carbon::parse($this->born_date)->toFormattedDateString() : null,
             'contact_phone' => $this->contact_phone,
             'contact_email' => $this->contact_email,
