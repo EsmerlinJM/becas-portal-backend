@@ -29,9 +29,13 @@ class ParametroController extends Controller
         $ofertas_academicas = InstitutionOffer::all();
         $area_desarrollo = DevelopmentArea::all();
 
+        $parametros['tipos_convocatorias'] = $tipos_convocatorias;
+        $parametros['niveles_educativos'] = $niveles_educativos;
+        $parametros['audiencias'] = $audiencias;
+        $parametros['ofertas_academicas'] = $ofertas_academicas;
+        $parametros['area_desarrollo'] = $area_desarrollo;
 
-
-
+        return new ParametroResource($parametros);
     }
 
     /**
