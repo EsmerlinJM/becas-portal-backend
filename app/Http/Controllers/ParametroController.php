@@ -11,6 +11,11 @@ use App\Models\DevelopmentArea;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\ParametroResource;
+use App\Http\Resources\ConvocatoriaTypeResource;
+use App\Http\Resources\EducationLevelParameterResource;
+use App\Http\Resources\AudienceResource;
+use App\Http\Resources\InstitutionOfferResource;
+use App\Http\Resources\DevelopmentAreaResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Tools\Tools;
 
@@ -24,16 +29,16 @@ class ParametroController extends Controller
     public function index()
     {
         $tipos_convocatorias = ConvocatoriaType::all();
-        $niveles_educativos = EducationLevel::all();
+        $niveles_educativos = EducationLevel::select('name')->groupBy('name')->get();
         $audiencias = Audience::all();
-        $ofertas_academicas = InstitutionOffer::all();
+        // $ofertas_academicas = InstitutionOffer::all();
         $area_desarrollo = DevelopmentArea::all();
 
-        $parametros['tipos_convocatorias'] = $tipos_convocatorias;
-        $parametros['niveles_educativos'] = $niveles_educativos;
-        $parametros['audiencias'] = $audiencias;
-        $parametros['ofertas_academicas'] = $ofertas_academicas;
-        $parametros['area_desarrollo'] = $area_desarrollo;
+        $parametros['tipos_convocatorias'] = ConvocatoriaTypeResource::collection($tipos_convocatorias);
+        $parametros['niveles_educativos'] = EducationLevelParameterResource::collection($niveles_educativos);
+        $parametros['audiencias'] = AudienceResource::collection($audiencias);
+        // $parametros['ofertas_academicas'] = InstitutionOfferResource::collection($ofertas_academicas);
+        $parametros['area_desarrollo'] = DevelopmentAreaResource::collection($area_desarrollo);
 
         return new ParametroResource($parametros);
     }
