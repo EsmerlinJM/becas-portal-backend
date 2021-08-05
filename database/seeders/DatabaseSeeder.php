@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
         // User::factory()->count(100)->usuario()->create();
 
         // Candidates
-        Candidate::factory()->count(20)->create();
+        Candidate::factory()->count(200)->create();
 
         // Audiences
         $this->call(AudiencesSeeder::class);
@@ -110,11 +110,11 @@ class DatabaseSeeder extends Seeder
 
         // Aplications (Status, Aplication, Details)
         $this->call(AplicationStatusesSeeder::class);
-        // Aplication::factory()->count(500)->create();
-        // AplicationDetail::factory()->count(1000)->create();
+        Aplication::factory()->count(100)->create();
+        AplicationDetail::factory()->count(200)->create();
 
         // Scholarship, details
-       // Scholarship::factory()->count(500)->create();
+        Scholarship::factory()->count(100)->create();
        // ScholarshipDetail::factory()->count(1000)->create();
     }
 }

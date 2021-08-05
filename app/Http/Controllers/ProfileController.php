@@ -159,6 +159,7 @@ class ProfileController extends Controller
             $request->validate([
                 'name' => 'required',
                 'last_name' => 'required',
+                'genero' => 'required',
                 'country_id' => 'required',
                 'province_id' => 'required',
                 'municipality_id' => 'required',
@@ -177,6 +178,7 @@ class ProfileController extends Controller
                     $candidate->document_id = $request->document_id;
                     $candidate->name = $request->name;
                     $candidate->last_name = $request->last_name;
+                    $candidate->genero = $request->genero;
                     $candidate->born_date = $request->born_date ? Carbon::parse($request->born_date) : null;
                     $candidate->contact_phone = $request->contact_phone;
                     $candidate->contact_email = $request->contact_email;
