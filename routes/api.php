@@ -44,6 +44,8 @@ use App\Http\Controllers\FormularioDetailController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\EvaluationRequirementController;
 
+use App\Http\Controllers\ParametroController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -59,6 +61,8 @@ use App\Http\Controllers\EvaluationRequirementController;
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
+//Parametros
+Route::get('/parametros/getAll', [ParametroController::class, 'index']);
 
 Route::get('/paises/getAll', [CountryController::class, 'index']);
 Route::get('/paises/getOne', [CountryController::class, 'show']);
