@@ -67,6 +67,7 @@ return [
         'Http/Kernel.php',
         'Console/Kernel.php',
         'Exceptions/Handler.php',
+        'App/Models/Evaluator.php',
         'Http/Controllers/Controller.php',
         'Http/Middleware/Authenticate.php',
         'Http/Middleware/EncryptCookies.php',
