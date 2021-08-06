@@ -30,7 +30,6 @@ jobs:
     strategy:
       matrix:
         php-version: ['7.4','8.0']
-
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
 
