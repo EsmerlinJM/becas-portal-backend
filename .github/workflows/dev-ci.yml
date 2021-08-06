@@ -3,6 +3,7 @@ name: Dev Tests
 on:
   push:
     branches:
+      - "*"
       - "!staging"
       - "!master"
 
