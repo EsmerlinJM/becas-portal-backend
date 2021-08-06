@@ -22,7 +22,7 @@ jobs:
       - uses: php-actions/composer@v5
 
       - name: Use PHP ${{ matrix.php-version }} for tests
-      - uses: php-actions/phpunit@v3
+        uses: php-actions/phpunit@v3
         with:
           php_version: ${{ matrix.php-version }}
           configuration: ./phpunit.xml
