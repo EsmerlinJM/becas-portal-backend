@@ -38,11 +38,8 @@ RUN docker-php-ext-configure intl \
         mbstring \
         exif \
         zip \
-    && pecl install \
-        imagick \
     && docker-php-ext-enable \
         opcache \
-        imagick \
     && docker-php-source delete \
     # Clean aptitude cache and tmp directory
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
