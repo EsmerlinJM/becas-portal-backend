@@ -35,11 +35,11 @@ jobs:
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
 
-      - name: Use PHP ${{ matrix.php-version }} for tests
-        uses: php-actions/phpunit@v3
-        with:
-          php_version: ${{ matrix.php-version }}
-          configuration: ./phpunit.xml
+      # - name: Use PHP ${{ matrix.php-version }} for tests
+      #   uses: php-actions/phpunit@v3
+      #   with:
+      #     php_version: ${{ matrix.php-version }}
+      #     configuration: ./phpunit.xml
 
   build:
     needs: ["test"]
