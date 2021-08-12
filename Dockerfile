@@ -9,6 +9,7 @@ FROM php:${PHP_VERSION}-fpm AS php
 # Install dependencies for the operating system software
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    libicu-dev \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
