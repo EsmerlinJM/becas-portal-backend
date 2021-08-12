@@ -59,8 +59,9 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
+          target: prod
           push: true
-          tags: ${{ env.REGISTRY_BASE}}/${{env.PROJECT_NAME}}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}-dev:${{ env.GITHUB_REF_SLUG }}
+          tags: ${{ env.REGISTRY_BASE}}/${{env.PROJECT_NAME}}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_REF_SLUG }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -74,8 +75,8 @@ jobs:
       - id: deploy
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          image: ${{ env.REGISTRY_BASE}}/${{env.PROJECT_NAME}}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}-dev:${{ env.GITHUB_REF_SLUG }}
-          service: ${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}-dev
+          image: ${{ env.REGISTRY_BASE}}/${{env.PROJECT_NAME}}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_REF_SLUG }}
+          service: ${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}-${{ env.GITHUB_REF_SLUG }}
           credentials: ${{ secrets.GAR_JSON_KEY }}
           region: ${{ secrets.GCP_REGION }}
           env_vars: |
