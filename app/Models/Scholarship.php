@@ -20,4 +20,13 @@ class Scholarship extends Model
     {
         return $this->hasOne(Aplication::class, 'id', 'aplication_id');
     }
+
+    public function scopeConvocatoria($query, $convocatoria_id)
+    {
+        if(! empty($convocatoria_id)) {
+
+            return $query->where('convocatoria_id',"LIKE" , "%$convocatoria_id%");
+        }
+
+    }
 }
