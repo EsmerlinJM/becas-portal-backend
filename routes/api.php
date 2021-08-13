@@ -63,6 +63,7 @@ Route::get('email/resend', [VerificationController::class, 'resend'])->name('ver
 
 //Parametros
 Route::get('/parametros/getAll', [ParametroController::class, 'index']);
+Route::get('/estadisticas', [ParametroController::class, 'estadisticas']);
 
 Route::get('/paises/getAll', [CountryController::class, 'index']);
 Route::get('/paises/getOne', [CountryController::class, 'show']);
