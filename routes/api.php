@@ -63,7 +63,7 @@ Route::get('email/resend', [VerificationController::class, 'resend'])->name('ver
 
 //Parametros
 Route::get('/parametros/getAll', [ParametroController::class, 'index']);
-Route::get('/estadisticas', [ParametroController::class, 'estadisticas']);
+
 
 Route::get('/paises/getAll', [CountryController::class, 'index']);
 Route::get('/paises/getOne', [CountryController::class, 'show']);
@@ -148,6 +148,9 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/profile/changepassword', [ProfileController::class, 'changePassword']);
         Route::post('/profile/getProfile', [ProfileController::class, 'getProfile']);
         Route::post('/profile/update', [ProfileController::class, 'update']);
+
+        #Estadisticas
+        Route::get('/estadisticas', [ParametroController::class, 'estadisticas']);
 
         Route::post('/users/getAll', [UserController::class, 'index']);
         Route::post('/users/show', [UserController::class, 'show']);
