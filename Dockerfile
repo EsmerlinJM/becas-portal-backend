@@ -98,13 +98,11 @@ WORKDIR /var/www/html
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN composer global require hirak/prestissimo \
-    && composer install \
+RUN composer install \
         --ignore-platform-reqs \
         --no-ansi \
         --no-dev \
-        --no-interaction \
-    && composer global remove hirak/prestissimo
+        --no-interaction
 
 RUN composer dump-autoload
 
