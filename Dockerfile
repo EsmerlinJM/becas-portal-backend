@@ -4,7 +4,7 @@ ARG XDEBUG_VERSION=2.9.6
 #####################################
 ##               PHP               ##
 #####################################
-FROM php:${PHP_VERSION}-fpm AS php
+FROM php:${PHP_VERSION}-apache AS php
 
 # Install dependencies for the operating system software
 RUN apt-get update && apt-get install -y --no-install-recommends \
