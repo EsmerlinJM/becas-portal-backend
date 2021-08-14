@@ -67,9 +67,7 @@ COPY . ./
 # Install composer (php package manager)
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN composer global require hirak/prestissimo \
-    && composer install \
-    && composer global remove hirak/prestissimo
+RUN composer install
 
 # TODO: TEST environment needs variable setup acordingly
 #####################################
