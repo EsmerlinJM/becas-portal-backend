@@ -16,8 +16,38 @@ class ScholarshipDetail extends Model
         return $this->belongsTo(Scholarship::class, 'scholarship_id', 'id');
     }
 
-    public function academic_offer()
+    public function candidate()
     {
-        return $this->hasOne(AcademicOffer::class, 'id', 'academic_offer_id');
+        return $this->belongsTo(Candidate::class, 'candidate_id', 'id');
+    }
+
+    public function aplication()
+    {
+        return $this->hasOne(Aplication::class, 'id', 'aplication_id');
+    }
+
+    public function convocatoria()
+    {
+        return $this->hasOne(Convocatoria::class, 'id', 'convocatoria_id');
+    }
+
+    public function convocatoria_detail()
+    {
+        return $this->hasOne(ConvocatoriaDetail::class, 'id', 'convocatoria_detail_id');
+    }
+
+    public function offerer()
+    {
+        return $this->hasOne(Offerer::class, 'id', 'offerer_id');
+    }
+
+    public function institution()
+    {
+        return $this->hasOne(Intitution::class, 'id', 'institution_id');
+    }
+
+    public function institution_offer()
+    {
+        return $this->hasOne(IntitutionOffer::class, 'id', 'institution_offer_id');
     }
 }

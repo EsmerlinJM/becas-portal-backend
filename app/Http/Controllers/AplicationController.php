@@ -11,6 +11,7 @@ use App\Models\AplicationStatus;
 use App\Models\Convocatoria;
 use App\Models\ConvocatoriaDetail;
 use App\Models\Candidate;
+use App\Models\Scholarship;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\AplicationResource;
@@ -50,18 +51,18 @@ class AplicationController extends Controller
      */
     public function getSolicitudes(Request $request)
     {
-        $solicitudes = Aplication::where('institution_id', 0)->get(); //Empty Collection
+        $solicitudes = Aplication::paginate(30); //Empty Collection
 
         if($request->institution_id) {
-            $solicitudes = Aplication::where('institution_id', $request->institution_id)->get();
+            $solicitudes = Aplication::where('institution_id', $request->institution_id)->paginate(30);
         }
 
         if($request->convocatoria_id) {
-            $solicitudes = Aplication::where('convocatoria_id', $request->convocatoria_id)->get();
+            $solicitudes = Aplication::where('convocatoria_id', $request->convocatoria_id)->paginate(30);
         }
 
         if($request->offerer_id) {
-            $solicitudes = Aplication::where('offerer_id', $request->offerer_id)->get();
+            $solicitudes = Aplication::where('offerer_id', $request->offerer_id)->paginate(30);
         }
 
         try {
@@ -331,6 +332,25 @@ class AplicationController extends Controller
             $solicitud->closed = true;
             $solicitud->notes = $request->notas;
             $solicitud->save();
+
+            if($request->aplication_status_id == 6 || $request->aplication_status_id == 7) {
+                //Aprobada la Solicitud
+                $beca = new Scholarship;
+                $beca->convocatoria_id = $solicitud->convocatoria->id;
+                $beca->convocatoria_detail_id = $solicitud->convocatoria_detail->id;
+                $beca->offerer_id = $solicitud->offerer->id;
+                $beca->institution_id = $solicitud->institution->id;
+                $beca->institution_offer_id = $solicitud->convocatoria_detail->oferta->id;
+                $beca->aplication_id = $solicitud->id;
+                $beca->candidate_id = $solicitud->candidate->id;
+
+                $beca->name = $solicitud->candidate->name;
+                $beca->lastname = $solicitud->candidate->last_name;
+                $beca->genero = $solicitud->candidate->genero;
+                $beca->estado = 'activo'; //Nuevo Activo por defecto
+                $beca->save();
+            }
+
             return new AplicationResource($solicitud);
 
         } catch (\Throwable $th) {

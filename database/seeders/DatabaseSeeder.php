@@ -115,6 +115,6 @@ class DatabaseSeeder extends Seeder
 
         // Scholarship, details
         Scholarship::factory()->count(100)->create();
-       // ScholarshipDetail::factory()->count(1000)->create();
+        ScholarshipDetail::factory()->count(1000)->create();
     }
 }
