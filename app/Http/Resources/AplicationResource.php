@@ -35,6 +35,7 @@ class AplicationResource extends JsonResource
                 'audience'  => $this->convocatoria_detail->convocatoria->audience->name,
                 'type'  => $this->convocatoria_detail->convocatoria->type->name,
             ],
+            'offerer' => new OffererResource($this->offerer),
             'oferta_academica' => new ConvocatoriaDetailResource($this->convocatoria_detail),
             'candidate' => new CandidateResource($this->candidate),
             'evaluacion' => AplicationDetailResource::collection($this->details),

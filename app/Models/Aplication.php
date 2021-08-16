@@ -21,6 +21,11 @@ class Aplication extends Model
         return $this->hasOne(Institution::class, 'id', 'institution_id');
     }
 
+    public function offerer()
+    {
+        return $this->hasOne(Offerer::class, 'id', 'offerer_id');
+    }
+
     public function convocatoria_detail()
     {
         return $this->hasOne(ConvocatoriaDetail::class, 'id', 'convocatoria_detail_id');
