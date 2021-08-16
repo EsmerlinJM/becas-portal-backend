@@ -46,6 +46,9 @@ use App\Http\Controllers\EvaluationRequirementController;
 
 use App\Http\Controllers\ParametroController;
 
+use App\Http\Controllers\ScholarshipController;
+use App\Http\Controllers\ScholarshipDetailController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -279,6 +282,27 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('solicitudes/forms/answerMultiple', [AplicationFormController::class, 'answerMultiple']);
         Route::post('solicitudes/forms/answer', [AplicationFormController::class, 'answer']);
         Route::post('solicitudes/forms/show', [AplicationFormController::class, 'show']);
+
+        #Becados
+        Route::get('becados/getAll', [ScholarshipController::class, 'index']);
+        Route::get('becados/getEstados', [ScholarshipController::class, 'estados']);
+        Route::post('becados/filter', [ScholarshipController::class, 'filter']);
+        Route::post('becados/show', [ScholarshipController::class, 'show']);
+        Route::post('becados/updateEstado', [ScholarshipController::class, 'updateEstado']);
+        Route::get('becados/egresados', [ScholarshipController::class, 'egresados']);
+        Route::get('becados/retirados', [ScholarshipController::class, 'retirados']);
+        Route::get('becados/expulsados', [ScholarshipController::class, 'expulsados']);
+        Route::get('becados/activos', [ScholarshipController::class, 'activos']);
+        Route::get('becados/suspendidos', [ScholarshipController::class, 'suspendidos']);
+
+        #Becados Details
+        Route::get('becados/detalles/getAll', [ScholarshipDetailController::class, 'index']);
+        Route::post('becados/detalles/byCandidate', [ScholarshipDetailController::class, 'byCandidate']);
+        Route::post('becados/detalles/byBeca', [ScholarshipDetailController::class, 'byBeca']);
+        Route::post('becados/detalles/show', [ScholarshipDetailController::class, 'show']);
+        Route::post('becados/detalles/create', [ScholarshipDetailController::class, 'store']);
+        Route::post('becados/detalles/update', [ScholarshipDetailController::class, 'update']);
+        Route::post('becados/detalles/delete', [ScholarshipDetailController::class, 'destroy']);
 
         #Documentos
         Route::get('documentos/getAll', [DocumentController::class, 'index']);

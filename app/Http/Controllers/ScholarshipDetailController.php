@@ -31,7 +31,15 @@ class ScholarshipDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // $table->foreignId('scholarship_id')->unsigned()->index()->references('id')->on('scholarships');
+        //     $table->foreignId('convocatoria_id')->unsigned()->index()->references('id')->on('convocatorias');
+        //     $table->foreignId('convocatoria_detail_id')->unsigned()->index()->references('id')->on('convocatoria_details');
+        //     $table->foreignId('offerer_id')->unsigned()->index()->references('id')->on('offerers');
+        //     $table->foreignId('institution_id')->unsigned()->index()->references('id')->on('institutions');
+        //     $table->foreignId('institution_offer_id')->unsigned()->index()->references('id')->on('institution_offers');
+        //     $table->foreignId('candidate_id')->unsigned()->index()->references('id')->on('candidates');
+        //     $table->foreignId('aplication_id')->unsigned()->index()->references('id')->on('aplications');
     }
 
     /**
