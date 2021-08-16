@@ -297,8 +297,7 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
 
         #Becados Details
         Route::get('becados/detalles/getAll', [ScholarshipDetailController::class, 'index']);
-        Route::post('becados/detalles/byCandidate', [ScholarshipDetailController::class, 'byCandidate']);
-        Route::post('becados/detalles/byBeca', [ScholarshipDetailController::class, 'byBeca']);
+        Route::post('becados/detalles/filtros', [ScholarshipDetailController::class, 'filter']);
         Route::post('becados/detalles/show', [ScholarshipDetailController::class, 'show']);
         Route::post('becados/detalles/create', [ScholarshipDetailController::class, 'store']);
         Route::post('becados/detalles/update', [ScholarshipDetailController::class, 'update']);
