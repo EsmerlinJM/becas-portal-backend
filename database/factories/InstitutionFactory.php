@@ -26,8 +26,15 @@ class InstitutionFactory extends Factory
     {
         return [
             'institution_type_id' => InstitutionType::all()->random(),
-            'siglas' => $this->faker->randomElement($array = array ('ABC','DCF','MIT','PCC','MXT','ITLA','UTE','APEC','AQX','GFT','GTER','GDKF','GTSK','ASDF','TREW','GDFS','AFGT','GDSA','HGTY','IOYP','JJDHF','OITX','LKSD','ASKG')),
             'name' => $this->faker->company,
+            'siglas' => $this->faker->randomElement($array = array ('ABC','DCF','MIT','PCC','MXT','ITLA','UTE','APEC','AQX','GFT','GTER','GDKF','GTSK','ASDF','TREW','GDFS','AFGT','GDSA','HGTY','IOYP','JJDHF','OITX','LKSD','ASKG')),
+            'telefono' => $this->faker->phoneNumber,
+            'email' => $this->faker->safeEmail,
+            'direccion' => $this->faker->address,
+            'web' => 'https://wwww.'.$this->faker->domainName,
+            'contacto_persona' => $this->faker->name,
+            'contacto_email' => $this->faker->email,
+            'contacto_telefono' => $this->faker->phoneNumber,
             'image_url'         => $this->faker->imageUrl($width = 640, $height = 480),
             'image_ext'         => 'jpg',
             'image_size'        => '1024',

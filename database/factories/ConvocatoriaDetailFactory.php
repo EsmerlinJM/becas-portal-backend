@@ -31,6 +31,7 @@ class ConvocatoriaDetailFactory extends Factory
         return [
             'convocatoria_id'   => $convocatoria->id,
             'institution_offer_id'    => $offer->id,
+            'institution_id'    => $offer->institution->id,
             'offerer_id'        => Offerer::all()->random(),
             'schedule_id'       => Schedule::all()->random(),
             'evaluation_id'     => $convocatoria->evaluation->id,

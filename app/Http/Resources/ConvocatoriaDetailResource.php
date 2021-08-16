@@ -23,10 +23,10 @@ class ConvocatoriaDetailResource extends JsonResource
             'image_url' => $this->image_url,
             'image_ext' => $this->image_ext,
             'image_size' => $this->image_size,
+            'institucion' => new InstitutionMinResource($this->institution),
             'schedule'  => new ScheduleResource($this->schedule),
             'offerer'   => new OffererResource($this->offerer),
             'oferta' => new InstitutionOfferResource($this->oferta),
-
         ];
     }
 }

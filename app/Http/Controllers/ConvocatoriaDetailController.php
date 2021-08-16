@@ -87,6 +87,7 @@ class ConvocatoriaDetailController extends Controller
             $detalle = new ConvocatoriaDetail;
             $detalle->convocatoria_id = $convocatoria->id;
             $detalle->institution_offer_id = $oferta->id;
+            $detalle->institution_id = $oferta->institution->id;
             $detalle->offerer_id = $oferente->id;
             $detalle->schedule_id = $horario->id;
             $detalle->coverage = $request->coverage;
@@ -169,6 +170,7 @@ class ConvocatoriaDetailController extends Controller
             }
 
             $detalle->institution_offer_id = $oferta->id;
+            $detalle->institution_id = $oferta->institution->id;
             $detalle->offerer_id = $oferente->id;
             $detalle->schedule_id = $horario->id;
             $detalle->coverage = $request->coverage;

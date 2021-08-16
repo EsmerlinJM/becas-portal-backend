@@ -26,6 +26,11 @@ class ConvocatoriaDetail extends Model
         return $this->hasOne(Offerer::class, 'id', 'offerer_id');
     }
 
+    public function institution()
+    {
+        return $this->hasOne(Institution::class, 'id', 'institution_id');
+    }
+
     public function schedule()
     {
         return $this->hasOne(Schedule::class, 'id', 'schedule_id');

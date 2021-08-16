@@ -46,6 +46,34 @@ class AplicationController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSolicitudes(Request $request)
+    {
+        $solicitudes = Aplication::where('institution_id', 0)->get(); //Empty Collection
+
+        if($request->institution_id) {
+            $solicitudes = Aplication::where('institution_id', $request->institution_id)->get();
+        }
+
+        if($request->convocatoria_id) {
+            $solicitudes = Aplication::where('convocatoria_id', $request->convocatoria_id)->get();
+        }
+
+        if($request->offerer_id) {
+            $solicitudes = Aplication::where('offerer_id', $request->offerer_id)->get();
+        }
+
+        try {
+            return AplicationResource::collection($solicitudes);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -196,6 +224,7 @@ class AplicationController extends Controller
             $solicitud = new Aplication;
             $solicitud->convocatoria_id = $convocatoria->id;
             $solicitud->convocatoria_detail_id = $convocatoria_detail->id;
+            $solicitud->offerer_id = $convocatoria_detail->offerer->id;
             $solicitud->institution_id = $institution->id;
             $solicitud->candidate_id = $candidate->id;
             $solicitud->aplication_status_id = Tools::SOLICITUD_INICIADA;

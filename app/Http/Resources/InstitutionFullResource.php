@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 
-class InstitutionResource extends JsonResource
+class InstitutionFullResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -31,7 +30,8 @@ class InstitutionResource extends JsonResource
             'image_ext' => $this->image_ext,
             'image_size' => $this->image_size,
             'type'  => new InstitutionTypeResource($this->type),
-            'ofertas' => InstitutionOfferResource::collection($this->ofertas)
+            'ofertas' => InstitutionOfferResource::collection($this->ofertas),
+            'convocatorias' => ConvocatoriaMinResource::collection($this->detalles)
         ];
     }
 }
