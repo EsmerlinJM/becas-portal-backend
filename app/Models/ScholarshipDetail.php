@@ -43,11 +43,11 @@ class ScholarshipDetail extends Model
 
     public function institution()
     {
-        return $this->hasOne(Intitution::class, 'id', 'institution_id');
+        return $this->hasOne(Institution::class, 'id', 'institution_id');
     }
 
     public function institution_offer()
     {
-        return $this->hasOne(IntitutionOffer::class, 'id', 'institution_offer_id');
+        return $this->hasOne(InstitutionOffer::class, 'id', 'institution_offer_id');
     }
 }

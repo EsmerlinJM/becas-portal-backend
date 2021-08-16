@@ -17,10 +17,10 @@ class ScholarshipDetailMinResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'max_rating' => $this->max_rating,
-            'min_rating' => $this->min_rating,
-            'period' => $this->period,
-            'rating'   => $this->rating,
+            'rango_maximo' => $this->max_rating,
+            'rango_minimo' => $this->min_rating,
+            'periodo' => $this->period,
+            'calificacion'   => $this->rating,
             'created_at' => $this->created_at->toDateTimeString()
         ];
     }
