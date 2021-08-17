@@ -17,7 +17,7 @@ class RolePermissionResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'permission' => new PermissionResource($this->permission)
+            'permission' => new PermissionResource($this->permiso)
         ];
     }
 }

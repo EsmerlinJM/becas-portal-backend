@@ -215,7 +215,7 @@ class AplicationController extends Controller
             $institution = $convocatoria_detail->institution;
             $candidate = auth()->user()->candidate;
             $evaluation = $convocatoria_detail->convocatoria->evaluation;
-            $formulario = $convocatoria_detail->convocatoria->formulario;
+            $formulario = $convocatoria_detail->formulario;
 
             $this->hasApplied($convocatoria_detail);
 

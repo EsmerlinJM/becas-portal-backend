@@ -18,10 +18,10 @@ class CreateConvocatoriaDetailsTable extends Migration
             $table->foreignId('convocatoria_id')->unsigned()->index()->references('id')->on('convocatorias');
             $table->foreignId('institution_id')->unsigned()->index()->references('id')->on('institutions');
             $table->foreignId('institution_offer_id')->unsigned()->index()->references('id')->on('institution_offers');
+            $table->foreignId('formulario_id')->unsigned()->index()->references('id')->on('formularios');
             $table->foreignId('offerer_id')->unsigned()->index()->references('id')->on('offerers');
             $table->foreignId('schedule_id')->unsigned()->index()->references('id')->on('schedules');
             $table->foreignId('evaluation_id')->unsigned()->index()->references('id')->on('evaluations');
-            $table->foreignId('formulario_id')->unsigned()->index()->references('id')->on('formularios');
             $table->integer('coverage');
             $table->string('image_url')->nullable();
             $table->string('image_ext')->nullable();
