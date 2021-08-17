@@ -35,7 +35,6 @@ class ConvocatoriaFactory extends Factory
             'convocatoria_type_id' => ConvocatoriaType::all()->random(),
             'audience_id'   => Audience::all()->random(),
             'evaluation_id'     => Evaluation::all()->random(),
-            'formulario_id'     => Formulario::all()->random(),
             'name'          => 'Convocatoria '.$this->faker->randomElement($array = array ('Becas Lenguas 2020','Becas Internacionales 2020','Becas Nacionales 2020','Becas Investigacion 2021')),
             'start_date'    => $convocatoriaDate,
             'end_date'      => $this->faker->dateTimeBetween($startDate = $convocatoriaDate, $endDate = '+5 years', $timezone = 'America/Santo_Domingo'),

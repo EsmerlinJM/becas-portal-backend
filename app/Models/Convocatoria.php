@@ -31,11 +31,6 @@ class Convocatoria extends Model
         return $this->hasOne(Evaluation::class, 'id', 'evaluation_id');
     }
 
-    public function formulario()
-    {
-        return $this->hasOne(Formulario::class, 'id', 'formulario_id');
-    }
-
     public function details()
     {
         return $this->hasmany(ConvocatoriaDetail::class);

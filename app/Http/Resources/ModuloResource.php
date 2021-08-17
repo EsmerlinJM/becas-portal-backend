@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 
-class PermissionResource extends JsonResource
+class ModuloResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +16,8 @@ class PermissionResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'id' => $this->permiso->id,
-            'name' => $this->permiso->name,
+            'id' => $this->id,
+            'name' => $this->name,
         ];
     }
 }

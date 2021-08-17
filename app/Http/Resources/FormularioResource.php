@@ -19,6 +19,7 @@ class FormularioResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'plantilla' => $this->isPlantilla ? true : false,
             'details' => FormularioDetailResource::collection($this->details)
         ];
 

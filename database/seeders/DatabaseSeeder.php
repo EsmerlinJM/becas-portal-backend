@@ -32,11 +32,19 @@ class DatabaseSeeder extends Seeder
         // Roles
         $this->call(RolesSeeder::class);
 
+        //Modulos
+        $this->call(ModulosSeeder::class);
+
         // Permissions
         $this->call(PermissionsSeeder::class);
 
         // Role Permissions
         $this->call(RolePermissionsSeeder::class);
+
+        // Role Modules
+        $this->call(RoleModulosSeeder::class);
+
+
 
         // Countries
         $this->call(CountriesSeeder::class);

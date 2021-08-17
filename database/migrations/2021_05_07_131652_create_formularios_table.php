@@ -17,6 +17,7 @@ class CreateFormulariosTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->boolean('isPlantilla')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

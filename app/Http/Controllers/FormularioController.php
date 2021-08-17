@@ -45,6 +45,7 @@ class FormularioController extends Controller
             $formulario = new Formulario;
             $formulario->name = $request->name;
             $formulario->description = $request->description;
+            $formulario->isPlantilla = isset($request->isPlantilla) ? true : false;
             $formulario->save();
             return new FormularioResource($formulario);
         } catch (\Throwable $th) {
@@ -92,6 +93,7 @@ class FormularioController extends Controller
         try {
             $formulario->name = $request->name;
             $formulario->description = $request->description;
+            $formulario->isPlantilla = isset($request->isPlantilla) ? true : false;
             $formulario->save();
             return new FormularioResource($formulario);
         } catch (\Throwable $th) {

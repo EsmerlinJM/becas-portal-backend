@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RolePermission extends Model
+class RoleModulo extends Model
 {
     use HasFactory;
 
@@ -14,8 +14,8 @@ class RolePermission extends Model
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
 
-    public function permiso()
+    public function modulo()
     {
-        return $this->hasOne(Permission::class, 'id', 'permission_id');
+        return $this->hasOne(Modulo::class, 'id', 'modulo_id');
     }
 }

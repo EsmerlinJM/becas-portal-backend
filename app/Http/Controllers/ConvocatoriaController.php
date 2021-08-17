@@ -92,13 +92,12 @@ class ConvocatoriaController extends Controller
      */
     public function store(Request $request)
     {
-        User::isAdmin();
+
 
         $request->validate([
             'coordinator_id' => 'required',
             'convocatoria_type_id' => 'required',
             'evaluation_id' => 'required',
-            'formulario_id' => 'required',
             'audience_id' => 'required',
             'name' => 'required',
             'start_date' => 'required',
@@ -135,7 +134,6 @@ class ConvocatoriaController extends Controller
             $convocatoria->convocatoria_type_id = $request->convocatoria_type_id;
             $convocatoria->audience_id = $request->audience_id;
             $convocatoria->evaluation_id = $request->evaluation_id;
-            $convocatoria->formulario_id = $request->formulario_id;
             $convocatoria->name = $request->name;
             $convocatoria->start_date = Carbon::parse($request->start_date);
             $convocatoria->end_date = Carbon::parse($request->end_date);
@@ -184,13 +182,11 @@ class ConvocatoriaController extends Controller
      */
     public function update(Request $request)
     {
-        User::isAdmin();
 
         $request->validate([
             'coordinator_id' => 'required',
             'convocatoria_id' => 'required',
             'evaluation_id' => 'required',
-            'formulario_id' => 'required',
             'convocatoria_type_id' => 'required',
             'audience_id' => 'required',
             'name' => 'required',
@@ -225,7 +221,6 @@ class ConvocatoriaController extends Controller
             $convocatoria->convocatoria_type_id = $request->convocatoria_type_id;
             $convocatoria->audience_id = $request->audience_id;
             $convocatoria->evaluation_id = $request->evaluation_id;
-            $convocatoria->formulario_id = $request->formulario_id;
             $convocatoria->name = $request->name;
             $convocatoria->start_date = Carbon::parse($request->start_date);
             $convocatoria->end_date = Carbon::parse($request->end_date);
