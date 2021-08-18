@@ -36,7 +36,7 @@ class AcademicOfferFactory extends Factory
             'academic_offer_type_id'    => AcademicOfferType::all()->random(),
             'career'                    => $this->faker->randomElement($occupations),
             'duration'                  => $this->faker->randomElement($durations),
-            'language'                  => $this->faker->randomElement(['English','Spanish','French','German']),
+            'language'                  => $this->faker->randomElement(['Español','Inglés','Francés','Alemán']),
             'pensum'                    => $this->faker->text($maxNbChars = 100),
             'detalles'                  => $this->faker->text($maxNbChars = 100),
             'active'                    => $this->faker->boolean,
