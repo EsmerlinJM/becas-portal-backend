@@ -36,67 +36,6 @@ class EvaluationRequirementController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $criterios =  json_decode($request->getContent());
-        $counter = 0;
-        $counter2 = 0;
-        $requerimientos = null;
-        $temporal = null;
-
-        if($criterios) {
-            $evaluacion = Evaluation::findOrFail($criterios[0]->evaluation_id);
-            $top_score = $evaluacion->top_score;
-            $current_sum = 0;
-
-            foreach ($criterios as $item) {
-
-                try {
-                    if($current_sum + $item->value <= $top_score) {
-                        $requerimiento = new EvaluationRequirement;
-                        $requerimiento->evaluation_id = $item->evaluation_id;
-                        $requerimiento->name = $item->name;
-                        $requerimiento->description = $item->description;
-                        $requerimiento->value = $item->value;
-                        $requerimiento->step_basic = round($item->value/3, 2);
-                        $requerimiento->step_medium = round(($item->value/3) * 2, 2);
-                        $requerimiento->step_complete = $item->value;
-                        // $requerimiento->save(); //Guardamos debajo luego de validar
-                        $temporal[$counter] = $requerimiento;
-
-                        $current_sum += $item->value;
-
-                        $counter ++;
-                    } else {
-                        return response()->json(['status' => 'error', 'message' => 'El valor de los requerimientos sobrepasa sobrepasa el valor total de la evaluacion'], ResponseCodes::UNPROCESSABLE_ENTITY);
-                    }
-
-                } catch (\Throwable $th) {
-                    throw new SomethingWentWrong($th);
-                }
-            }
-
-            if($current_sum == $top_score) {
-                foreach ($temporal as $item) {
-                    $item->save();
-                    $requerimientos[$counter2] = $item;
-                    $counter2 ++;
-                }
-            } else {
-                return response()->json(['status' => 'error', 'message' => 'El valor total de los requerimientos no es igual al valor de la evaluacion'], ResponseCodes::UNPROCESSABLE_ENTITY);
-            }
-            return EvaluationRequirementResource::collection($requerimientos);
-        } else {
-            throw new ArrayEmpty;
-        }
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request

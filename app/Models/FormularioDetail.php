@@ -15,4 +15,9 @@ class FormularioDetail extends Model
     {
         return $this->belongsTo(Formulario::class, 'formulario_id', 'id');
     }
+
+    public function seccion()
+    {
+        return $this->hasOne(FormularioSeccion::class, 'id', 'formulario_seccion_id');
+    }
 }
