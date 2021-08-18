@@ -211,7 +211,6 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         #Requerimientos Evaluaciones
         Route::post('/evaluaciones/requerimientos/byEvaluacion', [EvaluationRequirementController::class, 'byEvaluacion']);
         Route::post('/evaluaciones/requerimientos/show', [EvaluationRequirementController::class, 'show']);
-        Route::post('/evaluaciones/requerimientos/create', [EvaluationRequirementController::class, 'store']);
         Route::post('/evaluaciones/requerimientos/update', [EvaluationRequirementController::class, 'update']);
         Route::post('/evaluaciones/requerimientos/delete', [EvaluationRequirementController::class, 'destroy']);
 

@@ -105,6 +105,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EvaluationRequirementsSeeder::class);
 
         // Formularios, detalles de formulario
+        $this->call(FormularioSeccionSeeder::class);
         $this->call(FormulariosSeeder::class);
         $this->call(FormularioDetailsSeeder::class);
 

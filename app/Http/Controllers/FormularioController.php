@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Formulario;
+use App\Models\FormularioSeccion;
 use App\Models\Convocatoria;
 use App\Models\FormularioDetail;
 use Illuminate\Http\Request;
@@ -58,8 +59,12 @@ class FormularioController extends Controller
                     }
                 }
                 try {
+
+                    $seccion = FormularioSeccion::firstOrCreate(['name' =>  $item->seccion]);
+
                     $detalle = new FormularioDetail;
                     $detalle->formulario_id = $formulario->id;
+                    $detalle->formulario_seccion_id = $seccion->id;
                     $detalle->type = $item->type;
                     $detalle->required = $item->required ? 1 : 0;
                     $detalle->name = $item->name;

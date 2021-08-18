@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InstitutionEvaluator;
 use App\Models\Evaluator;
+use App\Models\Convocatoria;
 use App\Models\Institution;
 use Illuminate\Http\Request;
 
@@ -26,11 +27,13 @@ class InstitutionEvaluatorController extends Controller
     {
         $request->validate([
             'institution_id' => 'required',
+            'convocatoria_id' => 'required',
             'evaluator_id' => 'required',
         ]);
 
         $evaluator = Evaluator::findOrFail($request->evaluator_id);
         $institution = Institution::findOrFail($request->institution_id);
+        $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
 
         $check = InstitutionEvaluator::where('evaluator_id', $request->evaluator_id)->where('institution_id', $request->institution_id)->first();
 
@@ -38,6 +41,7 @@ class InstitutionEvaluatorController extends Controller
             try {
                 $ie = new InstitutionEvaluator;
                 $ie->evaluator_id = $evaluator->id;
+                $ie->convocatoria_id = $convocatoria->id;
                 $ie->institution_id = $institution->id;
                 $ie->save();
                 return new InstitutionEvaluatorResource($ie);
