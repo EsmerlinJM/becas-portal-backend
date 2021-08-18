@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Institution;
 use App\Models\InstitutionOffer;
 use App\Models\AcademicOffer;
 use App\Models\AcademicOfferType;
@@ -21,9 +22,13 @@ class AcademicOfferController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $aoffers = AcademicOffer::all();
+        $request->validate([
+            'institution_id' => 'required'
+        ]);
+
+        $aoffers = AcademicOffer::where('institution_id', $request->institution_id)->get();
         try {
             return AcademicOfferResource::collection($aoffers);
         } catch (\Throwable $th) {
@@ -40,10 +45,11 @@ class AcademicOfferController extends Controller
     public function byEducationLevel(Request $request)
     {
         $request->validate([
+            'institution_id' => 'required',
             'education_level_id' => 'required',
         ]);
 
-        $aoffers = AcademicOffer::where('education_level_id',$request->education_level_id)->get();
+        $aoffers = AcademicOffer::where('education_level_id',$request->education_level_id)->where('institution_id', $request->institution_id)->get();
 
         try {
             return AcademicOfferResource::collection($aoffers);
@@ -61,10 +67,11 @@ class AcademicOfferController extends Controller
     public function byOfferType(Request $request)
     {
         $request->validate([
+            'institution_id' => 'required',
             'academic_offer_type_id' => 'required',
         ]);
 
-        $aoffers = AcademicOffer::where('academic_offer_type_id',$request->academic_offer_type_id)->get();
+        $aoffers = AcademicOffer::where('academic_offer_type_id',$request->academic_offer_type_id)->where('institution_id', $request->institution_id)->get();
 
         try {
             return AcademicOfferResource::collection($aoffers);
@@ -82,6 +89,7 @@ class AcademicOfferController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'institution_id' => 'required',
             'academic_offer_type_id' => 'required',
             'education_level_id' => 'required',
             'career' => 'required',
@@ -90,12 +98,14 @@ class AcademicOfferController extends Controller
             'pensum' => 'required',
         ]);
 
+        Institution::findOrFail($request->institution_id); //Valido si existe
         AcademicOfferType::findOrFail($request->academic_offer_type_id); //Valido si existe
         EducationLevel::findOrFail($request->education_level_id); //Valido si existe
 
         try {
             $aoffer = new AcademicOffer;
             $aoffer->active = 1; //Activo por Defecto
+            $aoffer->institution_id = $request->institution_id;
             $aoffer->academic_offer_type_id = $request->academic_offer_type_id;
             $aoffer->education_level_id = $request->education_level_id;
             $aoffer->career = $request->career;

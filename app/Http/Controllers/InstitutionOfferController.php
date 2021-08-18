@@ -74,7 +74,6 @@ class InstitutionOfferController extends Controller
             $offer->institution_id = $request->institution_id;
             $offer->academic_offer_id = $request->academic_offer_id;
             $offer->campus_id = $request->campus_id;
-            $offer->detalles = $request->detalles;
             $offer->save();
             return new InstitutionOfferResource($offer);
         } catch (\Throwable $th) {
