@@ -113,6 +113,7 @@ Route::post('convocatorias/show', [ConvocatoriaController::class, 'show']);
 
 #Convocatorias Detalles
 Route::post('convocatorias/details/getAll', [ConvocatoriaDetailController::class, 'index']);
+Route::post('convocatorias/details/search', [ConvocatoriaDetailController::class, 'search']);
 Route::post('convocatorias/details/show', [ConvocatoriaDetailController::class, 'show']);
 
 #Oferentes

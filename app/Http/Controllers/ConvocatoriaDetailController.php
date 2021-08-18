@@ -9,6 +9,7 @@ use App\Models\InstitutionOffer;
 use App\Models\Convocatoria;
 use App\Models\ConvocatoriaDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Resources\ConvocatoriaDetailResource;
 use App\Exceptions\SomethingWentWrong;
@@ -33,6 +34,37 @@ class ConvocatoriaDetailController extends Controller
 
         Convocatoria::findOrFail($request->convocatoria_id); //Valido si no se ha borrado la convocatoria a la que pertenecen.
         $detalles = ConvocatoriaDetail::where('convocatoria_id',$request->convocatoria_id)->get();
+
+        try {
+            return ConvocatoriaDetailResource::collection($detalles);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+
+        $request->validate([
+            'busqueda' => 'required',
+        ]);
+
+        $detalles = null;
+        $counter = 0;
+        $all = ConvocatoriaDetail::orderBy('created_at', 'desc')->get();
+
+        foreach ($all as $item) {
+            if(str_contains($item->oferta->academic_offer->career, $request->busqueda) ){
+                $detalles[$counter] = $item;
+                $counter++;
+            }
+        }
 
         try {
             return ConvocatoriaDetailResource::collection($detalles);
