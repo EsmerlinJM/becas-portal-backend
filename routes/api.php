@@ -135,15 +135,7 @@ Route::post('instituciones/tipos/show', [InstitutionTypeController::class, 'show
 Route::get('instituciones/getAll', [InstitutionController::class, 'index']);
 Route::post('instituciones/show', [InstitutionController::class, 'show']);
 
-#Instituciones Ofertas
-Route::get('instituciones/ofertas/getAll', [InstitutionOfferController::class, 'index']);
-Route::post('instituciones/ofertas/institucion', [InstitutionOfferController::class, 'byInstitution']);
-Route::post('instituciones/ofertas/show', [InstitutionOfferController::class, 'show']);
 
-#Campus
-Route::get('campus/getAll', [CampusController::class, 'index']);
-Route::post('campus/institucion', [CampusController::class, 'byInstitution']);
-Route::post('campus/show', [CampusController::class, 'show']);
 
 #Areas de desarrollo
 Route::get('areas/desarrollo/getAll', [DevelopmentAreaController::class, 'index']);
@@ -158,11 +150,7 @@ Route::post('niveles/educativos/show', [EducationLevelController::class, 'show']
 Route::get('ofertas/academicas/tipos/getAll', [AcademicOfferTypeController::class, 'index']);
 Route::post('ofertas/academicas/tipos/show', [AcademicOfferTypeController::class, 'show']);
 
-#Ofertas Academicas
-Route::get('ofertas/academicas/getAll', [AcademicOfferController::class, 'index']);
-Route::post('ofertas/academicas/byEducationLevel', [AcademicOfferController::class, 'byEducationLevel']);
-Route::post('ofertas/academicas/byOfferType', [AcademicOfferController::class, 'byOfferType']);
-Route::post('ofertas/academicas/show', [AcademicOfferController::class, 'show']);
+
 
 Route::group(['middleware' => ['auth:api', 'verified']], function()
     {
@@ -324,12 +312,18 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('instituciones/update', [InstitutionController::class, 'update']);
         Route::post('instituciones/delete', [InstitutionController::class, 'destroy']);
 
-        #Instituciones Ofertas
+        #Instituciones Ofertas Academicas
+        Route::get('instituciones/ofertas/getAll', [InstitutionOfferController::class, 'index']);
+        Route::post('instituciones/ofertas/institucion', [InstitutionOfferController::class, 'byInstitution']);
+        Route::post('instituciones/ofertas/show', [InstitutionOfferController::class, 'show']);
         Route::post('instituciones/ofertas/create', [InstitutionOfferController::class, 'store']);
         Route::post('instituciones/ofertas/update', [InstitutionOfferController::class, 'update']);
         Route::post('instituciones/ofertas/delete', [InstitutionOfferController::class, 'destroy']);
 
         #Campus
+        Route::get('campus/getAll', [CampusController::class, 'index']);
+        Route::post('campus/institucion', [CampusController::class, 'byInstitution']);
+        Route::post('campus/show', [CampusController::class, 'show']);
         Route::post('campus/create', [CampusController::class, 'store']);
         Route::post('campus/update', [CampusController::class, 'update']);
         Route::post('campus/delete', [CampusController::class, 'destroy']);
@@ -346,17 +340,23 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('niveles/educativos/update', [EducationLevelController::class, 'update']);
         Route::post('niveles/educativos/delete', [EducationLevelController::class, 'destroy']);
 
+        #Instituciones Carreras
+        Route::post('instituciones/carreras/getAll', [AcademicOfferController::class, 'index']);
+        Route::post('instituciones/carreras/byEducationLevel', [AcademicOfferController::class, 'byEducationLevel']);
+        Route::post('instituciones/carreras/byOfferType', [AcademicOfferController::class, 'byOfferType']);
+        Route::post('instituciones/carreras/show', [AcademicOfferController::class, 'show']);
+        Route::post('instituciones/carreras/create', [AcademicOfferController::class, 'store']);
+        Route::post('instituciones/carreras/update', [AcademicOfferController::class, 'update']);
+        Route::post('instituciones/carreras/delete', [AcademicOfferController::class, 'destroy']);
+        Route::post('instituciones/carreras/activate', [AcademicOfferController::class, 'activate']);
+        Route::post('instituciones/carreras/deactivate', [AcademicOfferController::class, 'deactivate']);
+
         #Ofertas Academicas Tipos
         Route::post('ofertas/academicas/tipos/create', [AcademicOfferTypeController::class, 'store']);
         Route::post('ofertas/academicas/tipos/update', [AcademicOfferTypeController::class, 'update']);
         Route::post('ofertas/academicas/tipos/delete', [AcademicOfferTypeController::class, 'destroy']);
 
-        #Ofertas Academicas
-        Route::post('ofertas/academicas/create', [AcademicOfferController::class, 'store']);
-        Route::post('ofertas/academicas/update', [AcademicOfferController::class, 'update']);
-        Route::post('ofertas/academicas/delete', [AcademicOfferController::class, 'destroy']);
-        Route::post('ofertas/academicas/activate', [AcademicOfferController::class, 'activate']);
-        Route::post('ofertas/academicas/deactivate', [AcademicOfferController::class, 'deactivate']);
+
 
     });
 

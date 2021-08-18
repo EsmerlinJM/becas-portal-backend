@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Institution;
 use App\Models\AcademicOffer;
 use App\Models\AcademicOfferType;
 use App\Models\EducationLevel;
@@ -30,12 +31,14 @@ class AcademicOfferFactory extends Factory
         $durations = ['1 Month','2 Months','3 Months','4 Months','5 Months','6 Months','7 Months','8 Months','9 Months','10 Months','11 Months', '1 Year', '2 Years', '3 Years', '4 Years', '5 Years', '6 Years', '7 Years', '8 Years'];
 
         return [
+            'institution_id'            => Institution::all()->random(),
             'education_level_id'        => EducationLevel::all()->random(),
             'academic_offer_type_id'    => AcademicOfferType::all()->random(),
             'career'                    => $this->faker->randomElement($occupations),
             'duration'                  => $this->faker->randomElement($durations),
             'language'                  => $this->faker->randomElement(['English','Spanish','French','German']),
             'pensum'                    => $this->faker->text($maxNbChars = 100),
+            'detalles'                  => $this->faker->text($maxNbChars = 100),
             'active'                    => $this->faker->boolean,
             'created_at'                => Carbon::now(),
             'updated_at'                => Carbon::now(),
