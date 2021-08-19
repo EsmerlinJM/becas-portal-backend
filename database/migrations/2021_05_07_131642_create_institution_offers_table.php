@@ -17,6 +17,7 @@ class CreateInstitutionOffersTable extends Migration
             $table->id();
             $table->foreignId('institution_id')->unsigned()->index()->references('id')->on('institutions');
             $table->foreignId('academic_offer_id')->unsigned()->index()->references('id')->on('academic_offers');
+            $table->foreignId('schedule_id')->unsigned()->index()->references('id')->on('schedules');
             $table->foreignId('campus_id')->unsigned()->index()->references('id')->on('campuses');
             $table->timestamps();
             $table->softDeletes();

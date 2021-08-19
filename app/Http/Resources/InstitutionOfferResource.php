@@ -35,6 +35,7 @@ class InstitutionOfferResource extends JsonResource
             'campus_municipality' => $this->campus->municipality->name,
             'campus_province' => $this->campus->province->name,
             'campus_country' => $this->campus->country->name,
+            'schedule'  => new ScheduleResource($this->schedule),
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offerer;
-use App\Models\Schedule;
 use App\Models\Formulario;
 use App\Models\InstitutionOffer;
 use App\Models\Convocatoria;
@@ -87,7 +86,6 @@ class ConvocatoriaDetailController extends Controller
             'institution_offer_id' => 'required',
             'formulario_id' => 'required',
             'offerer_id' => 'required',
-            'schedule_id' => 'required',
             'coverage' => 'required',
         ]);
 
@@ -96,7 +94,6 @@ class ConvocatoriaDetailController extends Controller
 
         $convocatoria = Convocatoria::findOrFail($request->convocatoria_id); //Valido si la convocatoria existe
         $oferente = Offerer::findOrFail($request->offerer_id); //Valido si el oferente existe
-        $horario = Schedule::findOrFail($request->schedule_id); //Valido si el horario existe
         $oferta = InstitutionOffer::findOrFail($request->institution_offer_id); //Valido si la oferta existe
         $formulario = Formulario::findOrFail($request->formulario_id); //Valido si fomulario existe
 
@@ -123,12 +120,10 @@ class ConvocatoriaDetailController extends Controller
             $detalle->convocatoria_id = $convocatoria->id;
             $detalle->institution_offer_id = $oferta->id;
             $detalle->institution_id = $oferta->institution->id;
-            $detalle->formulario_id = $formulario->id;
             $detalle->offerer_id = $oferente->id;
-            $detalle->schedule_id = $horario->id;
             $detalle->coverage = $request->coverage;
             $detalle->evaluation_id = $convocatoria->evaluation->id;
-            $detalle->formulario_id = $convocatoria->formulario->id;
+            $detalle->formulario_id = $formulario->id;
             $detalle->image_url = $image['url'];
             $detalle->image_ext = $image['ext'];
             $detalle->image_size = $image['size'];
@@ -176,7 +171,6 @@ class ConvocatoriaDetailController extends Controller
             'institution_offer_id' => 'required',
             'offerer_id' => 'required',
             'formulario_id' => 'required',
-            'schedule_id' => 'required',
             'coverage' => 'required',
         ]);
 
@@ -185,7 +179,6 @@ class ConvocatoriaDetailController extends Controller
 
         $detalle = ConvocatoriaDetail::findOrFail($request->convocatoria_detail_id); //Valido si el Detalle Existe
         $oferente = Offerer::findOrFail($request->offerer_id); //Valido si el oferente existe
-        $horario = Schedule::findOrFail($request->schedule_id); //Valido si el horario existe
         $oferta = InstitutionOffer::findOrFail($request->institution_offer_id); //Valido si la oferta existe
         $formulario = Formulario::findOrFail($request->formulario_id); //Valido si fomulario existe
 
@@ -211,7 +204,6 @@ class ConvocatoriaDetailController extends Controller
             $detalle->institution_id = $oferta->institution->id;
             $detalle->formulario_id = $formulario->id;
             $detalle->offerer_id = $oferente->id;
-            $detalle->schedule_id = $horario->id;
             $detalle->coverage = $request->coverage;
             $detalle->image_url = $image['url'];
             $detalle->image_ext = $image['ext'];

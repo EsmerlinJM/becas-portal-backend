@@ -38,7 +38,7 @@ class ConvocatoriaFactory extends Factory
             'name'          => 'Convocatoria '.$this->faker->randomElement($array = array ('Becas Lenguas 2020','Becas Internacionales 2020','Becas Nacionales 2020','Becas Investigacion 2021')),
             'start_date'    => $convocatoriaDate,
             'end_date'      => $this->faker->dateTimeBetween($startDate = $convocatoriaDate, $endDate = '+5 years', $timezone = 'America/Santo_Domingo'),
-            'status'            => 'Pendiente',
+            'status'            => $this->faker->randomElement($array = array ('Pendiente','Cerrada','Abierta')),
             'image_url'         => $this->faker->imageUrl($width = 640, $height = 480),
             'image_ext'         => 'jpg',
             'image_size'        => '1024',

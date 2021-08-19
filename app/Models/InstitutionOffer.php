@@ -25,4 +25,9 @@ class InstitutionOffer extends Model
     {
         return $this->hasOne(Campus::class, 'id', 'campus_id');
     }
+
+    public function schedule()
+    {
+        return $this->hasOne(Schedule::class, 'id', 'schedule_id');
+    }
 }

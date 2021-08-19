@@ -97,6 +97,9 @@ class DatabaseSeeder extends Seeder
         // Education Levels
         EducationLevel::factory()->count(50)->create();
 
+        // Schedules
+        $this->call(SchedulesSeeder::class);
+
         // Academic Offers (Types, Academic Offers)
         $this->call(AcademicOfferTypesSeeder::class);
         AcademicOffer::factory()->count(100)->create();
@@ -113,8 +116,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FormulariosSeeder::class);
         $this->call(FormularioDetailsSeeder::class);
 
-        // Schedules
-        $this->call(SchedulesSeeder::class);
+
 
         // Convocatorias, details
         $this->call(ConvocatoriaTypesSeeder::class);
