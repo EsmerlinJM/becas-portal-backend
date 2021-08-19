@@ -19,6 +19,7 @@ use App\Models\EducationLevel;
 use App\Models\Scholarship;
 use App\Models\ScholarshipDetail;
 use App\Models\InstitutionOffer;
+use App\Models\Message;
 
 class DatabaseSeeder extends Seeder
 {
@@ -69,6 +70,9 @@ class DatabaseSeeder extends Seeder
 
         // Candidates
         Candidate::factory()->count(200)->create();
+
+        // Messages
+        Message::factory()->count(200)->create();
 
         // Audiences
         $this->call(AudiencesSeeder::class);
