@@ -137,8 +137,6 @@ Route::post('instituciones/tipos/show', [InstitutionTypeController::class, 'show
 Route::get('instituciones/getAll', [InstitutionController::class, 'index']);
 Route::post('instituciones/show', [InstitutionController::class, 'show']);
 
-
-
 #Areas de desarrollo
 Route::get('areas/desarrollo/getAll', [DevelopmentAreaController::class, 'index']);
 Route::post('areas/desarrollo/show', [DevelopmentAreaController::class, 'show']);
@@ -154,6 +152,9 @@ Route::post('ofertas/academicas/tipos/show', [AcademicOfferTypeController::class
 
 #Mensajes
 Route::post('/mensajes/create', [MessageController::class, 'store']);
+
+#Becados
+Route::post('becados/filter', [ScholarshipController::class, 'filter']);
 
 Route::group(['middleware' => ['auth:api', 'verified']], function()
     {
@@ -283,7 +284,6 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         #Becados
         Route::get('becados/getAll', [ScholarshipController::class, 'index']);
         Route::get('becados/getEstados', [ScholarshipController::class, 'estados']);
-        Route::post('becados/filter', [ScholarshipController::class, 'filter']);
         Route::post('becados/show', [ScholarshipController::class, 'show']);
         Route::post('becados/updateEstado', [ScholarshipController::class, 'updateEstado']);
         Route::get('becados/egresados', [ScholarshipController::class, 'egresados']);
