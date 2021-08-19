@@ -120,8 +120,8 @@ class DatabaseSeeder extends Seeder
 
         // Convocatorias, details
         $this->call(ConvocatoriaTypesSeeder::class);
-        Convocatoria::factory()->count(4)->create();
-        ConvocatoriaDetail::factory()->count(200)->create();
+        Convocatoria::factory()->count(20)->create();
+        ConvocatoriaDetail::factory()->count(400)->create();
 
         // Aplications (Status, Aplication, Details)
         $this->call(AplicationStatusesSeeder::class);
