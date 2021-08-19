@@ -42,6 +42,7 @@ class ConvocatoriaFactory extends Factory
             'image_url'         => $this->faker->imageUrl($width = 640, $height = 480),
             'image_ext'         => 'jpg',
             'image_size'        => '1024',
+            'published'           => $this->faker->boolean,
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now(),
         ];

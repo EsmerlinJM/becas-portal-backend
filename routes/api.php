@@ -236,6 +236,8 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('convocatorias/setOpen', [ConvocatoriaController::class, 'setOpen']);
         Route::post('convocatorias/setPending', [ConvocatoriaController::class, 'setPending']);
         Route::post('convocatorias/setClose', [ConvocatoriaController::class, 'setClose']);
+        Route::post('convocatorias/setPublished', [ConvocatoriaController::class, 'setPublished']);
+        Route::post('convocatorias/setUnPublished', [ConvocatoriaController::class, 'setUnPublished']);
         Route::post('convocatorias/delete', [ConvocatoriaController::class, 'destroy']);
 
         #Convocatorias Detalles

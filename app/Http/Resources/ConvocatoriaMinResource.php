@@ -19,6 +19,7 @@ class ConvocatoriaMinResource extends JsonResource
             'id' => $this->convocatoria->id,
             'name' => $this->convocatoria->name,
             'status' => $this->convocatoria->status,
+            'publicada' => $this->published,
             'start_date' => $this->convocatoria->start_date,
             'end_date' => $this->convocatoria->end_date,
             'image_url' => $this->convocatoria->image_url,
