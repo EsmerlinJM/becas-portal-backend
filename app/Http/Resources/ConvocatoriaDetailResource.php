@@ -26,6 +26,7 @@ class ConvocatoriaDetailResource extends JsonResource
             'institucion' => new InstitutionMinResource($this->institution),
             'offerer'   => new OffererResource($this->offerer),
             'oferta' => new InstitutionOfferResource($this->oferta),
+            'formulario' => new FormularioResource($this->formulario),
         ];
     }
 }
