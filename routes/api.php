@@ -49,6 +49,8 @@ use App\Http\Controllers\ParametroController;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\ScholarshipDetailController;
 
+use App\Http\Controllers\MessageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -97,8 +99,8 @@ Route::post('/logs/store', [LogController::class, 'store']);
 Route::post('/logs/search', [LogController::class, 'search']);
 
 #Profile (Login + Register)
-Route::post('/profile/register', [AuthController::class, 'register']);
-Route::post('/profile/login', [AuthController::class, 'login']);
+Route::post('/profile/register', [AuthController::class, 'register'])->name('register');
+Route::post('/profile/login', [AuthController::class, 'login'])->name('login');
 
 #Convocatorias Tipos
 Route::get('convocatorias/tipos/getAll', [ConvocatoriaTypeController::class, 'index']);
@@ -151,11 +153,12 @@ Route::post('niveles/educativos/show', [EducationLevelController::class, 'show']
 Route::get('ofertas/academicas/tipos/getAll', [AcademicOfferTypeController::class, 'index']);
 Route::post('ofertas/academicas/tipos/show', [AcademicOfferTypeController::class, 'show']);
 
-
+#Mensajes
+Route::post('/mensajes/create', [MessageController::class, 'store']);
 
 Route::group(['middleware' => ['auth:api', 'verified']], function()
     {
-        Route::post('/profile/logout', [AuthController::class, 'logout']);
+        Route::post('/profile/logout', [AuthController::class, 'logout'])->name('logout');
         Route::post('/profile/changepassword', [ProfileController::class, 'changePassword']);
         Route::post('/profile/getProfile', [ProfileController::class, 'getProfile']);
         Route::post('/profile/update', [ProfileController::class, 'update']);
@@ -169,6 +172,13 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/users/create', [UserController::class, 'store']);
         Route::post('/users/update', [UserController::class, 'update']);
         Route::post('/users/resetpassword', [UserController::class, 'resetPassword']);
+
+        #Mensajes
+        Route::post('/mensajes/getAll', [MessageController::class, 'index']);
+        Route::post('/mensajes/show', [MessageController::class, 'show']);
+        Route::post('/mensajes/markRead', [MessageController::class, 'markRead']);
+        Route::post('/mensajes/markUnRead', [MessageController::class, 'markUnRead']);
+        Route::post('/mensajes/delete', [MessageController::class, 'destroy']);
 
         #Evaluadores
         Route::post('/evaluators/getAll', [EvaluatorController::class, 'index']);
@@ -365,5 +375,5 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
 //FALL BACK ROUTE FOR NO URL FOUND
 Route::fallback(function () {
     return response()->json([
-        'status' => 'error', 'message' => 'Incorrect Route'], ResponseCodes::NOT_FOUND);
+        'status' => 'error', 'message' => 'Incorrect Route or not logged'], ResponseCodes::NOT_FOUND);
 });
