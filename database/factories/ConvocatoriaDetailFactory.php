@@ -6,7 +6,6 @@ use App\Models\ConvocatoriaDetail;
 use App\Models\Convocatoria;
 use App\Models\Formulario;
 use App\Models\InstitutionOffer;
-use App\Models\Schedule;
 use App\Models\Offerer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
@@ -35,7 +34,6 @@ class ConvocatoriaDetailFactory extends Factory
             'formulario_id'     => Formulario::all()->random(),
             'institution_id'    => $offer->institution->id,
             'offerer_id'        => Offerer::all()->random(),
-            'schedule_id'       => Schedule::all()->random(),
             'evaluation_id'     => $convocatoria->evaluation->id,
             'coverage'          => $this->faker->numberBetween($min = 20, $max = 100),
             'image_url'         => $this->faker->imageUrl($width = 640, $height = 480),

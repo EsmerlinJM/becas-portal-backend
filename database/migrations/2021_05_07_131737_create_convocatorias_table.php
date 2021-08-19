@@ -25,7 +25,7 @@ class CreateConvocatoriasTable extends Migration
             $table->string('image_url')->nullable();
             $table->string('image_ext')->nullable();
             $table->string('image_size')->nullable();
-            $table->enum('status', ['Pendiente', 'Abierta','Publicada']);
+            $table->enum('status', ['Pendiente', 'Abierta','Cerrada']);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -107,10 +107,9 @@ Route::get('convocatorias/tipos/getAll', [ConvocatoriaTypeController::class, 'in
 Route::post('convocatorias/tipos/show', [ConvocatoriaTypeController::class, 'show']);
 
 #Convocatorias
-Route::get('convocatorias/getAll', [ConvocatoriaController::class, 'index']);
-Route::get('convocatorias/pendientes', [ConvocatoriaController::class, 'pendientes']);
 Route::get('convocatorias/abiertas', [ConvocatoriaController::class, 'abiertas']);
-Route::get('convocatorias/publicadas', [ConvocatoriaController::class, 'publicadas']);
+Route::get('convocatorias/cerradas', [ConvocatoriaController::class, 'cerradas']);
+Route::get('convocatorias/portal', [ConvocatoriaController::class, 'portal']);
 Route::post('convocatorias/show', [ConvocatoriaController::class, 'show']);
 
 #Convocatorias Detalles
@@ -229,12 +228,13 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('convocatorias/tipos/delete', [ConvocatoriaTypeController::class, 'destroy']);
 
         #Convocatorias
+        Route::get('convocatorias/getAll', [ConvocatoriaController::class, 'index']);
+        Route::get('convocatorias/pendientes', [ConvocatoriaController::class, 'pendientes']);
         Route::post('convocatorias/create', [ConvocatoriaController::class, 'store']);
         Route::post('convocatorias/update', [ConvocatoriaController::class, 'update']);
-        Route::post('convocatorias/publish', [ConvocatoriaController::class, 'publish']);
-        Route::post('convocatorias/unpublish', [ConvocatoriaController::class, 'unpublish']);
-        Route::post('convocatorias/open', [ConvocatoriaController::class, 'open']);
-        Route::post('convocatorias/standby', [ConvocatoriaController::class, 'standby']);
+        Route::post('convocatorias/setOpen', [ConvocatoriaController::class, 'setOpen']);
+        Route::post('convocatorias/setPending', [ConvocatoriaController::class, 'setPending']);
+        Route::post('convocatorias/setClose', [ConvocatoriaController::class, 'setClose']);
         Route::post('convocatorias/delete', [ConvocatoriaController::class, 'destroy']);
 
         #Convocatorias Detalles

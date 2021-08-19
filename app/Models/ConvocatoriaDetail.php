@@ -31,11 +31,6 @@ class ConvocatoriaDetail extends Model
         return $this->hasOne(Institution::class, 'id', 'institution_id');
     }
 
-    public function schedule()
-    {
-        return $this->hasOne(Schedule::class, 'id', 'schedule_id');
-    }
-
     public function formulario()
     {
         return $this->hasOne(Formulario::class, 'id', 'formulario_id');
