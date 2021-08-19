@@ -14,6 +14,8 @@ use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\CantClose;
 use App\Exceptions\CantOpen;
 use App\Exceptions\CantPending;
+use App\Exceptions\CantPublish;
+use App\Exceptions\NotPublished;
 use App\Exceptions\AplicationNotClosed;
 use App\Tools\Tools;
 use Carbon\Carbon;
@@ -277,6 +279,61 @@ class ConvocatoriaController extends Controller
                 }
             } else {
                 throw new CantOpen;
+            }
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function setPublished(Request $request)
+    {
+        $request->validate([
+            'convocatoria_id' => 'required',
+        ]);
+
+        $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
+
+            if($convocatoria->status == 'Cerrada') {
+                try {
+                    $convocatoria->published = true; //Publicamos
+                    $convocatoria->save();
+                    return new ConvocatoriaResource($convocatoria);
+                } catch (\Throwable $th) {
+                    throw new SomethingWentWrong($th);
+                }
+            } else {
+                throw new CantPublish;
+            }
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function setUnPublished(Request $request)
+    {
+        $request->validate([
+            'convocatoria_id' => 'required',
+        ]);
+
+        $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
+
+            if($convocatoria->status == 'Cerrada' && $convocatoria->published == true) {
+                try {
+                    $convocatoria->published = false; //Publicamos
+                    $convocatoria->save();
+                    return new ConvocatoriaResource($convocatoria);
+                } catch (\Throwable $th) {
+                    throw new SomethingWentWrong($th);
+                }
+            } else {
+                throw new NotPublished;
             }
 
     }
