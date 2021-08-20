@@ -2,8 +2,8 @@ name: Linting
 
 on:
   push:
-    paths:
-      - "**.php"
+    # paths:
+    #   - "**.php"
   pull_request:
 
 jobs:
