@@ -11,11 +11,3 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: overtrue/phplint@7.4
-        with:
-          path: .
-
-      # - name: PHP Syntax Checker (Lint)
-      #   uses: StephaneBour/actions-php-lint@7.4
-      #   with:
-      #     dir: './app'
-      #     ignore: './vendor/\*\;./tests/\*'
