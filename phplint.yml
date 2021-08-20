@@ -1,4 +1,4 @@
-path: ./app
+path: .
 jobs: 10
 extensions:
   - php
