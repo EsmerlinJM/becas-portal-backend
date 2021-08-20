@@ -1,9 +1,5 @@
 path: 
-  - ./app/Http
-  - ./app/Services
-  - ./app/Models
-  - ./config
-  - ./routes
+  - ./
 jobs: 10
 extensions:
   - php
