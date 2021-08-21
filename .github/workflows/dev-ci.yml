@@ -1,11 +1,12 @@
 name: Dev Tests
 
 on:
-  push:
-    branches:
-      - "*"
-      - "!staging"
-      - "!master"
+  # push:
+  #   branches:
+  #     - "*"
+  #     - "!staging"
+  #     - "!master"
+  pull_request:
 
 env:
   PROJECT_NAME: becas-portal
