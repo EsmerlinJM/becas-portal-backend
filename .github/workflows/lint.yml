@@ -10,12 +10,16 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
-    # strategy:
-    #   matrix:
-    #     php-version: ['7.4','8.0']
+    strategy:
+      matrix:
+        php-version: ['7.4']
   
     steps:
       - uses: actions/checkout@v2
-      - uses: overtrue/phplint@7.4
-      - uses: MilesChou/php-tools-action/7.4/phpcs@master
-      - uses: MilesChou/php-tools-action/7.4/phpmd@master
+      - uses: overtrue/phplint@$7.4
+      - uses: MilesChou/php-tools-action/${{ matrix.php-version }}/phpcs@master
+        with:
+          args: ./app
+      - uses: MilesChou/php-tools-action/${{ matrix.php-version }}/phpmd@master
+        with:
+          args: ./app
