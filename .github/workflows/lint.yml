@@ -23,4 +23,4 @@ jobs:
           args: --standard=PSR12 ./app
       - uses: MilesChou/php-tools-action/7.4/phpmd@master
         with:
-          args: ./app
+          args: ./app github codesize,unusedcode,naming
