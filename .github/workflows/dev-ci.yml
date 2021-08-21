@@ -45,9 +45,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
 
-      - uses: MilesChou/php-tools-action/${{ matrix.php-version }}/phpcs@master
-      - uses: MilesChou/php-tools-action/${{ matrix.php-version }}/phpmd@master
-
       # - name: Execute tests
       #   continue-on-error: ${{ matrix.php-version > 8 }}
       #   run: vendor/bin/phpunit --verbose
