@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: overtrue/phplint@7.4
       - uses: MilesChou/php-tools-action/7.4/phpcs@master
+        continue-on-error: true
         with:
           args: --standard=PSR12 ./app
       - uses: MilesChou/php-tools-action/7.4/phpmd@master
