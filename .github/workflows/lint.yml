@@ -1,26 +1,37 @@
 name: Linting
 
-on:
   push:
-    # paths:
-    #   - "**.php"
+    branches:
+      - "*"
+      - "!staging"
+      - "!master"
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpcs.xml.dist'
+      - '.github/workflows/lint.yml'
   pull_request:
+    branches:
+      - "staging"
+      - "master"
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpcs.xml.dist'
+      - '.github/workflows/lint.yml'
 
 jobs:
   lint:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php: [7.4]
-  
     steps:
       - uses: actions/checkout@v2
-      - uses: overtrue/phplint@${{ matrix.php }}
-      - uses: MilesChou/php-tools-action/${{ matrix.php }}/phpcs@master
+      - uses: overtrue/phplint@7.4
+      - name: PHP_CodeSniffer check
+        uses: MilesChou/php-tools-action/7.4/phpcs@master
         continue-on-error: true
         with:
           args: --standard=PSR12 ./app
-      - uses: MilesChou/php-tools-action/${{ matrix.php }}/phpmd@master
+      - name: PHP Mess Detector check
+        uses: MilesChou/php-tools-action/7.4/phpmd@master
         with:
           args: ./app github codesize,unusedcode,cleancode,controversial,design
