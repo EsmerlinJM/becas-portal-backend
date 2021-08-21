@@ -10,17 +10,17 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
-    # strategy:
-    #   matrix:
-    #     php-version: ['7.4','8.0']
+    strategy:
+      matrix:
+        php: [7.4]
   
     steps:
       - uses: actions/checkout@v2
-      - uses: overtrue/phplint@7.4
-      - uses: MilesChou/php-tools-action/7.4/phpcs@master
+      - uses: overtrue/phplint@${{ matrix.php }}
+      - uses: MilesChou/php-tools-action/${{ matrix.php }}/phpcs@master
         continue-on-error: true
         with:
           args: --standard=PSR12 ./app
-      - uses: MilesChou/php-tools-action/7.4/phpmd@master
+      - uses: MilesChou/php-tools-action/${{ matrix.php }}/phpmd@master
         with:
           args: ./app github codesize,unusedcode,cleancode,controversial,design
