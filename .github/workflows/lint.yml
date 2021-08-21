@@ -16,7 +16,7 @@ jobs:
   
     steps:
       - uses: actions/checkout@v2
-      - uses: overtrue/phplint@$7.4
+      - uses: overtrue/phplint@7.4
       - uses: MilesChou/php-tools-action/7.4/phpcs@master
         with:
           args: ./app
