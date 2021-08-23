@@ -60,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           target: test
-          tags: ${{ env.GAR_BASE}}/${{env.PROJECT_NAME}}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_REF_SLUG }}
+          tags: ${{ env.GAR_BASE }}/${{env.PROJECT_NAME}}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_REF_SLUG }}
           build-args: |
             APP_NAME=${{ secrets.APP_NAME }}
             APP_KEY=${{ secrets.APP_KEY }}
@@ -81,6 +81,7 @@ jobs:
   test:
     needs: ["build"]
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     env:
       APP_URL: ${{ secrets.APP_URL }}
       DB_HOST: ${{ secrets.DB_HOST }}
@@ -118,7 +119,7 @@ jobs:
 
       - name: Run Odoo tests
         run: |
-          docker pull ${{ env.GAR_BASE }}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_HEAD_REF_SLUG }}
+          docker pull ${{ env.GAR_BASE }}/${{env.PROJECT_NAME}}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_HEAD_REF_SLUG }}
           docker run -e RUN_TESTS -e LOG_LEVEL -e EXTRA_MODULES -e PGHOST --network="host" --name odoo -t ${{ env.GAR_BASE }}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_HEAD_REF_SLUG }}
         env:
           APP_URL: http://localhost
@@ -171,7 +172,7 @@ jobs:
             DB_DATABASE=${{ secrets.DB_DATABASE }},
             DB_USERNAME=${{ secrets.DB_USERNAME }},
             DB_PASSWORD=${{ secrets.DB_PASSWORD }},
-            GOOGLE_CLOUD_PROJECT_ID=${{ secrets.GCP_PROJECT }}.
+            GOOGLE_CLOUD_PROJECT_ID=${{ secrets.GCP_PROJECT }},
             GOOGLE_CLOUD_KEY_FILE=${{ secrets.GAR_JSON_KEY }},
             GOOGLE_CLOUD_STORAGE_BUCKET=${{ secrets.GCP_BUCKET }}
 
