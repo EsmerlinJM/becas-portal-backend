@@ -9,6 +9,7 @@ on:
     paths:
       - '**.php'
       - 'composer.json'
+      - 'Dockerfile'
       - '.github/workflows/dev-ci.yml'
   pull_request:
     branches:
@@ -17,6 +18,7 @@ on:
     paths:
       - '**.php'
       - 'composer.json'
+      - 'Dockerfile'
       - '.github/workflows/dev-ci.yml'
     types: [ opened, synchronize, reopened, labeled ]
 
