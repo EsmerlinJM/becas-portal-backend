@@ -114,6 +114,7 @@ RUN chgrp -R www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache
 
 COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # start php-fpm server (for FastCGI Process Manager)
 ENTRYPOINT ["entrypoint.sh"]
