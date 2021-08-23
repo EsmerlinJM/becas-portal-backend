@@ -6,8 +6,8 @@ if [ -z "$FRESH_INSTALL" ]; then
     php artisan migrate
 else
     php artisan migrate:refresh
-    php artisan passport:install --force
     php artisan db:seed
+    php artisan passport:install --force
 fi
 
 apache2-foreground
