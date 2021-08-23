@@ -10,6 +10,7 @@ on:
       - '**.php'
       - 'composer.json'
       - 'Dockerfile'
+      - 'entrypoint.sh'
       - '.github/workflows/dev-ci.yml'
   pull_request:
     branches:
@@ -19,6 +20,7 @@ on:
       - '**.php'
       - 'composer.json'
       - 'Dockerfile'
+      - 'entrypoint.sh'
       - '.github/workflows/dev-ci.yml'
     types: [ opened, synchronize, reopened, labeled ]
 
