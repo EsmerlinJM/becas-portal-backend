@@ -41,39 +41,40 @@ Datos Configuracion Instancia:
 -   PHP Version: 8.0.7
 -   Laravel Version: 8.49.0
 -   Motor Base de datos MySQL 8.0
-
+<br>
 ENV VARIABLES
 
+APP VARIABLES
 -   APP_NAME={ app_name }
 -   APP_ENV={ local } #local or production
 -   APP_KEY={ laravel_key } #php artisan key:generate
 -   APP_DEBUG= { true } #true or false
 -   APP_URL= { full_url } #http://localhost
-
-
+<br>
+DATABASE CONNECTION
 -   DB_HOST={ host }
 -   DB_PORT={ port }
 -   DB_DATABASE={ dbName }
 -   DB_USERNAME={ db_user_name }
 -   DB_PASSWORD={ db_password }
-
+<br>
 CLOUD STORAGE GOOGLE (CDN) (VALORES EN ENV):
 -   GOOGLE_CLOUD_PROJECT_ID={ project_id } #ID Name of Google Project
 -   GOOGLE_CLOUD_KEY_FILE='../google_credentials.json'
 -   GOOGLE_CLOUD_STORAGE_BUCKET={ google_storage_bucket_name } #Google Storage Bucket
-
+<br>
 TOKEN SECRET
 -   TOKEN_SECRET={ 'token_secret_pass' }
-
+<br>
 PASSPORT KEYS
 -   PASSPORT_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
-<private key here>
+{private key here}
 -----END RSA PRIVATE KEY-----"
-
+<br>
 -   PASSPORT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----
-<public key here>
+{public key here}
 -----END PUBLIC KEY-----"
-
+<br>
 MAIL CONFIGURATION
 -   MAIL_MAILER={ smtp }
 -   MAIL_HOST={ mailhog }
