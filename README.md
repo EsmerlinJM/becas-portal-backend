@@ -65,6 +65,15 @@ CLOUD STORAGE GOOGLE (CDN) (VALORES EN ENV):
 TOKEN SECRET
 -   TOKEN_SECRET={ 'token_secret_pass' }
 
+PASSPORT KEYS
+-   PASSPORT_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
+<private key here>
+-----END RSA PRIVATE KEY-----"
+
+-   PASSPORT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----
+<public key here>
+-----END PUBLIC KEY-----"
+
 MAIL CONFIGURATION
 -   MAIL_MAILER={ smtp }
 -   MAIL_HOST={ mailhog }
