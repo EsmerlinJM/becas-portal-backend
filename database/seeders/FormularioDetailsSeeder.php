@@ -20,6 +20,7 @@ class FormularioDetailsSeeder extends Seeder
         DB::table('formulario_details')->insert([
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 1,
                 'type'  => 'text',
                 'required' => true,
                 'name' => 'Aplicacion',
@@ -30,6 +31,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 1,
                 'type'  => 'textarea',
                 'required' => true,
                 'name' => 'Motivacion',
@@ -40,6 +42,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 2,
                 'type'  => 'checkbox',
                 'required' => true,
                 'name' => 'Idiomas',
@@ -50,6 +53,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 2,
                 'type'  => 'radio',
                 'required' => true,
                 'name' => 'Nivel Academico',
@@ -60,6 +64,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 3,
                 'type'  => 'select',
                 'required' => true,
                 'name' => 'Carrera',
@@ -70,6 +75,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 3,
                 'type'  => 'date',
                 'required' => true,
                 'name' => 'Graduacion',
@@ -80,6 +86,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 4,
                 'type'  => 'file',
                 'required' => true,
                 'name' => 'Certificado Bachiller',
@@ -90,6 +97,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 4,
                 'type'  => 'file',
                 'required' => true,
                 'name' => 'Certificado Universitario',
@@ -100,6 +108,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 5,
                 'type'  => 'number',
                 'required' => true,
                 'name' => 'Tiempo Carrera',

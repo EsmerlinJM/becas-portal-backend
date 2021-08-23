@@ -28,11 +28,14 @@ class InstitutionOfferResource extends JsonResource
             'education_level_name' => $this->academic_offer->education_level->name,
             'development_area_id' => $this->academic_offer->education_level->development_area->id,
             'development_area_name' => $this->academic_offer->education_level->development_area->name,
+            'detalles' => $this->academic_offer->detalles,
+            'language' => $this->academic_offer->language,
             'campus_id' => $this->campus->id,
             'campus_name' => $this->campus->name,
             'campus_municipality' => $this->campus->municipality->name,
             'campus_province' => $this->campus->province->name,
             'campus_country' => $this->campus->country->name,
+            'schedule'  => new ScheduleResource($this->schedule),
         ];
     }
 }

@@ -20,6 +20,7 @@ class ConvocatoriaResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
+            'publicada' => $this->published,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'image_url' => $this->image_url,

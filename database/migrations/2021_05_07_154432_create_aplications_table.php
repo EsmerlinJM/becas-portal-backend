@@ -17,6 +17,7 @@ class CreateAplicationsTable extends Migration
             $table->id();
             $table->foreignId('convocatoria_id')->unsigned()->index()->references('id')->on('convocatorias');
             $table->foreignId('convocatoria_detail_id')->unsigned()->index()->references('id')->on('convocatoria_details');
+            $table->foreignId('offerer_id')->unsigned()->index()->references('id')->on('offerers');
             $table->foreignId('institution_id')->unsigned()->index()->references('id')->on('institutions');
             $table->foreignId('candidate_id')->unsigned()->index()->references('id')->on('candidates');
             $table->foreignId('aplication_status_id')->unsigned()->index()->references('id')->on('aplication_statuses');

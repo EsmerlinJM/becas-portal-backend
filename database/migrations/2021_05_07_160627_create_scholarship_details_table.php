@@ -16,7 +16,13 @@ class CreateScholarshipDetailsTable extends Migration
         Schema::create('scholarship_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('scholarship_id')->unsigned()->index()->references('id')->on('scholarships');
-            $table->foreignId('academic_offer_id')->unsigned()->index()->references('id')->on('academic_offers');
+            $table->foreignId('convocatoria_id')->unsigned()->index()->references('id')->on('convocatorias');
+            $table->foreignId('convocatoria_detail_id')->unsigned()->index()->references('id')->on('convocatoria_details');
+            $table->foreignId('offerer_id')->unsigned()->index()->references('id')->on('offerers');
+            $table->foreignId('institution_id')->unsigned()->index()->references('id')->on('institutions');
+            $table->foreignId('institution_offer_id')->unsigned()->index()->references('id')->on('institution_offers');
+            $table->foreignId('candidate_id')->unsigned()->index()->references('id')->on('candidates');
+            $table->foreignId('aplication_id')->unsigned()->index()->references('id')->on('aplications');
             $table->integer('max_rating');
             $table->integer('min_rating');
             $table->string('period');

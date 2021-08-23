@@ -6,13 +6,32 @@ use App\Models\Scholarship;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\ScholarshipResource;
+use App\Http\Resources\EstadosBecaResource;
 use App\Exceptions\SomethingWentWrong;
-use App\Exceptions\AlreadyActive;
-use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
+use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class ScholarshipController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function estados()
+    {
+        $estados = ['egresado','retirado','expulsado','activo','suspendido'];
+
+        try {
+            return new EstadosBecaResource($estados);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -20,51 +39,168 @@ class ScholarshipController extends Controller
      */
     public function index()
     {
-        //
+        $becas = Scholarship::paginate(30);
+        try {
+            return ScholarshipResource::collection($becas);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function egresados()
     {
-        //
+        $becas = Scholarship::where('estado','egresado')->paginate(30);
+        try {
+            return ScholarshipResource::collection($becas);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function retirados()
+    {
+        $becas = Scholarship::where('estado','retirado')->paginate(30);
+        try {
+            return ScholarshipResource::collection($becas);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function expulsados()
+    {
+        $becas = Scholarship::where('estado','expulsado')->paginate(30);
+        try {
+            return ScholarshipResource::collection($becas);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function activos()
+    {
+        $becas = Scholarship::where('estado','activo')->paginate(30);
+        try {
+            return ScholarshipResource::collection($becas);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function suspendidos()
+    {
+        $becas = Scholarship::where('estado','suspendido')->paginate(30);
+        try {
+            return ScholarshipResource::collection($becas);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filter(Request $request)
+    {
+        $becas = Scholarship::paginate(30); //Empty Collection
+
+        if($request->institution_id) {
+            $becas = Scholarship::where('institution_id', $request->institution_id)->paginate(30);
+        }
+
+        if($request->convocatoria_id) {
+            $becas = Scholarship::where('convocatoria_id', $request->convocatoria_id)->paginate(30);
+        }
+
+        if($request->offerer_id) {
+            $becas = Scholarship::where('offerer_id', $request->offerer_id)->paginate(30);
+        }
+
+        if($request->candidate_id) {
+            $becas = Scholarship::where('candidate_id', $request->candidate_id)->paginate(30);
+        }
+
+        try {
+            return ScholarshipResource::collection($becas);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+    }
+
+
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Scholarship  $scholarship
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Scholarship $scholarship)
+    public function show(Request $request)
     {
-        //
+        $request->validate([
+            'scholarship_id' => 'required',
+        ]);
+
+        $beca = Scholarship::findOrFail($request->scholarship_id);
+
+        try {
+            return new ScholarshipResource($beca);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Scholarship  $scholarship
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Scholarship $scholarship)
+    public function updateEstado(Request $request)
     {
-        //
+        $request->validate([
+            'scholarship_id' => 'required',
+            'estado'    => ['required', Rule::in(['egresado','retirado','expulsado','activo','suspendido']),]
+        ]);
+
+        $beca = Scholarship::findOrFail($request->scholarship_id);
+
+        try {
+            $beca->estado = $request->estado;
+            $beca->updated_at = Carbon::now();
+            $beca->save();
+            return new ScholarshipResource($beca);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Scholarship  $scholarship
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Scholarship $scholarship)
-    {
-        //
-    }
+
 }

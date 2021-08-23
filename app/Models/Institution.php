@@ -20,4 +20,10 @@ class Institution extends Model
     {
         return $this->hasmany(InstitutionOffer::class, 'institution_id', 'id');
     }
+
+    public function detalles()
+    {
+        return $this->hasmany(ConvocatoriaDetail::class);
+    }
+
 }

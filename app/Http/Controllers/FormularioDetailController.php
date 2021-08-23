@@ -8,6 +8,7 @@ use App\Models\FormularioDetail;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\FormularioDetailResource;
+use App\Http\Resources\FormularioResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\ArrayEmpty;
 use App\Tools\ResponseCodes;
@@ -32,49 +33,6 @@ class FormularioDetailController extends Controller
             return FormularioDetailResource::collection($detalles);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $preguntas =  json_decode($request->getContent());
-
-        $counter = 0;
-        $detalles = null;
-
-        if($preguntas) {
-            foreach ($preguntas as $item) {
-
-                if($item->type == 'checkbox' || $item->type == 'radio' || $item->type == 'select') {
-                    if(!isset($item->data)) {
-                        return response()->json(['status' => 'error', 'message' => 'Se necesita el campo data para este tipo de pregunta/input'], ResponseCodes::UNPROCESSABLE_ENTITY);
-                    }
-                }
-                try {
-                    $detalle = new FormularioDetail;
-                    $detalle->formulario_id = $item->formulario_id;
-                    $detalle->type = $item->type;
-                    $detalle->required = $item->required ? 1 : 0;
-                    $detalle->name = $item->name;
-                    $detalle->description = $item->description;
-                    $detalle->data = isset($item->data) ? $item->data : null;
-                    $detalle->save();
-
-                    $detalles[$counter] = $detalle;
-                    $counter ++;
-                } catch (\Throwable $th) {
-                    throw new SomethingWentWrong($th);
-                }
-            }
-            return FormularioDetailResource::collection($detalles);
-        } else {
-            throw new ArrayEmpty;
         }
     }
 

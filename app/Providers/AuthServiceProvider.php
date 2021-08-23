@@ -30,6 +30,13 @@ class AuthServiceProvider extends ServiceProvider
             Passport::routes();
         }
 
+         // Add scope to verify the user
+        // take note that here 2 scope for this due to refresh token scope
+        // Passport::tokensCan([
+        //     'user_name' => 'maria',
+        //     'role' => 'juana',
+        // ]);
+
         Passport::tokensExpireIn(now()->addDays(2));
         Passport::refreshTokensExpireIn(now()->addDays(2));
         Passport::personalAccessTokensExpireIn(now()->addMonths(1));

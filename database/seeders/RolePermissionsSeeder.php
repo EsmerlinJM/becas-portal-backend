@@ -21,36 +21,44 @@ class RolePermissionsSeeder extends Seeder
         DB::table('role_permissions')->insert([
 
             //Admin
-            ['role_id' => '1', 'permission_id' => '1', 'created_at' => Carbon::now()],
-            ['role_id' => '1', 'permission_id' => '2', 'created_at' => Carbon::now()],
-            ['role_id' => '1', 'permission_id' => '3', 'created_at' => Carbon::now()],
-            ['role_id' => '1', 'permission_id' => '4', 'created_at' => Carbon::now()],
+            ['role_id' => '1', 'permission_id' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '1', 'permission_id' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '1', 'permission_id' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '1', 'permission_id' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '1', 'permission_id' => '5', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '1', 'permission_id' => '6', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '1', 'permission_id' => '7', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 
 
             //Evaluators
-            ['role_id' => '2', 'permission_id' => '2', 'created_at' => Carbon::now()],
-            ['role_id' => '2', 'permission_id' => '3', 'created_at' => Carbon::now()],
-            ['role_id' => '2', 'permission_id' => '4', 'created_at' => Carbon::now()],
+            ['role_id' => '2', 'permission_id' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '2', 'permission_id' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '2', 'permission_id' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '2', 'permission_id' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 
             //Coordinators
-            ['role_id' => '3', 'permission_id' => '2', 'created_at' => Carbon::now()],
-            ['role_id' => '3', 'permission_id' => '3', 'created_at' => Carbon::now()],
-            ['role_id' => '3', 'permission_id' => '4', 'created_at' => Carbon::now()],
+            ['role_id' => '3', 'permission_id' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '3', 'permission_id' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '3', 'permission_id' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '3', 'permission_id' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 
             //IES
-            ['role_id' => '4', 'permission_id' => '2', 'created_at' => Carbon::now()],
-            ['role_id' => '4', 'permission_id' => '3', 'created_at' => Carbon::now()],
-            ['role_id' => '4', 'permission_id' => '4', 'created_at' => Carbon::now()],
+            ['role_id' => '4', 'permission_id' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '4', 'permission_id' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '4', 'permission_id' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '4', 'permission_id' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 
             //Offerers
-            ['role_id' => '5', 'permission_id' => '2', 'created_at' => Carbon::now()],
-            ['role_id' => '5', 'permission_id' => '3', 'created_at' => Carbon::now()],
-            ['role_id' => '5', 'permission_id' => '4', 'created_at' => Carbon::now()],
+            ['role_id' => '5', 'permission_id' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '5', 'permission_id' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '5', 'permission_id' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '5', 'permission_id' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 
             //Users
-            ['role_id' => '6', 'permission_id' => '2', 'created_at' => Carbon::now()],
-            ['role_id' => '6', 'permission_id' => '3', 'created_at' => Carbon::now()],
-            ['role_id' => '6', 'permission_id' => '4', 'created_at' => Carbon::now()],
+            ['role_id' => '6', 'permission_id' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '6', 'permission_id' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '6', 'permission_id' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['role_id' => '6', 'permission_id' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 
         ]);
     }

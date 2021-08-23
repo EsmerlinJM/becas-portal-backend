@@ -29,6 +29,7 @@ class AplicationFactory extends Factory
         return [
             'convocatoria_id'           => $detalle->convocatoria->id,
             'convocatoria_detail_id'    => $detalle->id,
+            'offerer_id'                => $detalle->offerer->id,
             'institution_id'            => $detalle->oferta->institution->id,
             'candidate_id'              => Candidate::all()->random(),
             'aplication_status_id'      => 1, //Solicitud Enviada

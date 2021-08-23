@@ -16,11 +16,14 @@ class CreateScholarshipsTable extends Migration
         Schema::create('scholarships', function (Blueprint $table) {
             $table->id();
             $table->foreignId('convocatoria_id')->unsigned()->index()->references('id')->on('convocatorias');
+            $table->foreignId('convocatoria_detail_id')->unsigned()->index()->references('id')->on('convocatoria_details');
+            $table->foreignId('offerer_id')->unsigned()->index()->references('id')->on('offerers');
+            $table->foreignId('institution_id')->unsigned()->index()->references('id')->on('institutions');
+            $table->foreignId('institution_offer_id')->unsigned()->index()->references('id')->on('institution_offers');
             $table->foreignId('candidate_id')->unsigned()->index()->references('id')->on('candidates');
             $table->foreignId('aplication_id')->unsigned()->index()->references('id')->on('aplications');
             $table->string('name');
-            $table->string('lastname1');
-            $table->string('lastname2');
+            $table->string('lastname');
             $table->enum('genero', ['masculino','femenino']);
             $table->enum('estado', ['egresado','retirado','expulsado','activo','suspendido']);
             $table->timestamps();

@@ -21,6 +21,11 @@ class AcademicOffer extends Model
         return $this->hasOne(EducationLevel::class, 'id', 'education_level_id');
     }
 
+    public function institution()
+    {
+        return $this->hasOne(Institution::class, 'id', 'institution_id');
+    }
+
     //Already defined on EducationLevel Relationship
     // public function development_area()
     // {
