@@ -87,7 +87,6 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 COPY entrypoint.sh /usr/local/bin/
 
-# start php-fpm server (for FastCGI Process Manager)
 ENTRYPOINT ["entrypoint.sh"]
 
 #####################################
