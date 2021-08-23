@@ -42,8 +42,34 @@ Datos Configuracion Instancia:
 -   Laravel Version: 8.49.0
 -   Motor Base de datos MySQL 8.0
 
-CLOUD STORAGE GOOGLE (CDN) (VALORES EN ENV):
+ENV VARIABLES
 
--   GOOGLE_CLOUD_PROJECT_ID={{ ID DEL PROYECTO }}
--   GOOGLE_CLOUD_KEY_FILE={{ LOCACION ARCHIVO DE CREDENCIALES EJEMPLO: '../google_credentials.json' }}
--   GOOGLE_CLOUD_STORAGE_BUCKET={{ NOMBRE DEL BUCKET EN GOOGLE CLOUD }}
+-   APP_NAME={ app_name }
+-   APP_ENV={ local } #local or production
+-   APP_KEY={ laravel_key } #php artisan key:generate
+-   APP_DEBUG= { true } #true or false
+-   APP_URL= { full_url } #http://localhost
+
+
+-   DB_HOST={ host }
+-   DB_PORT={ port }
+-   DB_DATABASE={ dbName }
+-   DB_USERNAME={ db_user_name }
+-   DB_PASSWORD={ db_password }
+
+CLOUD STORAGE GOOGLE (CDN) (VALORES EN ENV):
+-   GOOGLE_CLOUD_PROJECT_ID={ project_id } #ID Name of Google Project
+-   GOOGLE_CLOUD_KEY_FILE='../google_credentials.json'
+-   GOOGLE_CLOUD_STORAGE_BUCKET={ google_storage_bucket_name } #Google Storage Bucket
+
+TOKEN SECRET
+-   TOKEN_SECRET={ 'token_secret_pass' }
+
+MAIL CONFIGURATION
+-   MAIL_MAILER={ smtp }
+-   MAIL_HOST={ mailhog }
+-   MAIL_PORT={ 1025 }
+-   MAIL_USERNAME={ user_name }
+-   MAIL_PASSWORD= { password }
+-   MAIL_ENCRYPTION= { encryption } #SSL or TLS
+-   MAIL_FROM_ADDRESS= { from_email@here.com }
