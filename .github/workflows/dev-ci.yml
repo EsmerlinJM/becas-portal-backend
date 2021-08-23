@@ -172,6 +172,7 @@ jobs:
             DB_DATABASE=${{ secrets.DB_DATABASE }},
             DB_USERNAME=${{ secrets.DB_USERNAME }},
             DB_PASSWORD=${{ secrets.DB_PASSWORD }},
+            FRESH_INSTALL=1,
             GOOGLE_CLOUD_PROJECT_ID=${{ secrets.GCP_PROJECT }},
             GOOGLE_CLOUD_STORAGE_BUCKET=${{ secrets.GCP_BUCKET }}
 
