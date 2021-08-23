@@ -136,5 +136,27 @@ class User extends Authenticatable implements MustVerifyEmail
 
     }
 
+    //PERMISSIONS
+    public function hasModule($module)
+    {
+        foreach (auth()->user()->role->modulos as $item) {
+            if($item->modulo->name == $module) {
+                return true;
+            }
+        }
+        throw new NotPermissions;
+    }
+
+    public function hasPermission($permission)
+    {
+        foreach (auth()->user()->role->permisos as $item) {
+            if($item->permiso->name == $permission) {
+                return true;
+            }
+        }
+        throw new NotPermissions;
+    }
+
+
 
 }

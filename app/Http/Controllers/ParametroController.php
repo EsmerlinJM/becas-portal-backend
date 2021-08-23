@@ -14,6 +14,7 @@ use App\Models\DevelopmentArea;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\ParametroResource;
+use App\Http\Resources\EstadisticasResource;
 use App\Http\Resources\ConvocatoriaTypeResource;
 use App\Http\Resources\EducationLevelParameterResource;
 use App\Http\Resources\AudienceResource;
@@ -53,7 +54,7 @@ class ParametroController extends Controller
 
             $solicitudes_no_terminadas = Aplication::where('sent', false)->count();
             $solicitudes_enviadas = Aplication::where('sent', true)->count();
-
+            $solicitudes_aprobadas = Aplication::where('aplication_status_id', 6)->count() + Aplication::where('aplication_status_id', 7)->count();
 
             $parametros['tipos_convocatorias'] = ConvocatoriaTypeResource::collection($tipos_convocatorias);
             $parametros['niveles_educativos'] = EducationLevelParameterResource::collection($niveles_educativos);
@@ -74,8 +75,49 @@ class ParametroController extends Controller
 
             $parametros['solicitudes']['no_terminadas'] = $solicitudes_no_terminadas;
             $parametros['solicitudes']['enviadas'] = $solicitudes_enviadas;
+            $parametros['solicitudes']['aprobadas'] = $solicitudes_aprobadas;
 
             return new ParametroResource($parametros);
+
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+    }
+
+    public function estadisticas(Request $request)
+    {
+        $request->validate([
+            'convocatoria_id' => 'required',
+        ]);
+
+        try {
+            $becados = Scholarship::where('convocatoria_id', $request->convocatoria_id)->count();
+            $becados_egresados = Scholarship::where('estado','egresado')->where('convocatoria_id', $request->convocatoria_id)->count();
+            $becados_retirados = Scholarship::where('estado','retirado')->where('convocatoria_id', $request->convocatoria_id)->count();
+            $becados_expulsados = Scholarship::where('estado','expulsado')->where('convocatoria_id', $request->convocatoria_id)->count();
+            $becados_activos = Scholarship::where('estado','activo')->where('convocatoria_id', $request->convocatoria_id)->count();
+            $becados_suspendido = Scholarship::where('estado','suspendido')->where('convocatoria_id', $request->convocatoria_id)->count();
+            $becados_hombres = Scholarship::where('genero','masculino')->where('convocatoria_id', $request->convocatoria_id)->count();
+            $becados_mujeres = Scholarship::where('genero','femenino')->where('convocatoria_id', $request->convocatoria_id)->count();
+
+            $solicitudes_no_terminadas = Aplication::where('sent', false)->where('convocatoria_id', $request->convocatoria_id)->count();
+            $solicitudes_enviadas = Aplication::where('sent', true)->where('convocatoria_id', $request->convocatoria_id)->count();
+            $solicitudes_aprobadas = Aplication::where('aplication_status_id', 6)->where('convocatoria_id', $request->convocatoria_id)->count() + Aplication::where('aplication_status_id', 7)->where('convocatoria_id', $request->convocatoria_id)->count();
+
+            $estadisticas['becados']['egresados'] = $becados_egresados;
+            $estadisticas['becados']['retirados'] = $becados_retirados;
+            $estadisticas['becados']['expulsados'] = $becados_expulsados;
+            $estadisticas['becados']['activos'] = $becados_activos;
+            $estadisticas['becados']['suspendidos'] = $becados_suspendido;
+            $estadisticas['becados']['hombres'] = $becados_hombres;
+            $estadisticas['becados']['mujeres'] = $becados_mujeres;
+            $estadisticas['becados']['total'] = $becados;
+
+            $estadisticas['solicitudes']['no_terminadas'] = $solicitudes_no_terminadas;
+            $estadisticas['solicitudes']['enviadas'] = $solicitudes_enviadas;
+            $estadisticas['solicitudes']['aprobadas'] = $solicitudes_aprobadas;
+
+            return new EstadisticasResource($estadisticas);
 
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
