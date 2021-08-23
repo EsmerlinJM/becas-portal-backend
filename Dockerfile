@@ -85,12 +85,14 @@ WORKDIR /var/www/html
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+COPY entrypoint.sh /usr/local/bin/
+
 #####################################
 ##              PROD               ##
 #####################################
 FROM php AS prod
 
-ENV APP_ENV=prod
+ENV APP_ENV=production
 ENV LOG_CHANNEL=stack
 
 COPY --chown=www-data --from=assets-builder /var/www/html /var/www/html
