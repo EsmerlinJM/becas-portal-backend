@@ -178,7 +178,8 @@ jobs:
             DB_PASSWORD=${{ secrets.DB_PASSWORD }},
             PASSPORT_PRIVATE_KEY=${{ secrets.PASSPORT_PRIVATE_KEY }},
             PASSPORT_PUBLIC_KEY=${{ secrets.PASSPORT_PUBLIC_KEY }},
-            FRESH_INSTALL=1,
+            TOKEN_SECRET=becas-be-desarrollo
+            FRESH_INSTALL=${{ secrets.FRESH_INSTALL }},,
             GOOGLE_CLOUD_PROJECT_ID=${{ secrets.GCP_PROJECT }},
             GOOGLE_CLOUD_STORAGE_BUCKET=${{ secrets.GCP_BUCKET }}
 
