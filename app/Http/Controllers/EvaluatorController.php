@@ -12,6 +12,7 @@ use Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Resources\EvaluatorResource;
 use App\Exceptions\SomethingWentWrong;
+use App\Exceptions\EmailNotValid;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
@@ -88,13 +89,19 @@ class EvaluatorController extends Controller
             $evaluator->contact_email = $request->email;
             $evaluator->save();
 
-            event(new Registered($user));
-
-            return new EvaluatorResource($evaluator);
-
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
+
+            try {
+                event(new Registered($user));
+            } catch (\Throwable $th) {
+                $evaluator->forceDelete();
+                $user->forceDelete();
+                throw new EmailNotValid;
+            }
+
+        return new EvaluatorResource($evaluator);
 
     }
 

@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 
-class MessageResource extends JsonResource
+class UserFavoriteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,12 +17,8 @@ class MessageResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'subject' => $this->subject,
-            'message' => $this->message,
-            'status' => $this->read ? "read" : "unread",
-            'received' => Carbon::parse($this->created_at)->toDateTimeString(),
+            'user_id' => $this->user->id,
+            'convocatoria_detail' => new ConvocatoriaDetailResource($this->offer),
         ];
     }
 }

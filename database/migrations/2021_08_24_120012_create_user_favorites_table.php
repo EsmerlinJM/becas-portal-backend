@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMessagesTable extends Migration
+class CreateUserFavoritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('user_favorites', function (Blueprint $table) {
             $table->id();
-            $table->string('subject')->default('Solicitud Informacion');
-            $table->string('name');
-            $table->string('email');
-            $table->text('message');
-            $table->boolean('read')->default(0);
+            $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users');
+            $table->foreignId('convocatoria_detail_id')->unsigned()->index()->references('id')->on('convocatoria_details');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -32,6 +28,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('user_favorites');
     }
 }

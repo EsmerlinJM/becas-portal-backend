@@ -19,6 +19,7 @@ use App\Models\EducationLevel;
 use App\Models\Scholarship;
 use App\Models\ScholarshipDetail;
 use App\Models\InstitutionOffer;
+use App\Models\UserFavorites;
 use App\Models\Message;
 
 class DatabaseSeeder extends Seeder
@@ -131,5 +132,9 @@ class DatabaseSeeder extends Seeder
         // Scholarship, details
         Scholarship::factory()->count(100)->create();
         ScholarshipDetail::factory()->count(1000)->create();
+
+        // Favoritos
+        UserFavorites::factory()->count(200)->create();
+
     }
 }

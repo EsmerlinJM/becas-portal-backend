@@ -14,6 +14,7 @@ use App\Tools\ResponseCodes;
 use App\Http\Resources\UserResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
+use App\Exceptions\EmailNotValid;
 use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
 
@@ -67,7 +68,12 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
 
-            event(new Registered($user));
+            try {
+                event(new Registered($user));
+            } catch (\Throwable $th) {
+                    $user->forceDelete();
+                    throw new EmailNotValid;
+            }
 
             //Roles Usuarios
             // const ADMIN = 1; Profile
