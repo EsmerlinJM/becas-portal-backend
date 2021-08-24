@@ -43,6 +43,7 @@ class ConvocatoriaFactory extends Factory
             'image_ext'         => 'jpg',
             'image_size'        => '1024',
             'published'           => $this->faker->boolean,
+            'informacion'       => $this->faker->paragraphs($nb = 15, $nbSentences = 15),
             'created_at'    => Carbon::now(),
             'updated_at'    => Carbon::now(),
         ];

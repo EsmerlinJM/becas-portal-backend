@@ -38,6 +38,12 @@ Asumiendo deploy de la app en nginx, en /var/www/html:<br>
 ## Documentacion API:
 -  [API Documentacion Postman](https://documenter.getpostman.com/view/12386329/Tzm5JxHu)
 
+## URL Desarrollo:
+-   [API Becas Desarrollo](https://becas-portal-backend-dev-ci-cd-rta6xrq2vq-ue.a.run.app/)
+-   [Portal Ciudadano Becas Desarrollo](https://becas-portal-frontend-dev-ci-cd-rta6xrq2vq-ue.a.run.app/)
+-   [BackOffice Becas Desarrollo](https://becas-backoffice-frontend-dev-ci-cd-rta6xrq2vq-ue.a.run.app/)
+
+
   
 ## Datos Configuracion Instancia:
 - PHP Version: 8.0.7

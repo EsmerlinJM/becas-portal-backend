@@ -50,6 +50,7 @@ use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\ScholarshipDetailController;
 
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\UserFavoritesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -162,6 +163,11 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/profile/changepassword', [ProfileController::class, 'changePassword']);
         Route::post('/profile/getProfile', [ProfileController::class, 'getProfile']);
         Route::post('/profile/update', [ProfileController::class, 'update']);
+
+        #Favoritos
+        Route::get('/favoritos/getAll', [UserFavoritesController::class, 'index']);
+        Route::post('/favoritos/create', [UserFavoritesController::class, 'store']);
+        Route::post('/favoritos/delete', [UserFavoritesController::class, 'destroy']);
 
         #Estadisticas
         Route::get('/estadisticas', [ParametroController::class, 'estadisticas']);

@@ -25,6 +25,7 @@ class ConvocatoriaMinResource extends JsonResource
             'image_url' => $this->convocatoria->image_url,
             'image_ext' => $this->convocatoria->image_ext,
             'image_size' => $this->convocatoria->image_size,
+            'informacion' => $this->informacion,
             'audience'  => new AudienceResource($this->convocatoria->audience),
             'type'  => new ConvocatoriaTypeResource($this->convocatoria->type),
         ];
