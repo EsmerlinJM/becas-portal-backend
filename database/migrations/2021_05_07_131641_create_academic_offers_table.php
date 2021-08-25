@@ -24,7 +24,9 @@ class CreateAcademicOffersTable extends Migration
             $table->string('career');
             $table->string('duration');
             $table->string('language');
-            $table->text('pensum');
+            $table->string('pensum_url')->nullable();
+            $table->string('pensum_ext')->nullable();
+            $table->string('pensum_size')->nullable();
             $table->boolean('active');
             $table->timestamps();
             $table->softDeletes();

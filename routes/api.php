@@ -375,9 +375,6 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('ofertas/academicas/tipos/create', [AcademicOfferTypeController::class, 'store']);
         Route::post('ofertas/academicas/tipos/update', [AcademicOfferTypeController::class, 'update']);
         Route::post('ofertas/academicas/tipos/delete', [AcademicOfferTypeController::class, 'destroy']);
-
-
-
     });
 
 
