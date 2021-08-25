@@ -102,6 +102,7 @@ Route::post('/logs/search', [LogController::class, 'search']);
 #Profile (Login + Register)
 Route::post('/profile/register', [AuthController::class, 'register'])->name('register');
 Route::post('/profile/login', [AuthController::class, 'login'])->name('login');
+Route::post('/profile/loginCandidato', [AuthController::class, 'loginCandidato'])->name('loginCandidato');
 
 #Convocatorias Tipos
 Route::get('convocatorias/tipos/getAll', [ConvocatoriaTypeController::class, 'index']);
