@@ -76,7 +76,7 @@ class AuthController extends Controller
             $accessToken = auth()->user()->createToken(env('TOKEN_SECRET'))->accessToken;
             return response(['user' => new ProfileUserResource($user), 'access_token' => $accessToken], ResponseCodes::OK);
         } else {
-            return response()->json(['status' => 'error' ,'message' => 'El email no ha sido verificado, por favor verificar su email'], ResponseCodes::UNPROCESSABLE_ENTITY);
+            return response(['status' => 'error' ,'message' => 'El email no ha sido verificado, por favor verificar su email'], ResponseCodes::UNPROCESSABLE_ENTITY);
         }
     }
 
