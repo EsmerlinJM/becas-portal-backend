@@ -23,7 +23,7 @@ class ConvocatoriaDetailResource extends JsonResource
             'image_url' => $this->image_url,
             'image_ext' => $this->image_ext,
             'image_size' => $this->image_size,
-            'requisitos' => $this->convocatoria->informacion,
+            'requisitos' => $this->convocatoria->requisitos,
             'institucion' => new InstitutionMinResource($this->institution),
             'offerer'   => new OffererResource($this->offerer),
             'oferta' => new InstitutionOfferResource($this->oferta),
