@@ -95,14 +95,36 @@ class AcademicOfferController extends Controller
             'career' => 'required',
             'duration' => 'required',
             'language' => 'required',
-            'pensum' => 'required',
         ]);
+
+        // Initialize Google Storage
+        $disk = \Storage::disk('google');
+
+
 
         Institution::findOrFail($request->institution_id); //Valido si existe
         AcademicOfferType::findOrFail($request->academic_offer_type_id); //Valido si existe
         EducationLevel::findOrFail($request->education_level_id); //Valido si existe
 
         try {
+
+                //PDF or Image Handling
+            if (isset($request->pensum)) {
+                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('pensum')->getClientOriginalExtension());
+                $disk->write($fileName, file_get_contents($request->file('pensum')), ['visibility' => 'public']);
+                $pensum = array(
+                    "url" => $disk->url($fileName),
+                    "ext" => $request->file('pensum')->getClientOriginalExtension(),
+                    "size" => $request->file('pensum')->getSize(),
+                );
+            } else {
+                $pensum = array(
+                    "url" => null,
+                    "ext" => null,
+                    "size" => null,
+                );
+            }
+
             $aoffer = new AcademicOffer;
             $aoffer->active = 1; //Activo por Defecto
             $aoffer->institution_id = $request->institution_id;
@@ -111,7 +133,9 @@ class AcademicOfferController extends Controller
             $aoffer->career = $request->career;
             $aoffer->duration = $request->duration;
             $aoffer->language = $request->language;
-            $aoffer->pensum = $request->pensum;
+            $aoffer->pensum_url = $pensum['url'];
+            $aoffer->pensum_ext = $pensum['ext'];
+            $aoffer->pensum_size = $pensum['size'];
             $aoffer->save();
 
             return new AcademicOfferResource($aoffer);
@@ -160,18 +184,41 @@ class AcademicOfferController extends Controller
             'pensum' => 'required',
         ]);
 
+        // Initialize Google Storage
+        $disk = \Storage::disk('google');
+
         $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
 
         AcademicOfferType::findOrFail($request->academic_offer_type_id); //Valido si existe
         EducationLevel::findOrFail($request->education_level_id); //Valido si existe
 
         try {
+
+            //PDF or Image Handling
+            if (isset($request->pensum)) {
+                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('pensum')->getClientOriginalExtension());
+                $disk->write($fileName, file_get_contents($request->file('pensum')), ['visibility' => 'public']);
+                $pensum = array(
+                    "url" => $disk->url($fileName),
+                    "ext" => $request->file('pensum')->getClientOriginalExtension(),
+                    "size" => $request->file('pensum')->getSize(),
+                );
+            } else {
+                $pensum = array(
+                    "url" => null,
+                    "ext" => null,
+                    "size" => null,
+                );
+            }
+
             $aoffer->academic_offer_type_id = $request->academic_offer_type_id;
             $aoffer->education_level_id = $request->education_level_id;
             $aoffer->career = $request->career;
             $aoffer->duration = $request->duration;
             $aoffer->language = $request->language;
-            $aoffer->pensum = $request->pensum;
+            $aoffer->pensum_url = $pensum['url'];
+            $aoffer->pensum_ext = $pensum['ext'];
+            $aoffer->pensum_size = $pensum['size'];
             $aoffer->save();
 
             return new AcademicOfferResource($aoffer);

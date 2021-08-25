@@ -47,7 +47,7 @@ class FormularioDetailsSeeder extends Seeder
                 'required' => true,
                 'name' => 'Idiomas',
                 'description' => 'Cuales idiomas de este listado maneja',
-                'data' => "['Ingles','Frances','Aleman','Español']",
+                'data' => "Ingles, Frances, Aleman, Español",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -58,7 +58,7 @@ class FormularioDetailsSeeder extends Seeder
                 'required' => true,
                 'name' => 'Nivel Academico',
                 'description' => 'Cual es su nivel Academico',
-                'data' => "['Grado','PostGrado','Maestria','Nivel Tecnico','Bachiller']",
+                'data' => "Grado, PostGrado, Maestria, Nivel Tecnico, Bachiller",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -69,7 +69,7 @@ class FormularioDetailsSeeder extends Seeder
                 'required' => true,
                 'name' => 'Carrera',
                 'description' => 'A cual de estas carreras pertenece',
-                'data' => "['Medicina','Leyes','Agronomia','Contabilidad','Arquitectura']",
+                'data' => "Medicina, Leyes, Agronomia, Contabilidad, Arquitectura",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],

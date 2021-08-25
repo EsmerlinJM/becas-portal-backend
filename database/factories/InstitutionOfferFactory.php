@@ -31,6 +31,7 @@ class InstitutionOfferFactory extends Factory
             'academic_offer_id' => AcademicOffer::all()->random(),
             'campus_id' => Campus::all()->random(),
             'schedule_id'       => Schedule::all()->random(),
+            'justificacion'       => $this->faker->text($maxNbChars = 400),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
