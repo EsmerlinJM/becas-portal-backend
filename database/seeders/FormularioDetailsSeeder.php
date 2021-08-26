@@ -20,6 +20,7 @@ class FormularioDetailsSeeder extends Seeder
         DB::table('formulario_details')->insert([
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 1,
                 'type'  => 'text',
                 'required' => true,
                 'name' => 'Aplicacion',
@@ -30,6 +31,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 1,
                 'type'  => 'textarea',
                 'required' => true,
                 'name' => 'Motivacion',
@@ -40,36 +42,40 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 2,
                 'type'  => 'checkbox',
                 'required' => true,
                 'name' => 'Idiomas',
                 'description' => 'Cuales idiomas de este listado maneja',
-                'data' => "['Ingles','Frances','Aleman','Español']",
+                'data' => "Ingles, Frances, Aleman, Español",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 2,
                 'type'  => 'radio',
                 'required' => true,
                 'name' => 'Nivel Academico',
                 'description' => 'Cual es su nivel Academico',
-                'data' => "['Grado','PostGrado','Maestria','Nivel Tecnico','Bachiller']",
+                'data' => "Grado, PostGrado, Maestria, Nivel Tecnico, Bachiller",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 3,
                 'type'  => 'select',
                 'required' => true,
                 'name' => 'Carrera',
                 'description' => 'A cual de estas carreras pertenece',
-                'data' => "['Medicina','Leyes','Agronomia','Contabilidad','Arquitectura']",
+                'data' => "Medicina, Leyes, Agronomia, Contabilidad, Arquitectura",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 3,
                 'type'  => 'date',
                 'required' => true,
                 'name' => 'Graduacion',
@@ -80,6 +86,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 4,
                 'type'  => 'file',
                 'required' => true,
                 'name' => 'Certificado Bachiller',
@@ -90,6 +97,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 4,
                 'type'  => 'file',
                 'required' => true,
                 'name' => 'Certificado Universitario',
@@ -100,6 +108,7 @@ class FormularioDetailsSeeder extends Seeder
             ],
             [
                 'formulario_id' => 1,
+                'formulario_seccion_id' => 5,
                 'type'  => 'number',
                 'required' => true,
                 'name' => 'Tiempo Carrera',

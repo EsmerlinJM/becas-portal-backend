@@ -16,6 +16,7 @@ class CreateFormularioDetailsTable extends Migration
         Schema::create('formulario_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('formulario_id')->unsigned()->index()->references('id')->on('formularios');
+            $table->foreignId('formulario_seccion_id')->unsigned()->index()->references('id')->on('formulario_seccions');
             $table->enum('type', ['text','textarea','checkbox','radio','select','date','file','number']);
             $table->boolean('required')->default(0);
             $table->string('name');

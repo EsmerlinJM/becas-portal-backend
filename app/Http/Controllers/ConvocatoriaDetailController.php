@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offerer;
-use App\Models\Schedule;
+use App\Models\Formulario;
+use App\Models\InstitutionOffer;
 use App\Models\Convocatoria;
 use App\Models\ConvocatoriaDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Resources\ConvocatoriaDetailResource;
 use App\Exceptions\SomethingWentWrong;
@@ -41,6 +43,37 @@ class ConvocatoriaDetailController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+
+        $request->validate([
+            'busqueda' => 'required',
+        ]);
+
+        $detalles = null;
+        $counter = 0;
+        $all = ConvocatoriaDetail::orderBy('created_at', 'desc')->get();
+
+        foreach ($all as $item) {
+            if(str_contains($item->oferta->academic_offer->career, $request->busqueda) ){
+                $detalles[$counter] = $item;
+                $counter++;
+            }
+        }
+
+        try {
+            return ConvocatoriaDetailResource::collection($detalles);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -50,21 +83,19 @@ class ConvocatoriaDetailController extends Controller
     {
         $request->validate([
             'convocatoria_id' => 'required',
-            'institution_id' => 'required',
-            'campus_id' => 'required',
-            'academic_offer_id' => 'required',
+            'institution_offer_id' => 'required',
+            'formulario_id' => 'required',
             'offerer_id' => 'required',
-            'evaluation_id' => 'required',
-            'schedule_id' => 'required',
             'coverage' => 'required',
         ]);
 
         // Initialize Google Storage
         $disk = \Storage::disk('google');
 
-        Convocatoria::findOrFail($request->convocatoria_id); //Valido si la convocatoria existe
-        Offerer::findOrFail($request->offerer_id); //Valido si el oferente existe
-        Schedule::findOrFail($request->schedule_id); //Valido si el horario existe
+        $convocatoria = Convocatoria::findOrFail($request->convocatoria_id); //Valido si la convocatoria existe
+        $oferente = Offerer::findOrFail($request->offerer_id); //Valido si el oferente existe
+        $oferta = InstitutionOffer::findOrFail($request->institution_offer_id); //Valido si la oferta existe
+        $formulario = Formulario::findOrFail($request->formulario_id); //Valido si fomulario existe
 
         try {
 
@@ -86,14 +117,13 @@ class ConvocatoriaDetailController extends Controller
         }
 
             $detalle = new ConvocatoriaDetail;
-            $detalle->convocatoria_id = $request->convocatoria_id;
-            $detalle->institution_id = $request->institution_id;
-            $detalle->campus_id = $request->campus_id;
-            $detalle->academic_offer_id = $request->academic_offer_id;
-            $detalle->offerer_id = $request->offerer_id;
-            $detalle->evaluation_id = $request->evaluation_id;
-            $detalle->schedule_id = $request->schedule_id;
+            $detalle->convocatoria_id = $convocatoria->id;
+            $detalle->institution_offer_id = $oferta->id;
+            $detalle->institution_id = $oferta->institution->id;
+            $detalle->offerer_id = $oferente->id;
             $detalle->coverage = $request->coverage;
+            $detalle->evaluation_id = $convocatoria->evaluation->id;
+            $detalle->formulario_id = $formulario->id;
             $detalle->image_url = $image['url'];
             $detalle->image_ext = $image['ext'];
             $detalle->image_size = $image['size'];
@@ -103,8 +133,6 @@ class ConvocatoriaDetailController extends Controller
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
-
-
     }
 
     /**
@@ -140,12 +168,9 @@ class ConvocatoriaDetailController extends Controller
     {
         $request->validate([
             'convocatoria_detail_id' => 'required',
-            'institution_id' => 'required',
-            'campus_id' => 'required',
-            'academic_offer_id' => 'required',
+            'institution_offer_id' => 'required',
             'offerer_id' => 'required',
-            'evaluation_id' => 'required',
-            'schedule_id' => 'required',
+            'formulario_id' => 'required',
             'coverage' => 'required',
         ]);
 
@@ -153,8 +178,9 @@ class ConvocatoriaDetailController extends Controller
         $disk = \Storage::disk('google');
 
         $detalle = ConvocatoriaDetail::findOrFail($request->convocatoria_detail_id); //Valido si el Detalle Existe
-        Offerer::findOrFail($request->offerer_id); //Valido si el oferente existe
-        Schedule::findOrFail($request->schedule_id); //Valido si el horario existe
+        $oferente = Offerer::findOrFail($request->offerer_id); //Valido si el oferente existe
+        $oferta = InstitutionOffer::findOrFail($request->institution_offer_id); //Valido si la oferta existe
+        $formulario = Formulario::findOrFail($request->formulario_id); //Valido si fomulario existe
 
         try {
             //Image Handling
@@ -174,12 +200,10 @@ class ConvocatoriaDetailController extends Controller
                 );
             }
 
-            $detalle->institution_id = $request->institution_id;
-            $detalle->campus_id = $request->campus_id;
-            $detalle->academic_offer_id = $request->academic_offer_id;
-            $detalle->offerer_id = $request->offerer_id;
-            $detalle->evaluation_id = $request->evaluation_id;
-            $detalle->schedule_id = $request->schedule_id;
+            $detalle->institution_offer_id = $oferta->id;
+            $detalle->institution_id = $oferta->institution->id;
+            $detalle->formulario_id = $formulario->id;
+            $detalle->offerer_id = $oferente->id;
             $detalle->coverage = $request->coverage;
             $detalle->image_url = $image['url'];
             $detalle->image_ext = $image['ext'];

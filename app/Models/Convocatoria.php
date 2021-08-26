@@ -11,6 +11,11 @@ class Convocatoria extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function coordinator()
+    {
+        return $this->hasOne(Coordinator::class, 'id', 'coordinator_id');
+    }
+
     public function audience()
     {
         return $this->hasOne(Audience::class, 'id', 'audience_id');
@@ -24,11 +29,6 @@ class Convocatoria extends Model
     public function evaluation()
     {
         return $this->hasOne(Evaluation::class, 'id', 'evaluation_id');
-    }
-
-    public function formulario()
-    {
-        return $this->hasOne(Formulario::class, 'id', 'formulario_id');
     }
 
     public function details()

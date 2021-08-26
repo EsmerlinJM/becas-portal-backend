@@ -9,11 +9,13 @@ use App\Models\Audience;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\ConvocatoriaResource;
+use App\Http\Resources\ConvocatoriaOneResource;
 use App\Exceptions\SomethingWentWrong;
-use App\Exceptions\CantPublish;
+use App\Exceptions\CantClose;
 use App\Exceptions\CantOpen;
 use App\Exceptions\CantPending;
-use App\Exceptions\NotPlublished;
+use App\Exceptions\CantPublish;
+use App\Exceptions\NotPublished;
 use App\Exceptions\AplicationNotClosed;
 use App\Tools\Tools;
 use Carbon\Carbon;
@@ -30,6 +32,22 @@ class ConvocatoriaController extends Controller
 
         try {
             $convocatorias = Convocatoria::all();
+            return ConvocatoriaResource::collection($convocatorias);
+        } catch (\Throwable $th) {
+            throw new SomethingWentWrong($th);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function portal()
+    {
+
+        try {
+            $convocatorias = Convocatoria::where('status','!=','Pendiente')->get();
             return ConvocatoriaResource::collection($convocatorias);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
@@ -73,11 +91,11 @@ class ConvocatoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function publicadas()
+    public function cerradas()
     {
 
         try {
-            $convocatorias = Convocatoria::where('status','Publicada')->get();
+            $convocatorias = Convocatoria::where('status','Cerrada')->get();
             return ConvocatoriaResource::collection($convocatorias);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
@@ -92,12 +110,12 @@ class ConvocatoriaController extends Controller
      */
     public function store(Request $request)
     {
-        User::isAdmin();
+
 
         $request->validate([
+            'coordinator_id' => 'required',
             'convocatoria_type_id' => 'required',
             'evaluation_id' => 'required',
-            'formulario_id' => 'required',
             'audience_id' => 'required',
             'name' => 'required',
             'start_date' => 'required',
@@ -130,11 +148,10 @@ class ConvocatoriaController extends Controller
         }
 
             $convocatoria = new Convocatoria;
-
+            $convocatoria->coordinator_id = $request->coordinator_id;
             $convocatoria->convocatoria_type_id = $request->convocatoria_type_id;
             $convocatoria->audience_id = $request->audience_id;
             $convocatoria->evaluation_id = $request->evaluation_id;
-            $convocatoria->formulario_id = $request->formulario_id;
             $convocatoria->name = $request->name;
             $convocatoria->start_date = Carbon::parse($request->start_date);
             $convocatoria->end_date = Carbon::parse($request->end_date);
@@ -167,7 +184,7 @@ class ConvocatoriaController extends Controller
         $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
 
         try {
-            return new ConvocatoriaResource($convocatoria);
+            return new ConvocatoriaOneResource($convocatoria);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -183,12 +200,11 @@ class ConvocatoriaController extends Controller
      */
     public function update(Request $request)
     {
-        User::isAdmin();
 
         $request->validate([
+            'coordinator_id' => 'required',
             'convocatoria_id' => 'required',
             'evaluation_id' => 'required',
-            'formulario_id' => 'required',
             'convocatoria_type_id' => 'required',
             'audience_id' => 'required',
             'name' => 'required',
@@ -219,10 +235,10 @@ class ConvocatoriaController extends Controller
                 "size" => $convocatoria->image_size,
             );
         }
+            $convocatoria->coordinator_id = $request->coordinator_id;
             $convocatoria->convocatoria_type_id = $request->convocatoria_type_id;
             $convocatoria->audience_id = $request->audience_id;
             $convocatoria->evaluation_id = $request->evaluation_id;
-            $convocatoria->formulario_id = $request->formulario_id;
             $convocatoria->name = $request->name;
             $convocatoria->start_date = Carbon::parse($request->start_date);
             $convocatoria->end_date = Carbon::parse($request->end_date);
@@ -245,18 +261,13 @@ class ConvocatoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function open(Request $request)
+    public function setOpen(Request $request)
     {
-        User::isAdmin();
-
         $request->validate([
             'convocatoria_id' => 'required',
         ]);
 
-
-
         $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
-
 
             if($convocatoria->status == 'Pendiente') {
                 try {
@@ -278,56 +289,17 @@ class ConvocatoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function standby(Request $request)
+    public function setPublished(Request $request)
     {
-        User::isAdmin();
-
         $request->validate([
             'convocatoria_id' => 'required',
         ]);
 
         $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
 
-
-            if($convocatoria->status == 'Abierta') {
+            if($convocatoria->status == 'Cerrada') {
                 try {
-                    $convocatoria->status = "Pendiente"; //Abrimos
-                    $convocatoria->save();
-                    return new ConvocatoriaResource($convocatoria);
-                } catch (\Throwable $th) {
-                    throw new SomethingWentWrong($th);
-                }
-            } else {
-                throw new CantPending;
-            }
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function publish(Request $request)
-    {
-        User::isAdmin();
-
-        $request->validate([
-            'convocatoria_id' => 'required',
-        ]);
-
-        $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
-
-
-            if($convocatoria->status == 'Abierta') {
-                foreach ($convocatoria->aplications as $aplication) {
-                    if(!$aplication->closed) {
-                        throw new AplicationNotClosed;
-                    }
-                }
-                try {
-                    $convocatoria->status = 'Publicada'; //Publicamos
+                    $convocatoria->published = true; //Publicamos
                     $convocatoria->save();
                     return new ConvocatoriaResource($convocatoria);
                 } catch (\Throwable $th) {
@@ -336,28 +308,25 @@ class ConvocatoriaController extends Controller
             } else {
                 throw new CantPublish;
             }
-
     }
 
-    /**
+     /**
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function unpublish(Request $request)
+    public function setUnPublished(Request $request)
     {
-        User::isAdmin();
-
         $request->validate([
             'convocatoria_id' => 'required',
         ]);
 
         $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
 
-            if($convocatoria->status == 'Publicada') {
+            if($convocatoria->status == 'Cerrada' && $convocatoria->published == true) {
                 try {
-                    $convocatoria->status = 'Abierta'; //Despublicamos
+                    $convocatoria->published = false; //Publicamos
                     $convocatoria->save();
                     return new ConvocatoriaResource($convocatoria);
                 } catch (\Throwable $th) {
@@ -375,10 +344,63 @@ class ConvocatoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function setPending(Request $request)
+    {
+        $request->validate([
+            'convocatoria_id' => 'required',
+        ]);
+
+        $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
+
+        if($convocatoria->status == 'Abierta') {
+            try {
+                $convocatoria->status = "Pendiente"; //Ponemos pendiente
+                $convocatoria->save();
+                return new ConvocatoriaResource($convocatoria);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+        } else {
+            throw new CantPending;
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function setClose(Request $request)
+    {
+
+        $request->validate([
+            'convocatoria_id' => 'required',
+        ]);
+
+        $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
+
+            if($convocatoria->status == 'Abierta') {
+                try {
+                    $convocatoria->status = 'Cerrada'; //Cerramos
+                    $convocatoria->save();
+                    return new ConvocatoriaResource($convocatoria);
+                } catch (\Throwable $th) {
+                    throw new SomethingWentWrong($th);
+                }
+            } else {
+                throw new CantClose;
+            }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Request $request)
     {
-        User::isAdmin();
-
         $request->validate([
             'convocatoria_id' => 'required',
         ]);

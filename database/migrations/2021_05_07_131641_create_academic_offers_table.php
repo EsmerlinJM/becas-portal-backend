@@ -15,14 +15,18 @@ class CreateAcademicOffersTable extends Migration
     {
         Schema::create('academic_offers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('institution_id')->unsigned()->index()->references('id')->on('institutions');
             $table->foreignId('academic_offer_type_id')->unsigned()->index()->references('id')->on('academic_offer_types');
             $table->foreignId('education_level_id')->unsigned()->index()->references('id')->on('education_levels');
             //  Already defined on relationship with education level
             // $table->foreignId('development_area_id')->unsigned()->index()->references('id')->on('development_areas');
+            $table->text('detalles')->nullable();
             $table->string('career');
             $table->string('duration');
             $table->string('language');
-            $table->text('pensum');
+            $table->string('pensum_url')->nullable();
+            $table->string('pensum_ext')->nullable();
+            $table->string('pensum_size')->nullable();
             $table->boolean('active');
             $table->timestamps();
             $table->softDeletes();

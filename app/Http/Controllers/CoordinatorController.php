@@ -11,6 +11,7 @@ use Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Resources\CoordinatorResource;
 use App\Exceptions\SomethingWentWrong;
+use App\Exceptions\EmailNotValid;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
@@ -83,13 +84,19 @@ class CoordinatorController extends Controller
             $coordinator->contact_email = $request->email;
             $coordinator->save();
 
-            event(new Registered($user));
-
-            return new CoordinatorResource($coordinator);
-
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
+
+            try {
+                event(new Registered($user));
+            } catch (\Throwable $th) {
+                $coordinator->forceDelete();
+                $user->forceDelete();
+                throw new EmailNotValid;
+            }
+
+            return new CoordinatorResource($coordinator);
     }
 
     /**

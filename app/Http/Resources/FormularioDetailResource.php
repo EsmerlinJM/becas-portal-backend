@@ -19,6 +19,7 @@ class FormularioDetailResource extends JsonResource
             'id' => $this->id,
             'formulario_id' => $this->formulario_id,
             'required' => $this->required ? true : false,
+            'seccion'   => $this->seccion->name,
             'type' => $this->type,
             'name' => $this->name,
             'description' => $this->description,

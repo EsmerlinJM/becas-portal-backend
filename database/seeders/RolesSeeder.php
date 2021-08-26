@@ -19,12 +19,12 @@ class RolesSeeder extends Seeder
     public function run()
     {
         DB::table('roles')->insert([
-            ['name' => 'Admin', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Evaluador', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Coordinador', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Institucion', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Ofertante', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'Usuario', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'admin', 'description' => 'Role Administrador', 'created_at' => Carbon::now()],
+            ['name' => 'evaluador', 'description' => 'Role Evaluador', 'created_at' => Carbon::now()],
+            ['name' => 'coordinador', 'description' => 'Role Coordinador', 'created_at' => Carbon::now()],
+            ['name' => 'institucion', 'description' => 'Role Institucion', 'created_at' => Carbon::now()],
+            ['name' => 'oferente', 'description' => 'Role Oferente', 'created_at' => Carbon::now()],
+            ['name' => 'usuario', 'description' => 'Role Usuario', 'created_at' => Carbon::now()],
         ]);
     }
 }

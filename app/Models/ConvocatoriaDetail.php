@@ -16,19 +16,9 @@ class ConvocatoriaDetail extends Model
         return $this->belongsTo(Convocatoria::class, 'convocatoria_id', 'id');
     }
 
-    public function institution()
+    public function oferta()
     {
-        return $this->hasOne(Institution::class, 'id', 'institution_id');
-    }
-
-    public function campus()
-    {
-        return $this->hasOne(Campus::class, 'id', 'campus_id');
-    }
-
-    public function academic_offer()
-    {
-        return $this->hasOne(AcademicOffer::class, 'id', 'academic_offer_id');
+        return $this->hasOne(InstitutionOffer::class, 'id', 'institution_offer_id');
     }
 
     public function offerer()
@@ -36,8 +26,13 @@ class ConvocatoriaDetail extends Model
         return $this->hasOne(Offerer::class, 'id', 'offerer_id');
     }
 
-    public function schedule()
+    public function institution()
     {
-        return $this->hasOne(Schedule::class, 'id', 'schedule_id');
+        return $this->hasOne(Institution::class, 'id', 'institution_id');
+    }
+
+    public function formulario()
+    {
+        return $this->hasOne(Formulario::class, 'id', 'formulario_id');
     }
 }

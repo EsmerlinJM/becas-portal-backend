@@ -27,6 +27,14 @@ class InstitutionEvaluatorResource extends JsonResource
                'image_ext' => $this->institution->image_ext,
                'image_size' => $this->institution->image_size,
             ],
+            'convocatoria' => [
+                'id' => $this->convocatoria->id,
+                'name' => $this->convocatoria->name,
+                'status' => $this->convocatoria->status,
+                'image_url' => $this->convocatoria->image_url,
+                'image_ext' => $this->convocatoria->image_ext,
+                'image_size' => $this->convocatoria->image_size,
+             ],
         ];
     }
 }

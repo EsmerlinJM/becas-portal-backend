@@ -19,6 +19,8 @@ use App\Models\EducationLevel;
 use App\Models\Scholarship;
 use App\Models\ScholarshipDetail;
 use App\Models\InstitutionOffer;
+use App\Models\UserFavorites;
+use App\Models\Message;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,11 +34,19 @@ class DatabaseSeeder extends Seeder
         // Roles
         $this->call(RolesSeeder::class);
 
+        //Modulos
+        $this->call(ModulosSeeder::class);
+
         // Permissions
         $this->call(PermissionsSeeder::class);
 
         // Role Permissions
         $this->call(RolePermissionsSeeder::class);
+
+        // Role Modules
+        $this->call(RoleModulosSeeder::class);
+
+
 
         // Countries
         $this->call(CountriesSeeder::class);
@@ -60,7 +70,10 @@ class DatabaseSeeder extends Seeder
         // User::factory()->count(100)->usuario()->create();
 
         // Candidates
-        Candidate::factory()->count(20)->create();
+        Candidate::factory()->count(200)->create();
+
+        // Messages
+        Message::factory()->count(200)->create();
 
         // Audiences
         $this->call(AudiencesSeeder::class);
@@ -85,6 +98,9 @@ class DatabaseSeeder extends Seeder
         // Education Levels
         EducationLevel::factory()->count(50)->create();
 
+        // Schedules
+        $this->call(SchedulesSeeder::class);
+
         // Academic Offers (Types, Academic Offers)
         $this->call(AcademicOfferTypesSeeder::class);
         AcademicOffer::factory()->count(100)->create();
@@ -97,24 +113,28 @@ class DatabaseSeeder extends Seeder
         $this->call(EvaluationRequirementsSeeder::class);
 
         // Formularios, detalles de formulario
+        $this->call(FormularioSeccionSeeder::class);
         $this->call(FormulariosSeeder::class);
         $this->call(FormularioDetailsSeeder::class);
 
-        // Schedules
-        $this->call(SchedulesSeeder::class);
+
 
         // Convocatorias, details
         $this->call(ConvocatoriaTypesSeeder::class);
-        Convocatoria::factory()->count(4)->create();
-        ConvocatoriaDetail::factory()->count(200)->create();
+        Convocatoria::factory()->count(20)->create();
+        ConvocatoriaDetail::factory()->count(400)->create();
 
         // Aplications (Status, Aplication, Details)
         $this->call(AplicationStatusesSeeder::class);
-        // Aplication::factory()->count(500)->create();
-        // AplicationDetail::factory()->count(1000)->create();
+        Aplication::factory()->count(100)->create();
+        AplicationDetail::factory()->count(200)->create();
 
         // Scholarship, details
-       // Scholarship::factory()->count(500)->create();
-       // ScholarshipDetail::factory()->count(1000)->create();
+        Scholarship::factory()->count(100)->create();
+        ScholarshipDetail::factory()->count(1000)->create();
+
+        // Favoritos
+        UserFavorites::factory()->count(200)->create();
+
     }
 }

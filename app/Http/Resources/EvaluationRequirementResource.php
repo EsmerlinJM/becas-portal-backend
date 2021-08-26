@@ -19,6 +19,7 @@ class EvaluationRequirementResource extends JsonResource
         return [
             'id' => $this->id,
             'evaluation_id' => $this->evaluation_id,
+            'name' => $this->name,
             'description' => $this->description,
             'value' => $this->value,
             'step_basic' => $this->step_basic,

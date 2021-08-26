@@ -48,6 +48,7 @@ class CandidateFactory extends Factory
             'document_id'       => $this->faker->creditCardNumber,
             'name'              => $this->faker->firstName,
             'last_name'          => $this->faker->lastName,
+            'genero'            => $this->faker->randomElement($array = array ('masculino','femenino')),
             'born_date'         => $this->faker->dateTimeBetween($startDate = '-40 years', $endDate = '-20 years', $timezone = null),
             'contact_phone'      => $this->faker->phoneNumber,
             'contact_email'     => $email,

@@ -14,6 +14,7 @@ use App\Tools\ResponseCodes;
 use App\Http\Resources\UserResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
+use App\Exceptions\EmailNotValid;
 use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
 
@@ -21,7 +22,6 @@ class UserController extends Controller
 {
     // Metodo para traer todos los usuarios
     function index(){
-        User::isAdmin();
         try {
             $user = User::all();
             return UserResource::collection($user);
@@ -49,7 +49,6 @@ class UserController extends Controller
     // Metodo para crear usuario
     function store(Request $request)
     {
-        User::isAdmin();
         // Validaciones
         $request->validate([
             'email'=>'required|unique:users',
@@ -67,7 +66,12 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
 
-            event(new Registered($user));
+            try {
+                event(new Registered($user));
+            } catch (\Throwable $th) {
+                    $user->forceDelete();
+                    throw new EmailNotValid;
+            }
 
             //Roles Usuarios
             // const ADMIN = 1; Profile
@@ -134,9 +138,7 @@ class UserController extends Controller
     //Metodo para actualizar usuario
     function update(Request $request)
     {
-        User::isAdmin();
         $user = User::findOrFail($request->user_id);
-
 
             if($user->email != $request->email) {
                 $request->validate([
@@ -164,7 +166,6 @@ class UserController extends Controller
 
     function resetPassword(Request $request)
     {
-        User::isAdmin();
         $request->validate([
             'user_id' => 'required',
             'password' => 'required|confirmed',
