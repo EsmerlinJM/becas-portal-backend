@@ -15,6 +15,7 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->nullable();
             $table->string('subject')->default('Solicitud Informacion');
             $table->string('name');
             $table->string('email');
