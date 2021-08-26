@@ -316,8 +316,6 @@ class AplicationController extends Controller
             'aplication_status_id' => 'required', Rule::in([5,6,7,8]),
         ]);
 
-        User::isCoordinator();
-
         if($request->aplication_status_id < 5) {
             return response()->json(['status' => 'error', 'message' => 'Estado no pertenece a los cierres'], ResponseCodes::UNPROCESSABLE_ENTITY);
         }

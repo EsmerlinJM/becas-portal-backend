@@ -55,48 +55,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
 
-    public static function isAdmin()
-    {
-        if ( auth()->user()->role->id != Tools::ADMIN) {
-            throw new NotPermissions;
-        }
-    }
-
-    public static function isEvaluator()
-    {
-        if ( auth()->user()->role->id != Tools::EVALUADOR) {
-            throw new NotPermissions;
-        }
-    }
-
-    public static function isCoordinator()
-    {
-        if ( auth()->user()->role->id != Tools::COORDINADOR) {
-            throw new NotPermissions;
-        }
-    }
-
-    public static function isInstitution()
-    {
-        if ( auth()->user()->role->id != Tools::INSTITUCION) {
-            throw new NotPermissions;
-        }
-    }
-
-    public static function isOfferer()
-    {
-        if ( auth()->user()->role->id != Tools::OFERTANTE) {
-            throw new NotPermissions;
-        }
-    }
-
-    public static function isUser()
-    {
-        if ( auth()->user()->role->id != Tools::USUARIO) {
-            throw new NotPermissions;
-        }
-    }
-
     public function institution()
     {
         return $this->belongsTo(Institution::class, 'institution_id', 'id');
@@ -110,6 +68,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function candidate()
     {
         return $this->belongsTo(Candidate::class, 'id', 'user_id');
+    }
+
+    public function favoritos()
+    {
+        return $this->hasmany(UserFavorites::class, 'user_id', 'id');
     }
 
     public function profile()
