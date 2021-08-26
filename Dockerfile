@@ -1,14 +1,15 @@
-FROM php:7.4-fpm
+ARG PHP_VERSION=7.4
+ARG XDEBUG_VERSION=2.9.6
 
-# Copy composer.lock and composer.json into the working directory
-COPY composer.lock composer.json /var/www/html/
-
-# Set working directory
-WORKDIR /var/www/html/
+#####################################
+##               PHP               ##
+#####################################
+FROM php:${PHP_VERSION}-apache AS php
 
 # Install dependencies for the operating system software
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    libicu-dev \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
@@ -20,27 +21,102 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libonig-dev \
-    curl
+    curl \
+    # Clean aptitude cache and tmp directory
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install the PHP extensions
+RUN docker-php-ext-configure intl \
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+        gd \
+        pcntl \
+        intl \
+        opcache \
+        pdo_mysql \
+        mbstring \
+        exif \
+        zip \
+    && docker-php-ext-enable \
+        opcache \
+    && docker-php-source delete \
+    # Clean aptitude cache and tmp directory
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install extensions for php
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install gd
+# configure apache document root as per the image documentation in addition rewrite header
+ENV APP_HOME /var/www/html
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+# Use the PORT environment variable in Apache configuration files.
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+
+RUN a2enmod rewrite headers
+
+#####################################
+##              ASSETS             ##
+#####################################
+FROM php AS assets-builder
+
+WORKDIR /var/www/html
+COPY . ./
 
 # Install composer (php package manager)
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-# Copy existing application directory contents to the working directory
-COPY . /var/www/html
+RUN composer install
 
-# Assign permissions of the working directory to the www-data user
-RUN chown -R www-data:www-data \
-    /var/www/html/storage \
-    /var/www/html/bootstrap/cache
+# TODO: TEST environment needs variable setup acordingly
+#####################################
+##              TEST               ##
+#####################################
+FROM php AS test
 
-# Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
-EXPOSE 9000
-CMD ["php-fpm"]
+ENV APP_ENV=local
+ENV APP_DEBUG=true
+ENV LOG_CHANNEL=stack
+ENV LOG_LEVEL=debug
+
+COPY --chown=www-data --from=assets-builder /var/www/html /var/www/html
+WORKDIR /var/www/html
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+COPY entrypoint.sh /usr/local/bin/
+
+ENTRYPOINT ["entrypoint.sh"]
+
+#####################################
+##              PROD               ##
+#####################################
+FROM php AS prod
+
+ENV APP_ENV=production
+ENV LOG_CHANNEL=stack
+
+COPY --chown=www-data --from=assets-builder /var/www/html /var/www/html
+WORKDIR /var/www/html
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+RUN composer install \
+        --ignore-platform-reqs \
+        --no-ansi \
+        --no-dev \
+        --no-interaction
+
+RUN composer dump-autoload
+
+# Change the group ownership of the storage and bootstrap/cache directories to www-data
+# Recursively grant all permissions, including write and execute, to the group
+RUN chgrp -R www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache
+
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# start php-fpm server (for FastCGI Process Manager)
+ENTRYPOINT ["entrypoint.sh"]
