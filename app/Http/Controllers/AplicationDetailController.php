@@ -32,7 +32,6 @@ class AplicationDetailController extends Controller
             'score' => 'required|numeric',
         ]);
 
-        User::isEvaluator();
         $evaluator = Evaluator::where('user_id',auth()->user()->id)->first();
         $detail = AplicationDetail::findOrFail($request->aplication_detail_id);
         $aplication = $detail->aplication;
