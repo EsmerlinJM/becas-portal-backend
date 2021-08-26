@@ -18,4 +18,9 @@ class InstitutionEvaluator extends Model
     {
         return $this->hasOne(Institution::class, 'id', 'institution_id');
     }
+
+    public function convocatoria()
+    {
+        return $this->hasOne(Convocatoria::class, 'id', 'convocatoria_id');
+    }
 }

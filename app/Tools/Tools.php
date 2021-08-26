@@ -37,7 +37,7 @@ class Tools
 
     public static function deleted()
     {
-        return response()->json(['status' => 'successful', 'message' => 'Recurso borrado'], ResponseCodes::GONE);
+        return response()->json(['status' => 'successful', 'message' => 'Recurso borrado'], ResponseCodes::ACCEPTED);
     }
 
 }

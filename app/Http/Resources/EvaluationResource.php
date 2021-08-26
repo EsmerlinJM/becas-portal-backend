@@ -21,6 +21,7 @@ class EvaluationResource extends JsonResource
             'name' => $this->name,
             'color' => $this->color,
             'top_score' => $this->top_score,
+            'isPlanilla' => $this->isPlanilla ? true : false,
             'requirements' => EvaluationRequirementResource::collection($this->requirements)
         ];
     }

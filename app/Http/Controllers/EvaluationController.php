@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
+use App\Models\EvaluationRequirement;
 use App\Models\Convocatoria;
 use Illuminate\Http\Request;
 
+use App\Http\Resources\EvaluationRequirementResource;
 use App\Http\Resources\EvaluationResource;
 use App\Exceptions\SomethingWentWrong;
+use App\Exceptions\ArrayEmpty;
+use App\Tools\ResponseCodes;
 use App\Tools\Tools;
 
 class EvaluationController extends Controller
@@ -35,23 +39,68 @@ class EvaluationController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'color' => 'required',
-            'top_score' => 'required',
-            'pre_approved' => 'required',
-        ]);
+        $eval =  json_decode($request->getContent());
+        $counter = 0;
+        $counter2 = 0;
+        $requerimientos = null;
+        $temporal = null;
 
         try {
             $evaluacion = new Evaluation;
-            $evaluacion->name = $request->name;
-            $evaluacion->color = $request->color;
-            $evaluacion->top_score = $request->top_score;
-            $evaluacion->pre_approved = $request->pre_approved;
+            $evaluacion->name = $eval->name;
+            $evaluacion->color = $eval->color;
+            $evaluacion->top_score = $eval->top_score;
+            $evaluacion->pre_approved = $eval->pre_approved;
+            $evaluacion->isPlanilla = $eval->isPlanilla;
             $evaluacion->save();
-            return new EvaluationResource($evaluacion);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
+        }
+
+        if($eval) {
+
+            $top_score = $evaluacion->top_score;
+            $current_sum = 0;
+
+            foreach ($eval->requerimientos as $item) {
+
+                try {
+                    if($current_sum + $item->value <= $top_score) {
+                        $requerimiento = new EvaluationRequirement;
+                        $requerimiento->evaluation_id = $evaluacion->id;
+                        $requerimiento->name = $item->name;
+                        $requerimiento->description = $item->description;
+                        $requerimiento->value = $item->value;
+                        $requerimiento->step_basic = round($item->value/3, 2);
+                        $requerimiento->step_medium = round(($item->value/3) * 2, 2);
+                        $requerimiento->step_complete = $item->value;
+                        // $requerimiento->save(); //Guardamos debajo luego de validar
+                        $temporal[$counter] = $requerimiento;
+
+                        $current_sum += $item->value;
+
+                        $counter ++;
+                    } else {
+                        return response()->json(['status' => 'error', 'message' => 'El valor de los requerimientos sobrepasa sobrepasa el valor total de la evaluacion'], ResponseCodes::UNPROCESSABLE_ENTITY);
+                    }
+
+                } catch (\Throwable $th) {
+                    throw new SomethingWentWrong($th);
+                }
+            }
+
+            if($current_sum == $top_score) {
+                foreach ($temporal as $item) {
+                    $item->save();
+                    $requerimientos[$counter2] = $item;
+                    $counter2 ++;
+                }
+            } else {
+                return response()->json(['status' => 'error', 'message' => 'El valor total de los requerimientos no es igual al valor de la evaluacion'], ResponseCodes::UNPROCESSABLE_ENTITY);
+            }
+            return new EvaluationResource($evaluacion);
+        } else {
+            throw new ArrayEmpty;
         }
     }
 

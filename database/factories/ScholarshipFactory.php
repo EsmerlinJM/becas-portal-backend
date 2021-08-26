@@ -24,12 +24,19 @@ class ScholarshipFactory extends Factory
      */
     public function definition()
     {
+        $solicitud = Aplication::all()->random();
         return [
-            'candidate_id' => Candidate::all()->random(),
-            'aplication_id' => Aplication::all()->random(),
-            'name' => $this->faker->name,
-            'lastname1' => $this->faker->lastName,
-            'lastname2' => $this->faker->lastName,
+            'convocatoria_id' => $solicitud->convocatoria->id,
+            'convocatoria_detail_id' => $solicitud->convocatoria_detail->id,
+            'offerer_id' => $solicitud->offerer->id,
+            'institution_id' => $solicitud->institution->id,
+            'institution_offer_id' => $solicitud->convocatoria_detail->oferta->id,
+            'aplication_id' => $solicitud->id,
+            'candidate_id' => $solicitud->candidate->id,
+            'name' => $solicitud->candidate->name,
+            'lastname' => $solicitud->candidate->last_name,
+            'genero'    => $solicitud->candidate->genero,
+            'estado'    => $this->faker->randomElement($array = array ('egresado','retirado','expulsado','activo','suspendido')),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

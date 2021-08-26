@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InstitutionOffer;
 use App\Models\Institution;
+use App\Models\Schedule;
 use App\Models\AcademicOffer;
 use App\Models\Campus;
 use Illuminate\Http\Request;
@@ -62,18 +63,21 @@ class InstitutionOfferController extends Controller
         $request->validate([
             'institution_id' => 'required',
             'academic_offer_id' => 'required',
+            'schedule_id' => 'required',
             'campus_id' => 'required',
         ]);
 
-        Institution::findOrFail($request->institution_id); //Valido si la institucion existe
-        AcademicOffer::findOrFail($request->academic_offer_id); //Valido si la oferta academica existe
-        Campus::findOrFail($request->campus_id); //Valido si el campus existe
+        $institucion = Institution::findOrFail($request->institution_id); //Valido si la institucion existe
+        $oferta_academica = AcademicOffer::findOrFail($request->academic_offer_id); //Valido si la oferta academica existe
+        $horario = Schedule::findOrFail($request->schedule_id); //Valido si el horario existe
+        $campus = Campus::findOrFail($request->campus_id); //Valido si el campus existe
 
         try {
             $offer = new InstitutionOffer;
-            $offer->institution_id = $request->institution_id;
-            $offer->academic_offer_id = $request->academic_offer_id;
-            $offer->campus_id = $request->campus_id;
+            $offer->institution_id = $institucion->id;
+            $offer->academic_offer_id = $oferta_academica->id;
+            $offer->campus_id = $campus->id;
+            $offer->schedule_id = $horario->id;
             $offer->save();
             return new InstitutionOfferResource($offer);
         } catch (\Throwable $th) {
@@ -113,19 +117,22 @@ class InstitutionOfferController extends Controller
         $request->validate([
             'institution_offer_id' => 'required',
             'institution_id' => 'required',
+            'schedule_id' => 'required',
             'academic_offer_id' => 'required',
             'campus_id' => 'required',
         ]);
 
         $offer = InstitutionOffer::findOrFail($request->institution_offer_id); //Valido si la institucion existe
-        Institution::findOrFail($request->institution_id); //Valido si la institucion existe
-        AcademicOffer::findOrFail($request->academic_offer_id); //Valido si la oferta academica existe
-        Campus::findOrFail($request->campus_id); //Valido si el campus existe
+        $institucion = Institution::findOrFail($request->institution_id); //Valido si la institucion existe
+        $oferta_academica = AcademicOffer::findOrFail($request->academic_offer_id); //Valido si la oferta academica existe
+        $horario = Schedule::findOrFail($request->schedule_id); //Valido si el horario existe
+        $campus = Campus::findOrFail($request->campus_id); //Valido si el campus existe
 
         try {
-            $offer->institution_id = $request->institution_id;
-            $offer->academic_offer_id = $request->academic_offer_id;
+            $offer->institution_id = $institucion->id;
+            $offer->academic_offer_id = $oferta_academica->id;
             $offer->campus_id = $request->campus_id;
+            $offer->schedule_id = $horario->id;
             $offer->save();
             return new InstitutionOfferResource($offer);
         } catch (\Throwable $th) {

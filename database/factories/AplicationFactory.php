@@ -25,12 +25,18 @@ class AplicationFactory extends Factory
      */
     public function definition()
     {
+        $detalle = ConvocatoriaDetail::all()->random();
         return [
-            'convocatoria_detail_id' => ConvocatoriaDetail::all()->random(),
-            'candidate_id'           => Candidate::all()->random(),
-            'aplication_status_id'   => AplicationStatus::all()->random(),
-            'created_at'             => Carbon::now(),
-            'updated_at'             => Carbon::now(),
+            'convocatoria_id'           => $detalle->convocatoria->id,
+            'convocatoria_detail_id'    => $detalle->id,
+            'offerer_id'                => $detalle->offerer->id,
+            'institution_id'            => $detalle->oferta->institution->id,
+            'candidate_id'              => Candidate::all()->random(),
+            'aplication_status_id'      => 1, //Solicitud Enviada
+            'score'                     => $this->faker->randomElement($array = array ('10','20','30','40','50')),
+            'sent'                      => $this->faker->randomElement($array = array (true,false)),
+            'created_at'                => Carbon::now(),
+            'updated_at'                => Carbon::now(),
         ];
     }
 }

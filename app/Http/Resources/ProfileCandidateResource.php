@@ -32,6 +32,7 @@ class ProfileCandidateResource extends JsonResource
             'province' => new ProvinceResource($this->province),
             'country' => new CountryResource($this->country),
             'user'  => new UserResource($this->user),
+            'favoritos' => UserFavoriteResource::collection($this->user->favoritos),
         ];
     }
 }

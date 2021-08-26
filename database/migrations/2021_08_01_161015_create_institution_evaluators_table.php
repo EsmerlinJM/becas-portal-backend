@@ -17,6 +17,7 @@ class CreateInstitutionEvaluatorsTable extends Migration
             $table->id();
             $table->foreignId('evaluator_id')->unsigned()->index()->references('id')->on('evaluators');
             $table->foreignId('institution_id')->unsigned()->index()->references('id')->on('institutions');
+            $table->foreignId('convocatoria_id')->unsigned()->index()->references('id')->on('institutions');
             $table->timestamps();
         });
     }

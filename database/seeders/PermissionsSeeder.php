@@ -19,10 +19,13 @@ class PermissionsSeeder extends Seeder
     public function run()
     {
         DB::table('permissions')->insert([
-            ['name' => 'admin', 'description' => 'Permisos Administrativos', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'create', 'description' => 'Permisos crear', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'edit', 'description' => 'Permisos editar', 'active' => '1', 'created_at' => Carbon::now()],
-            ['name' => 'delete', 'description' => 'Permisos borrar', 'active' => '1', 'created_at' => Carbon::now()],
+            ['name' => 'read', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['name' => 'create', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['name' => 'update', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['name' => 'delete', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['name' => 'assign', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['name' => 'publish', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['name' => 'unpublish', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
     }
 }

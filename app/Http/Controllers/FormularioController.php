@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Formulario;
+use App\Models\FormularioSeccion;
 use App\Models\Convocatoria;
 use App\Models\FormularioDetail;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\FormularioResource;
 use App\Exceptions\SomethingWentWrong;
+use App\Exceptions\ArrayEmpty;
+use App\Tools\ResponseCodes;
 use App\Tools\Tools;
 
 class FormularioController extends Controller
@@ -36,19 +39,48 @@ class FormularioController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
+        $preguntas =  json_decode($request->getContent());
 
-        try {
-            $formulario = new Formulario;
-            $formulario->name = $request->name;
-            $formulario->description = $request->description;
-            $formulario->save();
+        $counter = 0;
+        $detalles = null;
+
+        $formulario = new Formulario;
+        $formulario->name = $preguntas->name;
+        $formulario->description = $preguntas->description;
+        $formulario->isPlantilla = $preguntas->isPlantilla;
+        $formulario->save();
+
+        if($preguntas) {
+            foreach ($preguntas->detalles as $item) {
+
+                if($item->type == 'checkbox' || $item->type == 'radio' || $item->type == 'select') {
+                    if(!isset($item->data)) {
+                        return response()->json(['status' => 'error', 'message' => 'Se necesita el campo data para este tipo de pregunta/input'], ResponseCodes::UNPROCESSABLE_ENTITY);
+                    }
+                }
+                try {
+
+                    $seccion = FormularioSeccion::firstOrCreate(['name' =>  $item->seccion]);
+
+                    $detalle = new FormularioDetail;
+                    $detalle->formulario_id = $formulario->id;
+                    $detalle->formulario_seccion_id = $seccion->id;
+                    $detalle->type = $item->type;
+                    $detalle->required = $item->required ? 1 : 0;
+                    $detalle->name = $item->name;
+                    $detalle->description = $item->description;
+                    $detalle->data = isset($item->data) ? $item->data : null;
+                    $detalle->save();
+
+                    $detalles[$counter] = $detalle;
+                    $counter ++;
+                } catch (\Throwable $th) {
+                    throw new SomethingWentWrong($th);
+                }
+            }
             return new FormularioResource($formulario);
-        } catch (\Throwable $th) {
-            throw new SomethingWentWrong($th);
+        } else {
+            throw new ArrayEmpty;
         }
     }
 
@@ -92,6 +124,7 @@ class FormularioController extends Controller
         try {
             $formulario->name = $request->name;
             $formulario->description = $request->description;
+            $formulario->isPlantilla = isset($request->isPlantilla) ? true : false;
             $formulario->save();
             return new FormularioResource($formulario);
         } catch (\Throwable $th) {

@@ -19,6 +19,7 @@ class CreateEvaluationsTable extends Migration
             $table->string('color');
             $table->double('top_score', 8, 2);
             $table->double('pre_approved', 8, 2);
+            $table->boolean('isPlanilla')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

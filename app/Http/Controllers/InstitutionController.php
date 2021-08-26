@@ -9,6 +9,7 @@ use App\Models\InstitutionType;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\InstitutionResource;
+use App\Http\Resources\InstitutionFullResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
 use App\Exceptions\AlreadyDeActivated;
@@ -72,8 +73,15 @@ class InstitutionController extends Controller
 
             $institucion = new Institution;
             $institucion->institution_type_id = $request->institution_type_id;
-            $institucion->siglas = $request->siglas;
             $institucion->name = $request->name;
+            $institucion->siglas = $request->siglas;
+            $institucion->telefono = $request->telefono;
+            $institucion->email = $request->email;
+            $institucion->direccion = $request->direccion;
+            $institucion->web = $request->web;
+            $institucion->contacto_persona = $request->contacto_persona;
+            $institucion->contacto_email = $request->contacto_email;
+            $institucion->contacto_telefono = $request->contacto_telefono;
             $institucion->image_url = $image['url'];
             $institucion->image_ext = $image['ext'];
             $institucion->image_size = $image['size'];
@@ -101,7 +109,7 @@ class InstitutionController extends Controller
         $institucion = Institution::findOrFail($request->institution_id);
 
         try {
-            return new InstitutionResource($institucion);
+            return new InstitutionFullResource($institucion);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -150,8 +158,15 @@ class InstitutionController extends Controller
         }
 
             $institucion->institution_type_id = $request->institution_type_id;
-            $institucion->siglas = $request->siglas;
             $institucion->name = $request->name;
+            $institucion->siglas = $request->siglas;
+            $institucion->telefono = $request->telefono;
+            $institucion->email = $request->email;
+            $institucion->direccion = $request->direccion;
+            $institucion->web = $request->web;
+            $institucion->contacto_persona = $request->contacto_persona;
+            $institucion->contacto_email = $request->contacto_email;
+            $institucion->contacto_telefono = $request->contacto_telefono;
             $institucion->image_url = $image['url'];
             $institucion->image_ext = $image['ext'];
             $institucion->image_size = $image['size'];
