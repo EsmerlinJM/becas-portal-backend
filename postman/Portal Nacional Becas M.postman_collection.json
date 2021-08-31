@@ -1,0 +1,8426 @@
+{
+	"info": {
+		"_postman_id": "c1ad195c-a1cd-414e-b4bb-8a166c0da6df",
+		"name": "Portal Nacional Becas M",
+		"description": "Microservicios Utilidades (Responde Directo JSON / SYNC)\n- Paises\n- Provincias\n- Municipios\n- Log de Errores\n- Publico Convocatorias\n- Convocatorias\n- Detalles Convocatorias\n- Oferentes\n- Horarios\n- Estatus Solicitudes\n- Solicitudes\n- Detalles Solicitudes\n- Tipos Ofertas Academicas\n- Ofertas Academicas\n- Campus\n- Areas de Desarrollo\n- Niveles Educativos\n- Estatus Solicitudes\n- Tipos de Instituciones\n- Instituciones\n- Ofertas de las Instituciones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = pm.response.json();",
+									"pm.collectionVariables.set(\"token\",res.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "admin@pruebas.com",
+									"description": "Email | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"description": "Password | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/profile/login",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"profile",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/profile/logout",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"profile",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/profile/getProfile",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"profile",
+								"getProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "System Administrator",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Imagen | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								},
+								{
+									"key": "contact_phone",
+									"value": "123-1233-1234",
+									"description": "Telefono | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "probando@cambio.do",
+									"description": "Email de Contacto | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/profile/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"profile",
+								"update"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "update Profile Candidato",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "Imagen | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								},
+								{
+									"key": "document_id",
+									"value": "00100123456",
+									"description": "Numero ID | Opcional | String",
+									"type": "text"
+								},
+								{
+									"key": "born_date",
+									"value": "2000-01-01",
+									"description": "Fecha Nacimiento | Opcional | String YYYY-DD-MM",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Juan Pedro ",
+									"description": "Nombres | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Martinez",
+									"description": "Apellidos | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "genero",
+									"value": "masculino",
+									"description": "Genero | Obligatorio | String | 'masculino' || 'femenino'",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Calle a #1, Santurce",
+									"description": "Direccion | Opcional | String",
+									"type": "text"
+								},
+								{
+									"key": "municipality_id",
+									"value": "1",
+									"description": "ID Municipio | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "province_id",
+									"value": "1",
+									"description": "ID Provincia | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "country_id",
+									"value": "1",
+									"description": "ID Pais | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "123-1233-1234",
+									"description": "Telefono | Opcional | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "probando@cambio.do",
+									"description": "Email de Contacto | Opcional | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/profile/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"profile",
+								"update"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "ChangePassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "current_password",
+									"value": "admin",
+									"description": "Password Actual | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"description": "Password | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "admin",
+									"description": "Confirmacion Password | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/profile/changepassword",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"profile",
+								"changepassword"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Control Profile para usuarios, Login and LogOut"
+		},
+		{
+			"name": "Parametros",
+			"item": [
+				{
+					"name": "Parametros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address}}/parametros/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"parametros",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Parametros Generales del sistema"
+		},
+		{
+			"name": "Estadistiscas",
+			"item": [
+				{
+					"name": "Estadisticas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{address}}/estadisticas/?convocatoria_id=1",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"estadisticas",
+								""
+							],
+							"query": [
+								{
+									"key": "convocatoria_id",
+									"value": "1",
+									"description": "ID Convocatoria | Obligatorio | Integer"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Estadisticas por Convocatorias"
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{address}}/users/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"users",
+								"getAll"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "2",
+									"description": "ID Usuario | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/users/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"users",
+								"show"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "aqui@toy.yo",
+									"description": "Email | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Juan Perez Perez",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "role_id",
+									"value": "6",
+									"description": "ID Role | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"description": "Password | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "admin",
+									"description": "Confirmacion Password | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/users/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"users",
+								"create"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "3",
+									"description": "ID Usuario | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "aqui@toy.yo45",
+									"description": "Email | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/users/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"users",
+								"update"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "2",
+									"description": "ID Usuario | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"description": "Password | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "admin",
+									"description": "Confirmacion Password | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/users/resetpassword",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"users",
+								"resetpassword"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				}
+			],
+			"description": "Control de Usuarios <br>\nSolo los administradores tienen acceso"
+		},
+		{
+			"name": "Evaluadores",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{address}}/evaluators/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluators",
+								"getAll"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluator_id",
+									"value": "2",
+									"description": "ID Evaluador | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluators/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluators",
+								"show"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "coordinator_id",
+									"value": "1",
+									"description": "ID Coordinador | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "aquidss@pruebas.com",
+									"description": "Email | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Juan Perez Perez",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "809-098-0987",
+									"description": "Telefono Contacto | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Imagen Evaluador | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"description": "Password | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "admin",
+									"description": "Confirmacion Password | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluators/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluators",
+								"create"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluator_id",
+									"value": "1",
+									"description": "ID Evaluador | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "coordinator_id",
+									"value": "1",
+									"description": "ID Coordinador | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Juan Perez Perez",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "aqui@toy.yo",
+									"description": "Email | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "809-098-0987",
+									"description": "Telefono Contacto | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Imagen Evaluador | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluators/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluators",
+								"update"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluator_id",
+									"value": "2",
+									"description": "ID Evaluador | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluators/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluators",
+								"delete"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				}
+			],
+			"description": "Evaluadores"
+		},
+		{
+			"name": "Coordinadores",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{address}}/coordinators/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"coordinators",
+								"getAll"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "coordinator_id",
+									"value": "1",
+									"description": "ID Evaluador | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/coordinators/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"coordinators",
+								"show"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "aquid2@microsoft.com",
+									"description": "Email | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Juan Perez Perez",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "809-098-0987",
+									"description": "Telefono Contacto | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Imagen Evaluador | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"description": "Password | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "admin",
+									"description": "Confirmacion Password | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/coordinators/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"coordinators",
+								"create"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "coordinator_id",
+									"value": "2",
+									"description": "ID Coordinador | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Juan Perez Perez",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "aqui@toy.yo",
+									"description": "Email | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_phone",
+									"value": "809-098-0987",
+									"description": "Telefono Contacto | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Imagen Evaluador | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/coordinators/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"coordinators",
+								"update"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "coordinator_id",
+									"value": "1",
+									"description": "ID Coodinador | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/coordinators/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"coordinators",
+								"delete"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "Asignar Instituciones a Evaluadores",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluator_id",
+									"value": "1",
+									"description": "ID Evaluador | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "institution_id",
+									"value": "5",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "convocatoria_id",
+									"value": "1",
+									"description": "ID Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/ievaluators/add",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"ievaluators",
+								"add"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				},
+				{
+					"name": "Remover Instituciones a Evaluadores",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_evaluator_id",
+									"value": "6",
+									"description": "ID Institucion - Evaluador | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/ievaluators/remove",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"ievaluators",
+								"remove"
+							]
+						},
+						"description": "Only Admins can do this"
+					},
+					"response": []
+				}
+			],
+			"description": "Coordinadores"
+		},
+		{
+			"name": "Publico Convocatorias",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/publico/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"publico",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audience_id",
+									"value": "1",
+									"description": "ID Publico Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/publico/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"publico",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Publico Convocatoria de Prueba",
+									"description": "Nombre del Estado | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/publico/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"publico",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audience_id",
+									"value": "5",
+									"description": "ID Publico Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Cambie el nombre del publico convocatoria",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/publico/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"publico",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audience_id",
+									"value": "5",
+									"description": "ID Publico Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/publico/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"publico",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Publico al que va dirigido la convocatoria"
+		},
+		{
+			"name": "Areas de Desarrollo",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/areas/desarrollo/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"areas",
+								"desarrollo",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "development_area_id",
+									"value": "2",
+									"description": "ID Area Desarrollo | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/areas/desarrollo/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"areas",
+								"desarrollo",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Nombre del Area de Desarrollo",
+									"description": "Nombre Area Desarrollo | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/areas/desarrollo/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"areas",
+								"desarrollo",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "development_area_id",
+									"value": "9",
+									"description": "ID Area Desarrollo | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Area Desarrollo Actualizada",
+									"description": "Nombre Area de Desarrollo | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/areas/desarrollo/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"areas",
+								"desarrollo",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "development_area_id",
+									"value": "6",
+									"description": "ID Area Desarrollo | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/areas/desarrollo/activate",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"areas",
+								"desarrollo",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "development_area_id",
+									"value": "6",
+									"description": "ID Area Desarrollo | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/areas/desarrollo/deactivate",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"areas",
+								"desarrollo",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "development_area_id",
+									"value": "8",
+									"description": "ID Area de Desarrollo | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/areas/desarrollo/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"areas",
+								"desarrollo",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Areas de Desarrollo"
+		},
+		{
+			"name": "Niveles Educativos",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/niveles/educativos/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"niveles",
+								"educativos",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byArea",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "development_area_id",
+									"value": "1",
+									"description": "ID Area Desarrollo | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/niveles/educativos/byArea",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"niveles",
+								"educativos",
+								"byArea"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "education_level_id",
+									"value": "2",
+									"description": "ID Nivel Educativo | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/niveles/educativos/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"niveles",
+								"educativos",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "development_area_id",
+									"value": "1",
+									"description": "ID Area Desarrollo | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Nombre Nivel Educativo",
+									"description": "Nombre Nivel Educativo | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/niveles/educativos/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"niveles",
+								"educativos",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "education_level_id",
+									"value": "51",
+									"description": "ID Nivel Educativo | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "development_area_id",
+									"value": "1",
+									"description": "ID Area Desarrollo | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Nivel Educativo Actualizado",
+									"description": "Nombre Nivel Educativo | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/niveles/educativos/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"niveles",
+								"educativos",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "education_level_id",
+									"value": "1",
+									"description": "ID Nivel Educativo | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/niveles/educativos/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"niveles",
+								"educativos",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Niveles Educativos"
+		},
+		{
+			"name": "Tipo Instituciones",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/instituciones/tipos/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"tipos",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_type_id",
+									"value": "2",
+									"description": "ID Tipo Institucion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/tipos/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"tipos",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Nombre Tipo Institucion",
+									"description": "Nombre Tipo Institucion | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/tipos/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"tipos",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_type_id",
+									"value": "6",
+									"description": "ID Tipo Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Politecnico Salesciano",
+									"description": "Nombre Tipo Institucion | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/tipos/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"tipos",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_type_id",
+									"value": "1",
+									"description": "ID Tipo de Institucion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/tipos/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"tipos",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Tipos Instituciones (IES)"
+		},
+		{
+			"name": "Tipos Ofertas Academicas",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/ofertas/academicas/tipos/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"ofertas",
+								"academicas",
+								"tipos",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "academic_offer_type_id",
+									"value": "1",
+									"description": "ID Tipo Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/ofertas/academicas/tipos/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"ofertas",
+								"academicas",
+								"tipos",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description",
+									"value": "Tecnica Bachiller",
+									"description": "Nombre - Descripcion | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/ofertas/academicas/tipos/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"ofertas",
+								"academicas",
+								"tipos",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "academic_offer_type_id",
+									"value": "1",
+									"description": "ID Tipo Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Tecnica Superior 4444444",
+									"description": "Nombre - Descripcion | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/ofertas/academicas/tipos/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"ofertas",
+								"academicas",
+								"tipos",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "academic_offer_type_id",
+									"value": "1",
+									"description": "ID Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/ofertas/academicas/tipos/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"ofertas",
+								"academicas",
+								"tipos",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Instituciones",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/instituciones/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "3",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_type_id",
+									"value": "1",
+									"description": "ID tipo audiencia | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "siglas",
+									"value": "MIT",
+									"description": "Siglas Institucion | Opcional | String",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Prueba Creacion",
+									"description": "Nombre Institucion | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Archivo Imagen | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "53",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "institution_type_id",
+									"value": "5",
+									"description": "ID tipo audiencia | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "siglas",
+									"value": "MIT",
+									"description": "Nombre Institucion | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Prueba Actualizacion",
+									"description": "Nombre Institucion | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Archivo Imagen | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "101",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Instituciones (IES)"
+		},
+		{
+			"name": "Formularios",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/formularios/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"formularios",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formulario_id",
+									"value": "1",
+									"description": "ID Formulario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/formularios/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"formularios",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Prueba Formulario\",\n    \"description\": \"Probando el Formulario\",\n    \"isPlantilla\": true,\n    \"detalles\": [\n        {\n            \"seccion\": \"Probando Seccion 1\",\n            \"type\": \"select\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 1\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 1\",\n            \"data\": \"['opcion1','opcion2','opcion3']\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 2\",\n            \"type\": \"checkbox\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 2\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 2\",\n            \"data\": \"['seleccion1','seleccion2','seleccion3']\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 1\",\n            \"type\": \"radio\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 3\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 3\",\n            \"data\": \"['radio1','radio2','radio3']\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 2\",\n            \"type\": \"text\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 4\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 4\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 3\",\n            \"type\": \"textarea\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 5\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 5\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 3\",\n            \"type\": \"file\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 6\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 6\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/formularios/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"formularios",
+								"create"
+							]
+						},
+						"description": "Enviar un Objeto con los atributos de \n<br> name (string),\n<br> description (string),\n<br> isPlantilla (boolean), \n<br> detalles (collection) y dentro de esta coleccion de objetos, estos deben de tener estos atributos:\n<br> seccion(string)\n<br> type(String) select | radio | checkbox | text | textarea | file \n<br> required (boolean)\n<br> name (string)\n<br> description (string)\n<br> data (string) solo en el caso de los types : select | radio | checkbox\nEjemplo:<br>\n<code>\n{\n    \"name\": \"Prueba Formulario\",\n    \"description\": \"Probando el Formulario\",\n    \"isPlantilla\": false,\n    \"detalles\": [\n        {\n            \"seccion\": \"Probando Seccion 1\",\n            \"type\": \"select\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 1\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 1\",\n            \"data\": \"['opcion1','opcion2','opcion3']\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 2\",\n            \"type\": \"checkbox\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 2\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 2\",\n            \"data\": \"['seleccion1','seleccion2','seleccion3']\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 1\",\n            \"type\": \"radio\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 3\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 3\",\n            \"data\": \"['radio1','radio2','radio3']\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 2\",\n            \"type\": \"text\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 4\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 4\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 3\",\n            \"type\": \"textarea\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 5\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 5\"\n        },\n        {\n            \"seccion\": \"Probando Seccion 3\",\n            \"type\": \"file\",\n            \"required\": \"true\",\n            \"name\": \"Pregunta Pruebas 6\",\n            \"description\": \"Descripcion o detalle de la pregunta de pruebas 6\"\n        }\n    ]\n}\n</code>"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formulario_id",
+									"value": "3",
+									"description": "ID Formulario | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Formulario de Pruebasssssss",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "La descripcion del formulario que estamos creando",
+									"description": "Descripcion del formulario | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "isPlantilla",
+									"value": "true",
+									"description": "Es Plantilla | Opcional | Boolean",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/formularios/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"formularios",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formulario_id",
+									"value": "3",
+									"description": "ID Formulario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/formularios/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"formularios",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Formularios"
+		},
+		{
+			"name": "Formularios (Preguntas)",
+			"item": [
+				{
+					"name": "byFormulario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formulario_id",
+									"value": "1",
+									"description": "ID Formulario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/formularios/details/byFormulario",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"formularios",
+								"details",
+								"byFormulario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formulario_detail_id",
+									"value": "1",
+									"description": "ID Detalle Formulario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/formularios/details/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"formularios",
+								"details",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formulario_detail_id",
+									"value": "3",
+									"description": "ID Detalle Formulario | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "required",
+									"value": "1",
+									"description": "Es Requerido | Obligatorio | Boolean",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "text",
+									"description": "Tipo de dato | Obligatorio | text, textarea, checkbox, radio, select, date, file, number",
+									"type": "text"
+								},
+								{
+									"key": "data",
+									"value": "",
+									"description": "Data para componente | Obligatorio en (checkbox, radio, select) | String",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Formulario de Pruebas",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "La descripcion del formulario que estamos creando",
+									"description": "Descripcion del formulario | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/formularios/details/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"formularios",
+								"details",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formulario_detail_id",
+									"value": "12",
+									"description": "ID Detalle Formulario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/formularios/details/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"formularios",
+								"details",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Detalles de Formularios"
+		},
+		{
+			"name": "Evaluaciones",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/evaluaciones/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluaciones",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluation_id",
+									"value": "1",
+									"description": "ID Evaluacion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluaciones/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluaciones",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Prueba de Evaluaciones\",\n    \"color\": \"#330044\",\n    \"top_score\": \"100\",\n    \"pre_approved\": \"90\",\n    \"isPlanilla\": true,\n        \"requerimientos\": [\n            {   \n                \"name\": \"Criterio Evaluacion 1\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 1\",\n                \"value\": \"20\"\n            },\n            {   \n                \"name\": \"Criterio Evaluacion 2\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 2\",\n                \"value\": \"20\"\n            },\n            {   \n                \"name\": \"Criterio Evaluacion 3\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 3\",\n                \"value\": \"20\"\n            },\n            {   \n                \"name\": \"Criterio Evaluacion 4\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 4\",\n                \"value\": \"20\"\n            },\n            {   \n                \"name\": \"Criterio Evaluacion 5\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 5\",\n                \"value\": \"20\"\n            }\n        ]\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}/evaluaciones/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluaciones",
+								"create"
+							]
+						},
+						"description": "Enviar un JSON con los key pair de \n<br> name (String), \n<br> color (string)\n<br> top_score (float)\n<br> pre_approved (float)\n<br> y una coleccion \"requerimientos\" con los datos:\n<br> name (String)\n<br> description (String)\n<br> value (String)\nEjemplo:<br>\n<code>\n{\n    \"name\":\"Prueba de Evaluaciones\",\n    \"color\": \"#330044\",\n    \"top_score\": \"100\",\n    \"pre_approved\": \"90\",\n        \"requerimientos\": [\n            {   \n                \"name\": \"Criterio Evaluacion 1\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 1\",\n                \"value\": \"20\"\n            },\n            {   \n                \"name\": \"Criterio Evaluacion 2\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 2\",\n                \"value\": \"20\"\n            },\n            {   \n                \"name\": \"Criterio Evaluacion 3\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 3\",\n                \"value\": \"20\"\n            },\n            {   \n                \"name\": \"Criterio Evaluacion 4\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 4\",\n                \"value\": \"20\"\n            },\n            {   \n                \"name\": \"Criterio Evaluacion 5\",\n                \"description\": \"Descripcion de Criterio de Evaluacion 5\",\n                \"value\": \"20\"\n            }\n        ]\n    \n}\n</code>"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluation_id",
+									"value": "1",
+									"description": "ID Evaluacion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Formulario de Pruebasdddddd",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "#330044",
+									"description": "Color en Hex | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "top_score",
+									"value": "100",
+									"description": "Maximo Score | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "pre_approved",
+									"value": "90",
+									"description": "Score con el que se pre-aprueba | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluaciones/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluaciones",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluation_id",
+									"value": "1",
+									"description": "ID Evaluacion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluaciones/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluaciones",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Evaluaciones"
+		},
+		{
+			"name": "Requerimientos Evaluaciones",
+			"item": [
+				{
+					"name": "byFormulario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluation_id",
+									"value": "2",
+									"description": "ID Evaluacion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluaciones/requerimientos/byEvaluacion",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluaciones",
+								"requerimientos",
+								"byEvaluacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluation_requirement_id",
+									"value": "2",
+									"description": "ID Requerimiento Evaluacion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluaciones/requerimientos/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluaciones",
+								"requerimientos",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluation_requirement_id",
+									"value": "60",
+									"description": "ID Requerimiento Evaluacion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Nombre del Requerimiento",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Descripcion del Requerimiento",
+									"description": "Descripcion | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "value",
+									"value": "10",
+									"description": "Valor Requerimiento | Obligatorio | Float",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluaciones/requerimientos/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluaciones",
+								"requerimientos",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluation_requirement_id",
+									"value": "60",
+									"description": "ID Requerimiento Evaluacion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/evaluaciones/requerimientos/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"evaluaciones",
+								"requerimientos",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Detalles de Formularios"
+		},
+		{
+			"name": "Instituciones Ofertas Academicas",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/instituciones/ofertas/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"ofertas",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get For Institution",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "2",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/ofertas/institucion",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"ofertas",
+								"institucion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_offer_id",
+									"value": "2",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/ofertas/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"ofertas",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "53",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "academic_offer_id",
+									"value": "1",
+									"description": "ID Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "campus_id",
+									"value": "1",
+									"description": "ID Campus | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "schedule_id",
+									"value": "2",
+									"description": "ID Horario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/ofertas/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"ofertas",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_offer_id",
+									"value": "1",
+									"description": "ID Oferta Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "institution_id",
+									"value": "53",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "academic_offer_id",
+									"value": "2",
+									"description": "ID Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "campus_id",
+									"value": "2",
+									"description": "ID Campus | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "schedule_id",
+									"value": "2",
+									"description": "ID Horario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/ofertas/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"ofertas",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_offer_id",
+									"value": "1",
+									"description": "ID Oferta Institucion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/ofertas/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"ofertas",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Convocatoria Tipos",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/convocatorias/tipos/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"tipos",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_type_id",
+									"value": "2",
+									"description": "ID Tipo Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/tipos/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"tipos",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Prueba",
+									"description": "Tipo Convocatoria | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "#0000FF",
+									"description": "Codigo Color | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/tipos/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"tipos",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_type_id",
+									"value": "4",
+									"description": "ID Tipo Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Prueba Cambio de Tipo",
+									"description": "Nombre Convocatoria | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "#0000FA",
+									"description": "Codigo Color | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/tipos/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"tipos",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_type_id",
+									"value": "4",
+									"description": "ID Tipo Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/tipos/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"tipos",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Convocatorias"
+		},
+		{
+			"name": "Convocatoria",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/convocatorias/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pendientes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/convocatorias/pendientes",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"pendientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cerradas",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/convocatorias/cerradas",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"cerradas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "portal",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/convocatorias/portal",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"portal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "abiertas",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/convocatorias/abiertas",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"abiertas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "1",
+									"description": "ID Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "coordinator_id",
+									"value": "1",
+									"description": "ID Coordinador | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "convocatoria_type_id",
+									"value": "1",
+									"description": "ID Tipo Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "evaluation_id",
+									"value": "1",
+									"description": "ID Evaluacion a usar | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "audience_id",
+									"value": "1",
+									"description": "ID tipo audiencia | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Prueba",
+									"description": "Nombre Convocatoria | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2021-06-18",
+									"description": "Fecha Inicio Convocatoria | Obligatorio (YYYY-MM-DD) | String Formatted",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2022-06-18",
+									"description": "Fecha Cierre Convocatoria | Obligatorio (YYYY-MM-DD) | String Formatted",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Archivo Imagen | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "coordinator_id",
+									"value": "1",
+									"description": "ID Coordinador | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "convocatoria_id",
+									"value": "2",
+									"description": "ID de la Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "audience_id",
+									"value": "1",
+									"description": "ID tipo audiencia | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Prueba Subiendole Imagen",
+									"description": "Nombre Convocatoria | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2021-06-18",
+									"description": "Fecha Inicio Convocatoria | Obligatorio (YYYY-MM-DD) | String Formatted",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2022-06-18",
+									"description": "Fecha Cierre Convocatoria | Obligatorio (YYYY-MM-DD) | String Formatted",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Archivo Imagen | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/PDFTestFile.pdf"
+								},
+								{
+									"key": "convocatoria_type_id",
+									"value": "2",
+									"description": "ID Tipo Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "evaluation_id",
+									"value": "1",
+									"description": "ID Evaluacion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "6",
+									"description": "ID Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Open",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "1",
+									"description": "ID Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/setOpen",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"setOpen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Pending",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "1",
+									"description": "ID Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/setPending",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"setPending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Closed",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "3",
+									"description": "ID Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/setClose",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"setClose"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Published",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "3",
+									"description": "ID Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/setPublished",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"setPublished"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set UnPublished",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "1",
+									"description": "ID Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/setUnPublished",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"setUnPublished"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Convocatorias"
+		},
+		{
+			"name": "Ofertas Academicas Convocatorias",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "1",
+									"description": "ID Convocatoria a la que pertenecen los detalles | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/details/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"details",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "busqueda",
+									"value": "claims",
+									"description": "Parametro de busqueda | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/details/search",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"details",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_detail_id",
+									"value": "1",
+									"description": "ID Detalle Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/details/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"details",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "2",
+									"description": "ID Convocatoria que Pertenece el detalle | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "formulario_id",
+									"value": "1",
+									"description": "ID Formulario a usar | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "institution_offer_id",
+									"value": "1",
+									"description": "ID Oferta Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "offerer_id",
+									"value": "1",
+									"description": "ID Oferente | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "coverage",
+									"value": "80",
+									"description": "Cobertura | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Archivo Imagen | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/details/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"details",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formulario_id",
+									"value": "1",
+									"description": "ID Formulario a usar | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "convocatoria_detail_id",
+									"value": "201",
+									"description": "ID Detalle Convocatoria Editar | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "institution_offer_id",
+									"value": "2",
+									"description": "ID Oferta Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "offerer_id",
+									"value": "2",
+									"description": "ID Oferente | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "coverage",
+									"value": "95",
+									"description": "Cobertura | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Archivo Imagen | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/JPGTestFile.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/details/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"details",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_detail_id",
+									"value": "201",
+									"description": "ID Detalle Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/convocatorias/details/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"convocatorias",
+								"details",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Detalles Convocatorias"
+		},
+		{
+			"name": "Campus",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/campus/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"campus",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get For Institution",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "3",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/campus/institucion",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"campus",
+								"institucion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "campus_id",
+									"value": "2",
+									"description": "ID Campus, Obligatorio",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/campus/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"campus",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "13",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "municipality_id",
+									"value": "22",
+									"description": "ID Municipio | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "province_id",
+									"value": "15",
+									"description": "ID Provincia | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "country_id",
+									"value": "1",
+									"description": "ID Pais | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Campus Este Stanford",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "San Pedro Macorisdddddd",
+									"description": "Direccion | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "1231234567",
+									"description": "Numero Telefono | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/campus/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"campus",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "campus_id",
+									"value": "103",
+									"description": "ID Campus | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "institution_id",
+									"value": "22",
+									"description": "ID Institucion | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "municipality_id",
+									"value": "22",
+									"description": "ID Municipio | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "province_id",
+									"value": "21",
+									"description": "ID Provincia | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "country_id",
+									"value": "2",
+									"description": "ID Pais | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Campus Este Stanford",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "San Pedro Macorisdddddd",
+									"description": "Direccion | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "1231234567",
+									"description": "Numero Telefono | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/campus/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"campus",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "campus_id",
+									"value": "1",
+									"description": "ID Campus, Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/campus/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"campus",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Oferentes",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/oferentes/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"oferentes",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "offerer_id",
+									"value": "10",
+									"description": "ID Oferente | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/oferentes/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"oferentes",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"description": "Imagen | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/PDFTestFile.pdf"
+								},
+								{
+									"key": "name",
+									"value": "ONG Privada 1",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "document_id",
+									"value": "01782773645",
+									"description": "No Documento | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "Organizacion Privada",
+									"description": "Tipo Oferente | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_person",
+									"value": "Jose Perez Martich",
+									"description": "Persona Contacto | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_number",
+									"value": "809-555-4343",
+									"description": "Numero Contacto | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "aqui@notoy.com",
+									"description": "Email Contacto | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/oferentes/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"oferentes",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "offerer_id",
+									"value": "1",
+									"description": "ID Oferente | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "imagen",
+									"description": "Archivo Imagen | Opcional | File",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "name",
+									"value": "ONG Privada 2345",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "document_id",
+									"value": "01782773645",
+									"description": "No Documento | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "Organizacion Privada",
+									"description": "Tipo Oferente | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_person",
+									"value": "Jose Perez Martich",
+									"description": "Persona Contacto | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_number",
+									"value": "809-555-4343",
+									"description": "Numero Contacto | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "contact_email",
+									"value": "aqui@notoy.com",
+									"description": "Email Contacto | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/oferentes/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"oferentes",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "offerer_id",
+									"value": "1",
+									"description": "ID Ofertante | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/oferentes/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"oferentes",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Oferentes"
+		},
+		{
+			"name": "Horarios",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/horarios/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"horarios",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "schedule_id",
+									"value": "2",
+									"description": "ID Horario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/horarios/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"horarios",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "modality",
+									"value": "Presencial",
+									"description": "Modalidad | Obligatorio | String | Example: \"Presencial - Semi Presencial - Online\"",
+									"type": "text"
+								},
+								{
+									"key": "shift",
+									"value": "Tardes",
+									"description": "Tandas | Obligatorio | String | Example: \"Mañanas - Tardes - Noches\"",
+									"type": "text"
+								},
+								{
+									"key": "days",
+									"value": "Luneas a Viernes",
+									"description": "Dias de la semana | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "time",
+									"value": "8am - 12pm",
+									"description": "Horario | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/horarios/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"horarios",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "schedule_id",
+									"value": "2",
+									"description": "ID Horario | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "modality",
+									"value": "Presencialeeeeeee",
+									"description": "Modalidad | Obligatorio | String | Example: \"Presencial - Semi Presencial - Online\"",
+									"type": "text"
+								},
+								{
+									"key": "shift",
+									"value": "Tardes",
+									"description": "Tandas | Obligatorio | String | Example: \"Mañanas - Tardes - Noches\"",
+									"type": "text"
+								},
+								{
+									"key": "days",
+									"value": "Luneas a Viernes",
+									"description": "Dias de la semana | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "time",
+									"value": "8am - 12pm",
+									"description": "Horario | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/horarios/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"horarios",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "schedule_id",
+									"value": "10",
+									"description": "ID Horario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/horarios/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"horarios",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "schedule_id",
+									"value": "2",
+									"description": "ID Horario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/horarios/activate",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"horarios",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "schedule_id",
+									"value": "2",
+									"description": "ID Horario | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/horarios/deactivate",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"horarios",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Horarios"
+		},
+		{
+			"name": "Solicitudes Estados",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/solicitudes/estados/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"estados",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCloseStatus",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/solicitudes/estados/getCloseStatus",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"estados",
+								"getCloseStatus"
+							]
+						},
+						"description": "Retorna los Status para Cierre por el Coordinador."
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "aplication_status_id",
+									"value": "1",
+									"description": "ID Estatus de Solicitud | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/estados/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"estados",
+								"show"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Estado de Solicitudes (Aplicaciones)"
+		},
+		{
+			"name": "Solicitudes",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/solicitudes/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pendientes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/solicitudes/pendientes",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"pendientes"
+							]
+						},
+						"description": "Solicitudes pendientes de envio por los candidatos"
+					},
+					"response": []
+				},
+				{
+					"name": "enviadas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/solicitudes/enviadas",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"enviadas"
+							]
+						},
+						"description": "Solicitudes que fueron enviadas por los candidatos"
+					},
+					"response": []
+				},
+				{
+					"name": "cerradas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/solicitudes/cerradas",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"cerradas"
+							]
+						},
+						"description": "Solicitudes con status de cerradas"
+					},
+					"response": []
+				},
+				{
+					"name": "byEvaluador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "evaluator_id",
+									"value": "2",
+									"description": "ID Evaluador | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "paginar",
+									"value": "25",
+									"description": "Numero de Resultados por pagina | Opcional | Integer",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "abiertas",
+									"description": "Estado Solicitud | Opcional | abiertas || cerradas en caso de no pasar parametro selecciona todas",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/byEvaluator",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"byEvaluator"
+							]
+						},
+						"description": "Solicitudes asignadas a un evaluador por la institucion a las cuales esta asignado"
+					},
+					"response": []
+				},
+				{
+					"name": "byConvocatoria - Institucion - Oferente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "1",
+									"description": "ID Convocatoria | Opcional | Integer",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "institution_id",
+									"value": "1",
+									"description": "ID Institucion | Opcional | Integer",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "offerer_id",
+									"value": "2",
+									"description": "ID Oferente | Opcional | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/getSolicitudes",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"getSolicitudes"
+							]
+						},
+						"description": "Enviar 1 de los tres parametros opcionales"
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "aplication_id",
+									"value": "1",
+									"description": "ID Solicitud | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_detail_id",
+									"value": "2",
+									"description": "ID Convocatoria | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enviar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "aplication_id",
+									"value": "1",
+									"description": "ID Solicitud | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/enviar",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"enviar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "aplication_id",
+									"value": "1",
+									"description": "ID Solicitud | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "razon",
+									"value": "Razon de la Cancelacion",
+									"description": "Razon Cancelacion | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/cancelar",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"cancelar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cerrar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "aplication_id",
+									"value": "1",
+									"description": "ID Solicitud | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "aplication_status_id",
+									"value": "5",
+									"description": "ID Status | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "notas",
+									"value": "Notas a la solicitud",
+									"description": "Notas | Opcional | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/cerrar",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"cerrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EvaluarRequerimiento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "aplication_detail_id",
+									"value": "18",
+									"description": "ID Solicitud | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "score",
+									"value": "10",
+									"description": "Valor Obtenido | Obligatorio | Numeric",
+									"type": "text"
+								},
+								{
+									"key": "notes",
+									"value": "kjhsdlkfjahdslkjfhalskfhjakls",
+									"description": "Valor Obtenido | Opcional | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/details/evaluate",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"details",
+								"evaluate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Contestar Pregunta Formulario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "aplication_form_id",
+									"value": "1",
+									"description": "ID Form de la Solicitud | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "answer",
+									"value": "AKJHDLKJAFHLFKJHADSKJFHADKSFJHAKSDHFAKJDSFHAKHJDGFKAJHDSGFKAJHDGSKFAJDHGSKFJAHGDS",
+									"description": "Respuesta | Opcional | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/forms/answer",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"forms",
+								"answer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Contestar Pregunta Formulario Multiple",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {   \n        \"aplication_form_id\": \"1\",\n        \"answer\": \"Probando llenado multiple1\"\n    },\n    {   \n        \"aplication_form_id\": \"2\",\n        \"answer\": \"Probando llenado multiple2\"\n    }\n]"
+						},
+						"url": {
+							"raw": "{{address}}/solicitudes/forms/answerMultiple",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"solicitudes",
+								"forms",
+								"answerMultiple"
+							]
+						},
+						"description": "Enviar un JSON con los key pair de aplication_form_id (Integer), answer(String). <br>\nEjemplo: <br>\n[<br>\n    {<br>   \n        \"aplication_form_id\": \"1\",<br>\n        \"answer\": \"Probando llenado multiple1\"<br>\n    },<br>\n    {<br>\n        \"aplication_form_id\": \"2\",<br>\n        \"answer\": \"Probando llenado multiple2\"<br>\n    }<br>\n]<br>"
+					},
+					"response": []
+				}
+			],
+			"description": "Solicitudes (Aplicaciones)"
+		},
+		{
+			"name": "Becados",
+			"item": [
+				{
+					"name": "Estados Becas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/becados/getEstados",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"getEstados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtros",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "convocatoria_id",
+									"value": "1",
+									"description": "ID Convocatoria | Opcional | Integer",
+									"type": "text"
+								},
+								{
+									"key": "institution_id",
+									"value": "24",
+									"description": "ID Convocatoria | Opcional | Integer",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "offerer_id",
+									"value": "1",
+									"description": "ID Convocatoria | Opcional | Integer",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "candidate_id",
+									"value": "3",
+									"description": "ID Convocatoria | Opcional | Integer",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/becados/filter",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"filter"
+							]
+						},
+						"description": "Filtra las becas por diferentes opciones, solo escoger una a la vez, si no se pasan parametros devuelve todo"
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "scholarship_id",
+									"value": "1",
+									"description": "ID Becado | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/becados/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambiar Estado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "scholarship_id",
+									"value": "1",
+									"description": "ID Becado | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "activo",
+									"description": "Estado | Obligatorio | String || egresado, retirado, expulsado, activo, suspendido",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/becados/updateEstado",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"updateEstado"
+							]
+						},
+						"description": "Cambia el estado de la beca."
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/becados/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "egresados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/becados/egresados",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"egresados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retirados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/becados/retirados",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"retirados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "expulsados",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/becados/expulsados",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"expulsados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/becados/activos",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"activos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "suspendidos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/becados/suspendidos",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"suspendidos"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Solicitudes (Aplicaciones)"
+		},
+		{
+			"name": "Becados Calificaciones",
+			"item": [
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "scholarship_detail_id",
+									"value": "1",
+									"description": "ID Detalle Becado | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/becados/detalles/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"detalles",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/becados/detalles/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"detalles",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtros",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "candidate_id",
+									"value": "3",
+									"description": "ID Candidato | Opcional | Integer",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "scholarship_id",
+									"value": "1",
+									"description": "ID Beca | Opcional | Integer",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/becados/detalles/filtros",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"detalles",
+								"filtros"
+							]
+						},
+						"description": "Filtrado de Detalles de Becas, solo pasar un parametro a la vez, si no pasan parametros retorna todo."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "scholarship_id",
+									"value": "1",
+									"description": "ID Becado | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "rango_minimo",
+									"value": "1",
+									"description": "Rango Minimo | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "rango_maximo",
+									"value": "100",
+									"description": "Rango Maximo | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "periodo",
+									"value": "1er Trimestre",
+									"description": "Periodo de Calificaciones | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "calificacion",
+									"value": "93",
+									"description": "Calificacion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/becados/detalles/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"detalles",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "scholarship_detail_id",
+									"value": "1004",
+									"description": "ID Detalle Beca | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "rango_minimo",
+									"value": "50",
+									"description": "Rango Minimo | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "rango_maximo",
+									"value": "100",
+									"description": "Rango Maximo | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "periodo",
+									"value": "1er Trimestre",
+									"description": "Periodo de Calificaciones | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "calificacion",
+									"value": "51",
+									"description": "Calificacion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/becados/detalles/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"detalles",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "scholarship_detail_id",
+									"value": "1",
+									"description": "ID Detalle Beca | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/becados/detalles/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"becados",
+								"detalles",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Solicitudes (Aplicaciones)"
+		},
+		{
+			"name": "Documentos",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/documentos/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"documentos",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forUser",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/documentos/forUser",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"documentos",
+								"forUser"
+							]
+						},
+						"description": "Solicitudes pendientes de envio por los candidatos"
+					},
+					"response": []
+				},
+				{
+					"name": "byAplication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "aplication_id",
+									"value": "1",
+									"description": "ID Aplicacion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/documentos/byAplication",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"documentos",
+								"byAplication"
+							]
+						},
+						"description": "Solicitudes que fueron enviadas por los candidatos"
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "document_id",
+									"value": "1",
+									"description": "ID Documento | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/documentos/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"documentos",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "document",
+									"description": "Document | Obligatorio | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/PDFTestFile.pdf"
+								},
+								{
+									"key": "name",
+									"value": "Nombre del Archivo",
+									"description": "Name | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "aplication_id",
+									"value": "1",
+									"description": "ID Aplicacion | Opcional | Integer | Si pertenece a una solicitud",
+									"type": "text"
+								},
+								{
+									"key": "notes",
+									"value": "Cualquier nota o aclaratoria que se quiera adicionar",
+									"description": "Notas | Opcional | String | Cualquier nota que se quiera que acompañe el documento",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/documentos/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"documentos",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "document_id",
+									"value": "1",
+									"description": "ID Documento | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/documentos/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"documentos",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Solicitudes (Aplicaciones)"
+		},
+		{
+			"name": "Carreras",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "3",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/carreras/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"carreras",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get For Education Level",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "30",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "education_level_id",
+									"value": "25",
+									"description": "ID Nivel Educativo | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/carreras/byEducationLevel",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"carreras",
+								"byEducationLevel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get For Offer Type",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "32",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "academic_offer_type_id",
+									"value": "4",
+									"description": "ID Nivel Educativo | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/carreras/byOfferType",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"carreras",
+								"byOfferType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "academic_offer_id",
+									"value": "20",
+									"description": "ID Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/carreras/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"carreras",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "institution_id",
+									"value": "1",
+									"description": "ID Institucion | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "academic_offer_type_id",
+									"value": "1",
+									"description": "ID Tipo Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "education_level_id",
+									"value": "2",
+									"description": "ID Nivel Academico | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "career",
+									"value": "Abogado",
+									"description": "Carrera | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "5 Years",
+									"description": "Duracion | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "language",
+									"value": "English",
+									"description": "Idioma | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "pensum",
+									"description": "Pensum de la carrera | Opcional | File",
+									"type": "file",
+									"src": "/Users/ivan/OneDrive - optic.gob.do/TestFiles/PDFTestFile.pdf"
+								},
+								{
+									"key": "detalles",
+									"value": "Detalles de la Carrera, todo lo que quieran",
+									"description": "Detalles de la carrera | Opcional | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/carreras/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"carreras",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "academic_offer_id",
+									"value": "101",
+									"description": "ID Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "academic_offer_type_id",
+									"value": "4",
+									"description": "ID Tipo Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "education_level_id",
+									"value": "4",
+									"description": "ID Nivel Academico | Obligatorio | Integer",
+									"type": "text"
+								},
+								{
+									"key": "career",
+									"value": "Marinerodddddddddd",
+									"description": "Carrera | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "15 Years",
+									"description": "Duracion | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "language",
+									"value": "Frances",
+									"description": "Idioma | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "pensum",
+									"description": "Pensum de la carrera | Opcional | File",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "detalles",
+									"value": "Detalles de la Carrera, todo lo que quieran",
+									"description": "Detalles de la carrera | Opcional | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/carreras/update",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"carreras",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "academic_offer_id",
+									"value": "101",
+									"description": "ID Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/carreras/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"carreras",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "academic_offer_id",
+									"value": "1",
+									"description": "ID Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/carreras/activate",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"carreras",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "academic_offer_id",
+									"value": "1",
+									"description": "ID Oferta Academica | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/instituciones/carreras/deactivate",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"instituciones",
+								"carreras",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Ofertas Academicas"
+		},
+		{
+			"name": "Paises",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/paises/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"paises",
+								"getAll"
+							]
+						},
+						"description": "Retorna listado paises"
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/paises/getOne?country_id=2",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"paises",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "country_id",
+									"value": "2",
+									"description": "ID Pais | Obligatorio | Integer"
+								}
+							]
+						},
+						"description": "Retorna un pais"
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/paises/search?busqueda=Dominican",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"paises",
+								"search"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "Dominican",
+									"description": "Parametro busqueda | Obligatorio | String"
+								}
+							]
+						},
+						"description": "Retorna listado paises, basado en resultado de busqueda"
+					},
+					"response": []
+				}
+			],
+			"description": "Modelo Paises <br>\nSin token necesario"
+		},
+		{
+			"name": "Provincias",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/provincias/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"provincias",
+								"getAll"
+							]
+						},
+						"description": "Retorna listado provincias"
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/provincias/getOne?province_code=62",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"provincias",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "province_code",
+									"value": "62",
+									"description": "Codigo Provincia | Obligatorio | Integer"
+								}
+							]
+						},
+						"description": "Retorna una provincia <br>\nSin token necesario"
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/provincias/search?busqueda=distrito",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"provincias",
+								"search"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "distrito",
+									"description": "Parametro Busqueda | Obligatorio | String"
+								}
+							]
+						},
+						"description": "Retorna listado de provincias, basado en resultado de la busqueda."
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Country",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/provincias/byCountry?country_id=62",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"provincias",
+								"byCountry"
+							],
+							"query": [
+								{
+									"key": "country_id",
+									"value": "62",
+									"description": "ID Pais | Obligatorio | Integer"
+								}
+							]
+						},
+						"description": "Retorna listado de provincias, por pais."
+					},
+					"response": []
+				}
+			],
+			"description": "Modelo Provincias <br>\nSin token necesario",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Municipios",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/municipios/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"municipios",
+								"getAll"
+							]
+						},
+						"description": "Retorna listado de municipios."
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/municipios/getOne?municipality_code=603",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"municipios",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "municipality_code",
+									"value": "603",
+									"description": "Codigo Municipio | Obligatorio | String"
+								}
+							]
+						},
+						"description": "Retorna un municipio."
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/municipios/search?busqueda=sant",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"municipios",
+								"search"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "sant",
+									"description": "Parametro de busqueda | Obligatorio | String"
+								}
+							]
+						},
+						"description": "Retorna listado de municipios basado en el resultado de la busqueda."
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Province",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/municipios/byProvince?province_code=62",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"municipios",
+								"byProvince"
+							],
+							"query": [
+								{
+									"key": "province_code",
+									"value": "62",
+									"description": "Codigo Provincia | Obligatorio | Integer"
+								}
+							]
+						},
+						"description": "Retorna listado de municipios por provincia."
+					},
+					"response": []
+				}
+			],
+			"description": "Modelo Municipios <br>\nSin token necesario",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Sectores",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/sectores/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"sectores",
+								"getAll"
+							]
+						},
+						"description": "Retorna listado de sectores."
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/sectores/getOne?sector_code=21040101008",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"sectores",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "sector_code",
+									"value": "21040101008",
+									"description": "Codido Sector | Obligatorio | Integer"
+								}
+							]
+						},
+						"description": "Retorna un sector."
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/sectores/search?busqueda=cambita",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"sectores",
+								"search"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "cambita",
+									"description": "Parametro de Busqueda | Obligatorio | String"
+								}
+							]
+						},
+						"description": "Retorna listado de sectores, basado en los resultados de la busqueda."
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Municipality",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/sectores/byMunicipality?municipality_code=2104",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"sectores",
+								"byMunicipality"
+							],
+							"query": [
+								{
+									"key": "municipality_code",
+									"value": "2104",
+									"description": "Codigo Municipio | Obligatorio | Integer"
+								}
+							]
+						},
+						"description": "Retorna listado de sectores por el municipio."
+					},
+					"response": []
+				}
+			],
+			"description": "Modelo Sectores <br>\nSin token necesario",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/logs/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"logs",
+								"getAll"
+							]
+						},
+						"description": "Retorna listado de Logs"
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/logs/getOne?log_id=1002",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"logs",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "log_id",
+									"value": "1002",
+									"description": "Log ID Required"
+								}
+							]
+						},
+						"description": "Retorna un log."
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "service",
+									"value": "Service name",
+									"description": "Service name to store log for, Required",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "Message error",
+									"description": "Error message for the error, Required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/logs/store",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"logs",
+								"store"
+							]
+						},
+						"description": "Crea un log en storage"
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "initial_date",
+									"value": "2021-07-01",
+									"description": "YYYY-MM-DD Required (Start Date for Search)",
+									"type": "text"
+								},
+								{
+									"key": "final_date",
+									"value": "2021-07-07",
+									"description": "YYYY-MM-DD Required (Final Date for Search)",
+									"type": "text"
+								},
+								{
+									"key": "service",
+									"value": "eum",
+									"description": "Service Name. Optional",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/logs/search",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"logs",
+								"search"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "cambita",
+									"description": "Search parameter",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Retorna un listado de logs, basados en los resultados de la busqueda."
+					},
+					"response": []
+				}
+			],
+			"description": "Modelo Logs de Servicios"
+		},
+		{
+			"name": "Mensajes",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "status",
+									"value": "read",
+									"description": "Status de Mensajes | Opcional | String | read || unread",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/mensajes/getAll",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"mensajes",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOne",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "message_id",
+									"value": "1",
+									"description": "ID Mensaje | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/mensajes/show",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"mensajes",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Juan Perez",
+									"description": "Nombre | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "juan@perez.com",
+									"description": "Email | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "Aqui el mensaje que quieren enviar",
+									"description": "Mensaje | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/mensajes/create",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"mensajes",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "message_id",
+									"value": "1",
+									"description": "ID Mensaje | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/mensajes/delete",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"mensajes",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark as Read",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "message_id",
+									"value": "2",
+									"description": "ID Mensaje | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/mensajes/markRead",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"mensajes",
+								"markRead"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark as UnRead",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "message_id",
+									"value": "2",
+									"description": "ID Mensaje | Obligatorio | Integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/mensajes/markUnRead",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"mensajes",
+								"markUnRead"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Portal Ciudadanos",
+			"item": [
+				{
+					"name": "Favoritos",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{address}}/favoritos/getAll",
+									"host": [
+										"{{address}}"
+									],
+									"path": [
+										"favoritos",
+										"getAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "convocatoria_detail_id",
+											"value": "63",
+											"description": "ID Detalle Convocatoria | Obligatorio | Integer",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{address}}/favoritos/create",
+									"host": [
+										"{{address}}"
+									],
+									"path": [
+										"favoritos",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "favorite_id",
+											"value": "202",
+											"description": "ID Favorito | Obligatorio | Integer",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{address}}/favoritos/delete",
+									"host": [
+										"{{address}}"
+									],
+									"path": [
+										"favoritos",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "admin2@pruebas.com",
+									"description": "Email | Obligatorio | String | Email ha de ser valido",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Ivan",
+									"description": "Nombres | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Firestone",
+									"description": "Apellidos | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"description": "Password | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "admin",
+									"description": "Confirmar Password | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/profile/register",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"profile",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Candidato",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = pm.response.json();",
+									"pm.collectionVariables.set(\"token\",res.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "usuario@pruebas.com",
+									"description": "Email | Obligatorio | String | Email ha de ser valido",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"description": "Password | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/profile/loginCandidato",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"profile",
+								"loginCandidato"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangePassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "current_password",
+									"value": "123456",
+									"description": "Password Actual | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"description": "Password | Obligatorio | String",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "password",
+									"description": "Confirmacion Password | Obligatorio | String",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{address}}/profile/changepassword",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"profile",
+								"changepassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend Verification",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{address}}/email/resend?email=ivan.firestone@fmt.com.do",
+							"host": [
+								"{{address}}"
+							],
+							"path": [
+								"email",
+								"resend"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "ivan.firestone@fmt.com.do",
+									"description": "Email | Obligatorio | String"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Para el portal de cara al ciudadano"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "address",
+			"value": "http://be-becas.fmt/api"
+		},
+		{
+			"key": "address_publica",
+			"value": "http://ifirestone.fmt.com.do:9393/api"
+		},
+		{
+			"key": "address_google",
+			"value": "https://becas-portal-backend-dev-ci-cd-rta6xrq2vq-ue.a.run.app/api"
+		},
+		{
+			"key": "token",
+			"value": "no_token"
+		}
+	]
+}
