@@ -79,6 +79,26 @@ class AplicationController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @return \Illuminate\Http\Response
+     */
+    public function getByCandidato()
+    {
+
+        if (auth()->user()->candidate) {
+            try {
+                $solicitudes = Aplication::where('candidate_id', auth()->user()->candidate->id)->paginate(30);
+                return AplicationResource::collection($solicitudes);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+        } else {
+            throw new NotCandidate;
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
