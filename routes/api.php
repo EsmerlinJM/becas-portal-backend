@@ -275,7 +275,9 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('solicitudes/cerrar', [AplicationController::class, 'cerrar']);
         Route::post('solicitudes/enviar', [AplicationController::class, 'enviar']);
         Route::get('solicitudes/getAll', [AplicationController::class, 'index']);
+        Route::get('solicitudes/getByCandidato', [AplicationController::class, 'getByCandidato']);
         Route::post('solicitudes/getSolicitudes', [AplicationController::class, 'getSolicitudes']);
+
         Route::post('solicitudes/byEvaluator', [AplicationController::class, 'getByEvaluator']);
         Route::get('solicitudes/pendientes', [AplicationController::class, 'pendientes']);
         Route::get('solicitudes/enviadas', [AplicationController::class, 'enviadas']);
