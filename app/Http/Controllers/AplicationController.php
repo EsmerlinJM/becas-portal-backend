@@ -65,6 +65,10 @@ class AplicationController extends Controller
             $solicitudes = Aplication::where('offerer_id', $request->offerer_id)->paginate(30);
         }
 
+        if($request->candidate_id) {
+            $solicitudes = Aplication::where('candidate_id', $request->candidate_id)->paginate(30);
+        }
+
         try {
             return AplicationResource::collection($solicitudes);
         } catch (\Throwable $th) {
