@@ -19,10 +19,8 @@ class AplicationDetailResource extends JsonResource
         return [
             'id' => $this->id,
             'aplication_id' => $this->aplication_id,
-            'evaluation_id' => $this->requirement->evaluation->id,
-            'evaluation_requirement_id' => $this->requirement->id,
-            'evaluation_requirement_description' => $this->requirement->description,
-            'evaluation_requirement_value' => $this->requirement->value,
+            'evaluation' => new EvaluationResourceSolicitud($this->requirement->evaluation),
+            'requerimiento' => new EvaluationRequirementResource($this->requirement),
             'score' => $this->score,
             'notes' => $this->notes,
             'evaluator_id' => $this->evaluator ? $this->evaluator->id : null,
