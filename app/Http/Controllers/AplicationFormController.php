@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\AplicationForm;
+use App\Models\Aplication;
+use App\Models\FormularioDetail;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\AplicationFormResource;
@@ -30,15 +32,15 @@ class AplicationFormController extends Controller
             'answer'    => 'required',
         ]);
 
-        $form = AplicationForm::findOrFail($request->aplication_form_id);
+        $respuesta = AplicationForm::findOrFail($request->aplication_form_id);
 
-        $this->belongsToUser($form);
+        $this->belongsToUser($respuesta);
 
         try {
-            $form->answer = $request->answer;
-            $form->updated_at = Carbon::now();
-            $form->save();
-            return new AplicationFormResource($form);
+            $respuesta->answer = $request->answer;
+            $respuesta->updated_at = Carbon::now();
+            $respuesta->save();
+            return new AplicationFormResource($respuesta);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -53,22 +55,25 @@ class AplicationFormController extends Controller
      */
     public function answerMultiple(Request $request)
     {
-        $respuestas =  json_decode($request->getContent());
+        $counter = 0;
+        $answers_array = null;
+        $answers =  json_decode($request->getContent());
 
-        if($respuestas) {
-            foreach ($respuestas as $item) {
-                $form = AplicationForm::findOrFail($item->aplication_form_id);
-                $this->belongsToUser($form);
+        if($answers) {
+            foreach ($answers as $item) {
+                $respuesta = AplicationForm::findOrFail($item->aplication_form_id);
+                $this->belongsToUser($respuesta);
                 try {
-                    $form->answer = $item->answer;
-                    $form->updated_at = Carbon::now();
-                    $form->save();
+                    $respuesta->answer = $item->respuesta;
+                    $respuesta->updated_at = Carbon::now();
+                    $respuesta->save();
+                    $answers_array[$counter] = $respuesta;
+                    $counter ++;
                 } catch (\Throwable $th) {
                     throw new SomethingWentWrong($th);
                 }
             }
-            $forms = AplicationForm::where('aplication_id',$form->aplication_id)->get();
-            return AplicationFormResource::collection($forms);
+            return AplicationFormResource::collection($answers_array);
         } else {
             throw new ArrayEmpty;
         }
@@ -94,9 +99,9 @@ class AplicationFormController extends Controller
         }
     }
 
-    public static function belongsToUser(AplicationForm $form)
+    public static function belongsToUser(AplicationForm $respuesta)
     {
-        if (auth()->user()->candidate->id == $form->aplication->candidate->id) {
+        if (auth()->user()->candidate->id == $respuesta->aplication->candidate->id) {
             return true;
         } else {
             throw new NotBelongsTo;
