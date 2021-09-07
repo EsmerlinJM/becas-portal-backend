@@ -39,7 +39,7 @@ class AplicationResource extends JsonResource
             'oferta_academica' => new ConvocatoriaDetailResource($this->convocatoria_detail),
             'candidate' => new CandidateResource($this->candidate),
             'evaluacion' => AplicationDetailResource::collection($this->details),
-            'formulario' => AplicationFormResource::collection($this->forms),
+            'formulario_answers' => AplicationFormResource::collection($this->forms),
             'documents' => DocumentResource::collection($this->documents),
         ];
 
