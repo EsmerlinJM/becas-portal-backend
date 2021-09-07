@@ -18,7 +18,8 @@ class AplicationFormResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'aplication_id' => $this->aplication_id,
+            'aplication_form_id' => $this->id,
+            'aplication_id' => $this->aplication->id,
             'formulario_id' => $this->formulario->formulario->id,
             'formulario_detail_id' => $this->formulario->id,
             'formulario_detail_type' => $this->formulario->type,
