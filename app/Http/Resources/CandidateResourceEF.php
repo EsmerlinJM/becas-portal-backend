@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
 
-class CandidateResource extends JsonResource
+class CandidateResourceEF extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -32,8 +32,6 @@ class CandidateResource extends JsonResource
             'municipality_id' => $this->municipality_id,
             'province_id' => $this->province_id,
             'country_id' => $this->country_id,
-            'formacion_academica' => FormacionAcademicaResource::collection($this->formacionAcademica),
-            'experiencia_laboral' => ExperienciaLaboralResource::collection($this->experienciaLaboral)
         ];
     }
 }
