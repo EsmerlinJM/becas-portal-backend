@@ -17,8 +17,8 @@ class CreateCandidatesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->unsigned()->index()->references('id')->on('users');
             $table->foreignId('country_id')->unsigned()->index()->references('id')->on('countries');
-            $table->foreignId('province_id')->unsigned()->index()->references('id')->on('provinces');
-            $table->foreignId('municipality_id')->unsigned()->index()->references('id')->on('municipalities');
+            $table->integer('province_id')->nullable();
+            $table->integer('municipality_id')->nullable();
             $table->string('document_id')->nullable();
             $table->string('image_url')->nullable();
             $table->string('image_ext')->nullable();

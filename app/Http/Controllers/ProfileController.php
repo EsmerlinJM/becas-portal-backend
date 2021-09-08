@@ -161,8 +161,6 @@ class ProfileController extends Controller
                 'last_name' => 'required',
                 'genero' => 'required',
                 'country_id' => 'required',
-                'province_id' => 'required',
-                'municipality_id' => 'required',
             ]);
 
             try {
