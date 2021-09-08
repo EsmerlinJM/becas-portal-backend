@@ -52,6 +52,9 @@ use App\Http\Controllers\ScholarshipDetailController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserFavoritesController;
 
+use App\Http\Controllers\ExperienciaLaboralController;
+use App\Http\Controllers\FormacionAcademicaController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -377,7 +380,24 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('ofertas/academicas/tipos/create', [AcademicOfferTypeController::class, 'store']);
         Route::post('ofertas/academicas/tipos/update', [AcademicOfferTypeController::class, 'update']);
         Route::post('ofertas/academicas/tipos/delete', [AcademicOfferTypeController::class, 'destroy']);
+
+
+        #ExperienciaLaboral
+        Route::get('/candidatos/experiencia/getAll', [ExperienciaLaboralController::class, 'index']);
+        Route::get('/candidatos/experiencia/show', [ExperienciaLaboralController::class, 'show']);
+        Route::post('/candidatos/experiencia/create', [ExperienciaLaboralController::class, 'store']);
+        Route::post('/candidatos/experiencia/update', [ExperienciaLaboralController::class, 'update']);
+        Route::post('/candidatos/experiencia/delete', [ExperienciaLaboralController::class, 'destroy']);
+
+        #FormacionAcademica
+        Route::get('/candidatos/formacion/getAll', [FormacionAcademicaController::class, 'index']);
+        Route::get('/candidatos/formacion/show', [FormacionAcademicaController::class, 'show']);
+        Route::post('/candidatos/formacion/create', [FormacionAcademicaController::class, 'store']);
+        Route::post('/candidatos/formacion/update', [FormacionAcademicaController::class, 'update']);
+        Route::post('/candidatos/formacion/delete', [FormacionAcademicaController::class, 'destroy']);
     });
+
+
 
 
 //FALL BACK ROUTE FOR NO URL FOUND
