@@ -158,9 +158,11 @@ class CoordinatorController extends Controller
         $coordinator = Coordinator::findOrFail($request->coordinator_id);
 
         try {
-            $coordinator->image_url = $image['url'];
-            $coordinator->image_ext = $image['ext'];
-            $coordinator->image_size = $image['size'];
+            if(isset($request->image)) {
+                $coordinator->image_url = $image['url'];
+                $coordinator->image_ext = $image['ext'];
+                $coordinator->image_size = $image['size'];
+            }
             $coordinator->name = $request->name;
             $coordinator->contact_phone = $request->contact_phone;
             $coordinator->contact_email = $request->contact_email;
