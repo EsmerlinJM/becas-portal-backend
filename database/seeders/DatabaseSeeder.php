@@ -22,6 +22,9 @@ use App\Models\InstitutionOffer;
 use App\Models\UserFavorites;
 use App\Models\Message;
 
+use App\Models\ExperienciaLaboral;
+use App\Models\FormacionAcademica;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -70,7 +73,7 @@ class DatabaseSeeder extends Seeder
         // User::factory()->count(100)->usuario()->create();
 
         // Candidates
-        Candidate::factory()->count(200)->create();
+        Candidate::factory()->count(100)->create();
 
         // Messages
         Message::factory()->count(200)->create();
@@ -135,6 +138,10 @@ class DatabaseSeeder extends Seeder
 
         // Favoritos
         UserFavorites::factory()->count(200)->create();
+
+        // Experiencia Laboral y Formacion Academica
+        ExperienciaLaboral::factory()->count(300)->create();
+        FormacionAcademica::factory()->count(300)->create();
 
     }
 }

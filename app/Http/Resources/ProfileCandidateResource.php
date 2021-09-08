@@ -18,6 +18,7 @@ class ProfileCandidateResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
+            'candidate_id' => $this->id,
             'document_id' => $this->document_id,
             'image_url' => $this->image_url,
             'image_ext' => $this->image_ext,
@@ -33,6 +34,8 @@ class ProfileCandidateResource extends JsonResource
             'country' => new CountryResource($this->country),
             'user'  => new UserResource($this->user),
             'favoritos' => UserFavoriteResource::collection($this->user->favoritos),
+            'formacion_academica' => FormacionAcademicaResource::collection($this->formacionAcademica),
+            'experiencia_laboral' => ExperienciaLaboralResource::collection($this->experienciaLaboral)
         ];
     }
 }
