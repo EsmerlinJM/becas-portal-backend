@@ -101,6 +101,11 @@ Archivo .env
 
 #### TOKEN SECRET
 - TOKEN_SECRET={ 'token_secret_pass' }
+#### LANDINGS
+LADING_AFTER_EMAIL_CONFIRMATION={ 'url_where_to_land' }
+LADING_AFTER_PASSWORD_RESET={ 'url_where_to_land' }
+LADING_AFTER_TOKEN_EXPIRED={ 'url_where_to_land' }
+LADING_AFTER_EMAIL_CONFIRMATION={ 'url_where_to_land' }
 
 #### PASSPORT KEYS
 - PASSPORT_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----

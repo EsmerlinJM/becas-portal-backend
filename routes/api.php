@@ -70,6 +70,10 @@ use App\Http\Controllers\FormacionAcademicaController;
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
+
+Route::get('email/forgotPassword', [VerificationController::class, 'forgot'])->name('password.forgot');
+Route::get('email/resetPassword', [VerificationController::class, 'reset'])->name('password.reset');
+
 //Parametros
 Route::get('/parametros/getAll', [ParametroController::class, 'index']);
 
