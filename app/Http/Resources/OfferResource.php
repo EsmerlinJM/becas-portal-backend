@@ -19,7 +19,6 @@ class OfferResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'user_id' => $this->user->user_id,
             'document_id' => $this->document_id,
             'type' => $this->type,
             'contact_person' => $this->contact_person,
