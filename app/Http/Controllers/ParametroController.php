@@ -84,90 +84,112 @@ class ParametroController extends Controller
         }
     }
 
+
     public function estadisticas(Request $request)
     {
         $request->validate([
             'convocatoria_id' => 'required',
         ]);
 
-        try {
-            $becados = Scholarship::where('convocatoria_id', $request->convocatoria_id)->count();
-            $becados_egresados = Scholarship::where('estado','egresado')->where('convocatoria_id', $request->convocatoria_id)->count();
-            $becados_retirados = Scholarship::where('estado','retirado')->where('convocatoria_id', $request->convocatoria_id)->count();
-            $becados_expulsados = Scholarship::where('estado','expulsado')->where('convocatoria_id', $request->convocatoria_id)->count();
-            $becados_activos = Scholarship::where('estado','activo')->where('convocatoria_id', $request->convocatoria_id)->count();
-            $becados_suspendido = Scholarship::where('estado','suspendido')->where('convocatoria_id', $request->convocatoria_id)->count();
-            $becados_hombres = Scholarship::where('genero','masculino')->where('convocatoria_id', $request->convocatoria_id)->count();
-            $becados_mujeres = Scholarship::where('genero','femenino')->where('convocatoria_id', $request->convocatoria_id)->count();
+        if(auth()->user()->institution) {
+            $institution = auth()->user()->institution->id;
 
-            $solicitudes_no_terminadas = Aplication::where('sent', false)->where('convocatoria_id', $request->convocatoria_id)->count();
-            $solicitudes_enviadas = Aplication::where('sent', true)->where('convocatoria_id', $request->convocatoria_id)->count();
-            $solicitudes_aprobadas = Aplication::where('aplication_status_id', 6)->where('convocatoria_id', $request->convocatoria_id)->count() + Aplication::where('aplication_status_id', 7)->where('convocatoria_id', $request->convocatoria_id)->count();
+            try {
+                $becados = Scholarship::where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
+                $becados_egresados = Scholarship::where('estado','egresado')->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
+                $becados_retirados = Scholarship::where('estado','retirado')->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
+                $becados_expulsados = Scholarship::where('estado','expulsado')->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
+                $becados_activos = Scholarship::where('estado','activo')->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
+                $becados_suspendido = Scholarship::where('estado','suspendido')->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
+                $becados_hombres = Scholarship::where('genero','masculino')->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
+                $becados_mujeres = Scholarship::where('genero','femenino')->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
 
-            $estadisticas['becados']['egresados'] = $becados_egresados;
-            $estadisticas['becados']['retirados'] = $becados_retirados;
-            $estadisticas['becados']['expulsados'] = $becados_expulsados;
-            $estadisticas['becados']['activos'] = $becados_activos;
-            $estadisticas['becados']['suspendidos'] = $becados_suspendido;
-            $estadisticas['becados']['hombres'] = $becados_hombres;
-            $estadisticas['becados']['mujeres'] = $becados_mujeres;
-            $estadisticas['becados']['total'] = $becados;
+                $solicitudes_no_terminadas = Aplication::where('sent', false)->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
+                $solicitudes_enviadas = Aplication::where('sent', true)->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
+                $solicitudes_aprobadas = Aplication::where('aplication_status_id', 6)->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count() + Aplication::where('aplication_status_id', 7)->where('convocatoria_id', $request->convocatoria_id)->where('institution_id', $institution)->count();
 
-            $estadisticas['solicitudes']['no_terminadas'] = $solicitudes_no_terminadas;
-            $estadisticas['solicitudes']['enviadas'] = $solicitudes_enviadas;
-            $estadisticas['solicitudes']['aprobadas'] = $solicitudes_aprobadas;
+                $estadisticas['becados']['egresados'] = $becados_egresados;
+                $estadisticas['becados']['retirados'] = $becados_retirados;
+                $estadisticas['becados']['expulsados'] = $becados_expulsados;
+                $estadisticas['becados']['activos'] = $becados_activos;
+                $estadisticas['becados']['suspendidos'] = $becados_suspendido;
+                $estadisticas['becados']['hombres'] = $becados_hombres;
+                $estadisticas['becados']['mujeres'] = $becados_mujeres;
+                $estadisticas['becados']['total'] = $becados;
 
-            return new EstadisticasResource($estadisticas);
+                $estadisticas['solicitudes']['no_terminadas'] = $solicitudes_no_terminadas;
+                $estadisticas['solicitudes']['enviadas'] = $solicitudes_enviadas;
+                $estadisticas['solicitudes']['aprobadas'] = $solicitudes_aprobadas;
 
-        } catch (\Throwable $th) {
-            throw new SomethingWentWrong($th);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+        } elseif (auth()->user()->offerer) {
+            $oferente = auth()->user()->offerer->id;
+
+            try {
+                $becados = Scholarship::where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+                $becados_egresados = Scholarship::where('estado','egresado')->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+                $becados_retirados = Scholarship::where('estado','retirado')->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+                $becados_expulsados = Scholarship::where('estado','expulsado')->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+                $becados_activos = Scholarship::where('estado','activo')->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+                $becados_suspendido = Scholarship::where('estado','suspendido')->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+                $becados_hombres = Scholarship::where('genero','masculino')->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+                $becados_mujeres = Scholarship::where('genero','femenino')->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+
+                $solicitudes_no_terminadas = Aplication::where('sent', false)->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+                $solicitudes_enviadas = Aplication::where('sent', true)->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+                $solicitudes_aprobadas = Aplication::where('aplication_status_id', 6)->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count() + Aplication::where('aplication_status_id', 7)->where('convocatoria_id', $request->convocatoria_id)->where('offerer_id', $oferente)->count();
+
+                $estadisticas['becados']['egresados'] = $becados_egresados;
+                $estadisticas['becados']['retirados'] = $becados_retirados;
+                $estadisticas['becados']['expulsados'] = $becados_expulsados;
+                $estadisticas['becados']['activos'] = $becados_activos;
+                $estadisticas['becados']['suspendidos'] = $becados_suspendido;
+                $estadisticas['becados']['hombres'] = $becados_hombres;
+                $estadisticas['becados']['mujeres'] = $becados_mujeres;
+                $estadisticas['becados']['total'] = $becados;
+
+                $estadisticas['solicitudes']['no_terminadas'] = $solicitudes_no_terminadas;
+                $estadisticas['solicitudes']['enviadas'] = $solicitudes_enviadas;
+                $estadisticas['solicitudes']['aprobadas'] = $solicitudes_aprobadas;
+
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+        } else {
+            try {
+                $becados = Scholarship::where('convocatoria_id', $request->convocatoria_id)->count();
+                $becados_egresados = Scholarship::where('estado','egresado')->where('convocatoria_id', $request->convocatoria_id)->count();
+                $becados_retirados = Scholarship::where('estado','retirado')->where('convocatoria_id', $request->convocatoria_id)->count();
+                $becados_expulsados = Scholarship::where('estado','expulsado')->where('convocatoria_id', $request->convocatoria_id)->count();
+                $becados_activos = Scholarship::where('estado','activo')->where('convocatoria_id', $request->convocatoria_id)->count();
+                $becados_suspendido = Scholarship::where('estado','suspendido')->where('convocatoria_id', $request->convocatoria_id)->count();
+                $becados_hombres = Scholarship::where('genero','masculino')->where('convocatoria_id', $request->convocatoria_id)->count();
+                $becados_mujeres = Scholarship::where('genero','femenino')->where('convocatoria_id', $request->convocatoria_id)->count();
+
+                $solicitudes_no_terminadas = Aplication::where('sent', false)->where('convocatoria_id', $request->convocatoria_id)->count();
+                $solicitudes_enviadas = Aplication::where('sent', true)->where('convocatoria_id', $request->convocatoria_id)->count();
+                $solicitudes_aprobadas = Aplication::where('aplication_status_id', 6)->where('convocatoria_id', $request->convocatoria_id)->count() + Aplication::where('aplication_status_id', 7)->where('convocatoria_id', $request->convocatoria_id)->count();
+
+                $estadisticas['becados']['egresados'] = $becados_egresados;
+                $estadisticas['becados']['retirados'] = $becados_retirados;
+                $estadisticas['becados']['expulsados'] = $becados_expulsados;
+                $estadisticas['becados']['activos'] = $becados_activos;
+                $estadisticas['becados']['suspendidos'] = $becados_suspendido;
+                $estadisticas['becados']['hombres'] = $becados_hombres;
+                $estadisticas['becados']['mujeres'] = $becados_mujeres;
+                $estadisticas['becados']['total'] = $becados;
+
+                $estadisticas['solicitudes']['no_terminadas'] = $solicitudes_no_terminadas;
+                $estadisticas['solicitudes']['enviadas'] = $solicitudes_enviadas;
+                $estadisticas['solicitudes']['aprobadas'] = $solicitudes_aprobadas;
+
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
         }
+        return new EstadisticasResource($estadisticas);
 
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Parametro  $parametro
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Parametro $parametro)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Parametro  $parametro
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Parametro $parametro)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Parametro  $parametro
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Parametro $parametro)
-    {
-        //
     }
 }
