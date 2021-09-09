@@ -11,11 +11,13 @@ use App\Models\EducationLevel;
 use App\Models\Audience;
 use App\Models\InstitutionOffer;
 use App\Models\DevelopmentArea;
+use App\Models\AcademicOfferType;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\ParametroResource;
 use App\Http\Resources\EstadisticasResource;
 use App\Http\Resources\ConvocatoriaTypeResource;
+use App\Http\Resources\AcademicOfferTypeResource;
 use App\Http\Resources\EducationLevelParameterResource;
 use App\Http\Resources\AudienceResource;
 use App\Http\Resources\InstitutionOfferResource;
@@ -38,6 +40,7 @@ class ParametroController extends Controller
             $niveles_educativos = EducationLevel::select('name')->groupBy('name')->get();
             $audiencias = Audience::all();
             $area_desarrollo = DevelopmentArea::all();
+            $tipos_ofertas = AcademicOfferType::all();
 
             $candidatos_mujeres = Candidate::where('genero','femenino')->count();
             $candidatos_hombres = Candidate::where('genero','masculino')->count();
@@ -60,6 +63,7 @@ class ParametroController extends Controller
             $parametros['niveles_educativos'] = EducationLevelParameterResource::collection($niveles_educativos);
             $parametros['audiencias'] = AudienceResource::collection($audiencias);
             $parametros['area_desarrollo'] = DevelopmentAreaResource::collection($area_desarrollo);
+            $parametros['tipos_ofertas'] = AcademicOfferTypeResource::collection($tipos_ofertas);
             $parametros['candidatos']['mujeres'] = $candidatos_mujeres;
             $parametros['candidatos']['hombres'] = $candidatos_hombres;
             $parametros['candidatos']['total'] = $candidatos;
