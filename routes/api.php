@@ -296,7 +296,7 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('solicitudes/details/evaluate', [AplicationDetailController::class, 'evaluate']);
 
         #Solicitudes Contestar Formularios
-        Route::post('solicitudes/forms/answerMultiple', [AplicationFormController::class, 'answerMultiple']);
+        // Route::post('solicitudes/forms/answerMultiple', [AplicationFormController::class, 'answerMultiple']);
         Route::post('solicitudes/forms/answer', [AplicationFormController::class, 'answer']);
         Route::post('solicitudes/forms/show', [AplicationFormController::class, 'show']);
 
