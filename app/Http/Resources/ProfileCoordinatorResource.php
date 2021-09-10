@@ -16,14 +16,21 @@ class ProfileCoordinatorResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'id' => $this->id,
-            'image_url' => $this->image_url,
-            'image_ext' => $this->image_ext,
-            'image_size' => $this->image_size,
-            'name' => $this->name,
-            'contact_phone' => $this->contact_phone,
-            'contact_email' => $this->contact_email,
-            'user'  => new UserResource($this->user),
+            'id' => $this->user->id,
+            'email' => $this->user->email,
+            'role' => new RoleResource($this->user->role),
+            'institution' => new InstitutionResourceUser($this->user->institution),
+            'offerer' => new OffererResourceUser($this->user->offerer),
+            'profile' => [
+                'id' => $this->id,
+                'coordinator_id' => $this->id,
+                'image_url' => $this->image_url,
+                'image_ext' => $this->image_ext,
+                'image_size' => $this->image_size,
+                'name' => $this->name,
+                'contact_phone' => $this->contact_phone,
+                'contact_email' => $this->contact_email,
+            ]
         ];
     }
 }
