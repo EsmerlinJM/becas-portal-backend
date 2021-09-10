@@ -134,6 +134,9 @@ class AcademicOfferController extends Controller
             $aoffer->career = $request->career;
             $aoffer->duration = $request->duration;
             $aoffer->language = $request->language;
+            $aoffer->creditos = $request->creditos;
+            $aoffer->esfuerzo = $request->esfuerzo;
+            $aoffer->costo = $request->costo;
             $aoffer->pensum_url = $pensum['url'];
             $aoffer->pensum_ext = $pensum['ext'];
             $aoffer->pensum_size = $pensum['size'];
@@ -182,7 +185,6 @@ class AcademicOfferController extends Controller
             'career' => 'required',
             'duration' => 'required',
             'language' => 'required',
-            'pensum' => 'required',
         ]);
 
         // Initialize Google Storage
@@ -217,9 +219,14 @@ class AcademicOfferController extends Controller
             $aoffer->career = $request->career;
             $aoffer->duration = $request->duration;
             $aoffer->language = $request->language;
-            $aoffer->pensum_url = $pensum['url'];
-            $aoffer->pensum_ext = $pensum['ext'];
-            $aoffer->pensum_size = $pensum['size'];
+            $aoffer->creditos = $request->creditos;
+            $aoffer->esfuerzo = $request->esfuerzo;
+            $aoffer->costo = $request->costo;
+            if (isset($request->pensum)) {
+                $aoffer->pensum_url = $pensum['url'];
+                $aoffer->pensum_ext = $pensum['ext'];
+                $aoffer->pensum_size = $pensum['size'];
+            }
             $aoffer->save();
 
             return new AcademicOfferResource($aoffer);
