@@ -15,7 +15,7 @@ class CreateSocioEconomicosTable extends Migration
     {
         Schema::create('socio_economicos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('candidate_id')->unsigned()->index()->references('id')->on('candidates');
+            $table->integer('candidate_id');
             $table->string('padre_nombre')->nullable();
             $table->enum('padre_nivel_educativo', ['Sin estudios','Basico','Medio','Universitario'])->nullable();
             $table->enum('padre_trabaja', ['Si','No'])->nullable();
@@ -28,10 +28,6 @@ class CreateSocioEconomicosTable extends Migration
             $table->string('madre_lugar_trabajo')->nullable();
             $table->string('madre_funcion_trabajo')->nullable();
             $table->string('madre_rango_salarial')->nullable();
-            $table->enum('candidato_trabaja', ['Si','No'])->nullable();
-            $table->string('candidato_lugar_trabajo')->nullable();
-            $table->string('candidato_funcion_trabajo')->nullable();
-            $table->string('candidato_rango_salarial')->nullable();
             $table->enum('pago_alquiler', ['Si','No'])->nullable();
             $table->float('monto_alquiler')->nullable();
             $table->enum('vehiculo_propio', ['Si','No'])->nullable();
