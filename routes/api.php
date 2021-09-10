@@ -397,7 +397,6 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::get('/candidatos/formacion/getAll', [FormacionAcademicaController::class, 'index']);
         Route::get('/candidatos/formacion/show', [FormacionAcademicaController::class, 'show']);
         Route::post('/candidatos/formacion/create', [FormacionAcademicaController::class, 'store']);
-        Route::post('/candidatos/formacion/multiple', [FormacionAcademicaController::class, 'multiple']);
         Route::post('/candidatos/formacion/update', [FormacionAcademicaController::class, 'update']);
         Route::post('/candidatos/formacion/delete', [FormacionAcademicaController::class, 'destroy']);
     });
