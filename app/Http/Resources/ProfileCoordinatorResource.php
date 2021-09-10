@@ -21,6 +21,7 @@ class ProfileCoordinatorResource extends JsonResource
             'role' => new RoleResource($this->user->role),
             'institution' => new InstitutionResourceUser($this->user->institution),
             'offerer' => new OffererResourceUser($this->user->offerer),
+            'notificaciones' => NotificacionResource::collection($this->user->notificaciones),
             'profile' => [
                 'id' => $this->id,
                 'coordinator_id' => $this->id,

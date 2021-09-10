@@ -24,6 +24,7 @@ use App\Models\Message;
 
 use App\Models\ExperienciaLaboral;
 use App\Models\FormacionAcademica;
+use App\Models\Notificacion;
 
 class DatabaseSeeder extends Seeder
 {
@@ -142,6 +143,8 @@ class DatabaseSeeder extends Seeder
         // Experiencia Laboral y Formacion Academica
         ExperienciaLaboral::factory()->count(300)->create();
         FormacionAcademica::factory()->count(300)->create();
+
+        Notificacion::factory()->count(600)->create();
 
     }
 }
