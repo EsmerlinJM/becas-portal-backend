@@ -42,6 +42,9 @@ class AcademicOfferFactory extends Factory
             'pensum_size'               => '15',
             'detalles'                  => $this->faker->text($maxNbChars = 100),
             'active'                    => $this->faker->boolean,
+            'creditos'                  => $this->faker->numberBetween($min = 100, $max = 200),
+            'esfuerzo'                  => $this->faker->numberBetween($min = 20, $max = 50)." hs/sem",
+            'costo'                     => $this->faker->numberBetween($min = 200000, $max = 600000),
             'created_at'                => Carbon::now(),
             'updated_at'                => Carbon::now(),
         ];
