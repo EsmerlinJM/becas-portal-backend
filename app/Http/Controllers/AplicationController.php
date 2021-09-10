@@ -279,6 +279,8 @@ class AplicationController extends Controller
                 $form->save();
             }
 
+            $this->notificar(auth()->user(), "Aplicación iniciada", "Tu aplicación ha sido iniciada, favor completar el proceso. ");
+
             return new AplicationResource($solicitud);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
