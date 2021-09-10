@@ -55,6 +55,7 @@ use App\Http\Controllers\UserFavoritesController;
 use App\Http\Controllers\ExperienciaLaboralController;
 use App\Http\Controllers\FormacionAcademicaController;
 use App\Http\Controllers\NotificacionController;
+use App\Http\Controllers\SocioEconomicoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -406,6 +407,10 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::get('/notificaciones/show', [NotificacionController::class, 'show']);
         Route::post('/notificaciones/update', [NotificacionController::class, 'update']);
         Route::post('/notificaciones/delete', [NotificacionController::class, 'destroy']);
+
+        #SocioEconomicos
+        Route::get('/candidatos/economicos/get', [SocioEconomicoController::class, 'index']);
+        Route::post('/candidatos/economicos/update', [SocioEconomicoController::class, 'update']);
     });
 
 

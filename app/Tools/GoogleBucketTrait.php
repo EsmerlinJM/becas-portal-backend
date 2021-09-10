@@ -15,6 +15,16 @@ trait GoogleBucketTrait
 {
     public function upload(Request $request, $fileName)
     {
+
+        if (!$request->file($fileName)) {
+            return $file = array(
+                "name" => null,
+                "url" => null,
+                "ext" => null,
+                "size" => null,
+            );
+        }
+
         try {
             // Initialize Google Storage
             $disk = \Storage::disk('google');
@@ -23,6 +33,7 @@ trait GoogleBucketTrait
             $disk->write($name, file_get_contents($request->file($fileName)), ['visibility' => 'public']);
 
             $file = array(
+                "name" => $name,
                 "url" => $disk->url($name),
                 "ext" => $request->file($fileName)->getClientOriginalExtension(),
                 "size" => $request->file($fileName)->getSize(),
