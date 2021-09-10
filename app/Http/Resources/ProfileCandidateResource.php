@@ -35,6 +35,7 @@ class ProfileCandidateResource extends JsonResource
             'country' => new CountryResource($this->country),
             'user'  => new UserResource($this->user),
             'favoritos' => UserFavoriteResource::collection($this->user->favoritos),
+            'notificaciones' => NotificacionResource::collection($this->user->notificaciones),
             'formacion_academica' => FormacionAcademicaResource::collection($this->formacionAcademica),
             'experiencia_laboral' => ExperienciaLaboralResource::collection($this->experienciaLaboral)
         ];

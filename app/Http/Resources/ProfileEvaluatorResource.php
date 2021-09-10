@@ -21,6 +21,7 @@ class ProfileEvaluatorResource extends JsonResource
             'role' => new RoleResource($this->user->role),
             'institution' => new InstitutionResourceUser($this->user->institution),
             'offerer' => new OffererResourceUser($this->user->offerer),
+            'notificaciones' => NotificacionResource::collection($this->user->notificaciones),
             'profile' => [
                 'id' => $this->id,
                 'evaluator_id' => $this->id,

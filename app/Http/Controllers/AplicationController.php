@@ -27,8 +27,12 @@ use App\Tools\Tools;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 
+use App\Tools\NotificacionTrait;
+
 class AplicationController extends Controller
 {
+
+    use NotificacionTrait;
     /**
      * Display a listing of the resource.
      *
@@ -191,11 +195,16 @@ class AplicationController extends Controller
 
         $aplication = Aplication::findOrFail($request->aplication_id);
 
+        $this->belongsToUser($aplication);
+
         if(!$aplication->sent) {
             try {
                 $aplication->sent = true;
                 $aplication->updated_at = Carbon::now();
                 $aplication->save();
+
+                $this->notificar(auth()->user(), "Aplicación enviada", "Tu aplicación ha sido enviada con éxito. ");
+
                 return new AplicationResource($aplication);
             } catch (\Throwable $th) {
                 throw new SomethingWentWrong($th);

@@ -54,6 +54,7 @@ use App\Http\Controllers\UserFavoritesController;
 
 use App\Http\Controllers\ExperienciaLaboralController;
 use App\Http\Controllers\FormacionAcademicaController;
+use App\Http\Controllers\NotificacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -399,6 +400,12 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/candidatos/formacion/create', [FormacionAcademicaController::class, 'store']);
         Route::post('/candidatos/formacion/update', [FormacionAcademicaController::class, 'update']);
         Route::post('/candidatos/formacion/delete', [FormacionAcademicaController::class, 'destroy']);
+
+        #Notificaciones
+        Route::get('/notificaciones/getAll', [NotificacionController::class, 'index']);
+        Route::get('/notificaciones/show', [NotificacionController::class, 'show']);
+        Route::post('/notificaciones/update', [NotificacionController::class, 'update']);
+        Route::post('/notificaciones/delete', [NotificacionController::class, 'destroy']);
     });
 
 
