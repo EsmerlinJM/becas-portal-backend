@@ -22,6 +22,7 @@ class ProfileUserResource extends JsonResource
             'profile' => new ProfileResource($this->profile),
             'institution' => new InstitutionResourceUser($this->institution),
             'offerer' => new OffererResourceUser($this->offerer),
+            // 'notificaciones' => NotificacionResource::collection($this->notificaciones),
         ];
     }
 }

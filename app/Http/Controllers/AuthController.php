@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Candidate;
+use App\Models\SocioEconomico;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\UserResource;
@@ -41,6 +42,13 @@ class AuthController extends Controller
             $candidate->name = $request->name;
             $candidate->last_name = $request->last_name;
             $candidate->save();
+
+            // return $candidate;
+
+            $economico = new SocioEconomico();
+            $economico->candidate_id = $candidate->id;
+            $economico->save();
+
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }

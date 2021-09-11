@@ -24,6 +24,8 @@ use App\Models\Message;
 
 use App\Models\ExperienciaLaboral;
 use App\Models\FormacionAcademica;
+use App\Models\Notificacion;
+use App\Models\SocioEconomico;
 
 class DatabaseSeeder extends Seeder
 {
@@ -73,7 +75,8 @@ class DatabaseSeeder extends Seeder
         // User::factory()->count(100)->usuario()->create();
 
         // Candidates
-        Candidate::factory()->count(100)->create();
+        // Candidate::factory()->count(100)->create();
+        SocioEconomico::factory()->count(100)->create(); //Se Crean los Candidatos en Base al Modelo SocioEconomico on the Fly
 
         // Messages
         Message::factory()->count(200)->create();
@@ -139,9 +142,15 @@ class DatabaseSeeder extends Seeder
         // Favoritos
         UserFavorites::factory()->count(200)->create();
 
-        // Experiencia Laboral y Formacion Academica
+        // Experiencia Laboral, Formacion Academica y Datos Socio Economicos
         ExperienciaLaboral::factory()->count(300)->create();
         FormacionAcademica::factory()->count(300)->create();
+
+        //Creo un SocioEconomico para el Candidato #1
+        SocioEconomico::factory()->count(1)->candidato()->create();
+
+
+        Notificacion::factory()->count(600)->create();
 
     }
 }

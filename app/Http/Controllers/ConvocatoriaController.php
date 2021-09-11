@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Aplication;
 use App\Models\Convocatoria;
 use App\Models\Audience;
+use App\Models\Candidate;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\ConvocatoriaResource;
@@ -20,8 +21,12 @@ use App\Exceptions\AplicationNotClosed;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\NotificacionTrait;
+
 class ConvocatoriaController extends Controller
 {
+
+    use NotificacionTrait;
     /**
      * Display a listing of the resource.
      *
@@ -161,6 +166,9 @@ class ConvocatoriaController extends Controller
             $convocatoria->image_size = $image['size'];
             $convocatoria->save();
 
+            foreach (User::where('role_id', 1)->get() as $user) {
+                $this->notificar($user, "Han creado una convocatoria", "El usuario: ". auth()->user()->profile->name . ", ha agregado la nueva convocatoria: ".$convocatoria->name);
+            }
             return new ConvocatoriaResource($convocatoria);
 
         } catch (\Throwable $th) {
@@ -247,6 +255,10 @@ class ConvocatoriaController extends Controller
             $convocatoria->image_size = $image['size'];
             $convocatoria->save();
 
+            foreach (User::where('role_id', 1)->get() as $user) {
+                $this->notificar($user, "Han realizado cambios a una convocatoria", "El usuario: ". auth()->user()->profile->name . ", ha realizado camios a la convocatoria: ".$convocatoria->name);
+            }
+
             return new ConvocatoriaResource($convocatoria);
 
         } catch (\Throwable $th) {
@@ -273,6 +285,12 @@ class ConvocatoriaController extends Controller
                 try {
                     $convocatoria->status = "Abierta"; //Abrimos
                     $convocatoria->save();
+                    foreach (Candidate::all() as $candidato) {
+                        $this->notificar($candidato->user, "Apertura Convocatoria", "Se ha aperturado la convocatoria ".$convocatoria->name);
+                    }
+                    foreach (User::where('role_id', 1)->get() as $user) {
+                        $this->notificar($user, "Apertura Convocatoria", "Se ha aperturado la convocatoria ".$convocatoria->name);
+                    }
                     return new ConvocatoriaResource($convocatoria);
                 } catch (\Throwable $th) {
                     throw new SomethingWentWrong($th);
@@ -280,6 +298,8 @@ class ConvocatoriaController extends Controller
             } else {
                 throw new CantOpen;
             }
+
+
 
     }
 
@@ -301,6 +321,12 @@ class ConvocatoriaController extends Controller
                 try {
                     $convocatoria->published = true; //Publicamos
                     $convocatoria->save();
+                    foreach (Candidate::all() as $candidato) {
+                        $this->notificar($candidato->user, "Publicacion resultados", "Se han publicado los resultados de la convocatoria ".$convocatoria->name);
+                    }
+                    foreach (User::where('role_id', 1)->get() as $user) {
+                        $this->notificar($user, "Publicacion resultados", "Se han publicado los resultados de la convocatoria ".$convocatoria->name);
+                    }
                     return new ConvocatoriaResource($convocatoria);
                 } catch (\Throwable $th) {
                     throw new SomethingWentWrong($th);
@@ -328,6 +354,11 @@ class ConvocatoriaController extends Controller
                 try {
                     $convocatoria->published = false; //Publicamos
                     $convocatoria->save();
+
+                    foreach (User::where('role_id', 1)->get() as $user) {
+                        $this->notificar($user, "Cambios en convocatoria", "Se ha cambiado el status a la convocatoria ".$convocatoria->name);
+                    }
+
                     return new ConvocatoriaResource($convocatoria);
                 } catch (\Throwable $th) {
                     throw new SomethingWentWrong($th);
@@ -356,6 +387,9 @@ class ConvocatoriaController extends Controller
             try {
                 $convocatoria->status = "Pendiente"; //Ponemos pendiente
                 $convocatoria->save();
+                foreach (User::where('role_id', 1)->get() as $user) {
+                    $this->notificar($user, "Cambios en convocatoria", "Se ha cambiado el status a la convocatoria ".$convocatoria->name);
+                }
                 return new ConvocatoriaResource($convocatoria);
             } catch (\Throwable $th) {
                 throw new SomethingWentWrong($th);
@@ -384,6 +418,12 @@ class ConvocatoriaController extends Controller
                 try {
                     $convocatoria->status = 'Cerrada'; //Cerramos
                     $convocatoria->save();
+                    foreach (Candidate::all() as $candidato) {
+                        $this->notificar($candidato->user, "Cierre convocatoria", "La convocatoria ".$convocatoria->name." se ha cerrado y no reciba más postulaciones.");
+                    }
+                    foreach (User::where('role_id', 1)->get() as $user) {
+                        $this->notificar($user, "Cierre convocatoria", "La convocatoria ".$convocatoria->name." se ha cerrado y no reciba más postulaciones.");
+                    }
                     return new ConvocatoriaResource($convocatoria);
                 } catch (\Throwable $th) {
                     throw new SomethingWentWrong($th);
