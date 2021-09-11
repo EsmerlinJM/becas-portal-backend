@@ -24,6 +24,7 @@ class ExperienciaLaboralResourceFull extends JsonResource
             'tipo_contrato' => $this->tipo_contrato,
             'fecha_entrada' => Carbon::parse($this->fecha_entrada)->toFormattedDateString(),
             'fecha_salida' => $this->fecha_salida ? Carbon::parse($this->fecha_salida)->toFormattedDateString() : null,
+            'rango_salarial' => $this->rango_salarial,
             'documento_url' => $this->documento_url,
             'documento_ext' => $this->documento_ext,
             'documento_size' => $this->documento_size,

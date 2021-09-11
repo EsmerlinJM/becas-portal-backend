@@ -12,9 +12,11 @@ use App\Exceptions\NotCandidate;
 use App\Exceptions\NotBelongsTo;
 use App\Tools\Tools;
 use Carbon\Carbon;
+use App\Tools\GoogleBucketTrait;
 
 class ExperienciaLaboralController extends Controller
 {
+    use GoogleBucketTrait;
     /**
      * Display a listing of the resource.
      * @param  \Illuminate\Http\Request  $request
@@ -57,29 +59,16 @@ class ExperienciaLaboralController extends Controller
             'fecha_entrada' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
+        // // Initialize Google Storage
+        // $disk = \Storage::disk('google');
 
         $candidato = auth()->user()->candidate;
 
 
         if($candidato) {
             //Image Handling
-            if (isset($request->documento)) {
-                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('documento')->getClientOriginalExtension());
-                $disk->write($fileName, file_get_contents($request->file('documento')), ['visibility' => 'public']);
-                $image = array(
-                    "url" => $disk->url($fileName),
-                    "ext" => $request->file('documento')->getClientOriginalExtension(),
-                    "size" => $request->file('documento')->getSize(),
-                );
-            } else {
-                $image = array(
-                    "url" => null,
-                    "ext" => null,
-                    "size" => null,
-                );
-            }
+
+            $image = $this->upload($request, 'documento');
 
             try {
                 $experiencia = new ExperienciaLaboral();
@@ -89,6 +78,7 @@ class ExperienciaLaboralController extends Controller
                 $experiencia->telefono = $request->telefono;
                 $experiencia->tipo_contrato = $request->tipo_contrato;
                 $experiencia->fecha_entrada = Carbon::parse($request->fecha_entrada);
+                $experiencia->rango_salarial = $request->rango_salarial;
                 $experiencia->fecha_salida = isset($request->fecha_salida) ? Carbon::parse($request->fecha_salida) : null;
                 $experiencia->documento_url = $image['url'];
                 $experiencia->documento_ext = $image['ext'];
@@ -152,21 +142,7 @@ class ExperienciaLaboralController extends Controller
 
 
         //Image Handling
-        if (isset($request->documento)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('documento')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('documento')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('documento')->getClientOriginalExtension(),
-                "size" => $request->file('documento')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => null,
-                "ext" => null,
-                "size" => null,
-            );
-        }
+        $image = $this->upload($request, 'documento');
 
         try {
             $experiencia->empresa = $request->empresa;
@@ -174,6 +150,7 @@ class ExperienciaLaboralController extends Controller
             $experiencia->telefono = $request->telefono;
             $experiencia->tipo_contrato = $request->tipo_contrato;
             $experiencia->fecha_entrada = Carbon::parse($request->fecha_entrada);
+            $experiencia->rango_salarial = $request->rango_salarial;
             $experiencia->fecha_salida = isset($request->fecha_salida) ? Carbon::parse($request->fecha_salida) : null;
             if(isset($request->documento)) {
                 $experiencia->documento_url = $image['url'];

@@ -22,6 +22,7 @@ class CreateExperienciaLaboralsTable extends Migration
             $table->string('tipo_contrato');
             $table->date('fecha_entrada');
             $table->date('fecha_salida')->nullable();
+            $table->string('rango_salarial')->nullable();
             $table->string('documento_url')->nullable();
             $table->string('documento_ext')->nullable();
             $table->string('documento_size')->nullable();
