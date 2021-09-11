@@ -10,15 +10,20 @@ use Illuminate\Http\Request;
 
 use App\Http\Resources\AplicationDetailResource;
 use App\Exceptions\SomethingWentWrong;
-use App\Exceptions\NotBelongsTo;
-use App\Exceptions\NotCandidate;
+use App\Exceptions\NotPermissions;
+
 use App\Exceptions\AplicationClosed;
 use App\Tools\ResponseCodes;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\NotificacionTrait;
+
 class AplicationDetailController extends Controller
 {
+
+    use NotificacionTrait;
+
     /**
      * Store a newly created resource in storage.
      *
@@ -37,6 +42,7 @@ class AplicationDetailController extends Controller
         $aplication = $detail->aplication;
 
         $this->isOpen($aplication);
+        $this->isEvaluador();
 
         try {
             if($request->score <= $detail->requirement->value) {
@@ -54,6 +60,8 @@ class AplicationDetailController extends Controller
                 }
                 $aplication->save();
 
+                $this->notificar($aplication->candidate->user, "Aplicacion en evaluacion", "Tu aplicación está ahora en proceso de evaluación.");
+
                 return new AplicationDetailResource($detail);
             } else {
                 return response()->json(['status' => 'error', 'message' => 'Valor suministrado es superior al esperado'], ResponseCodes::UNPROCESSABLE_ENTITY);
@@ -70,6 +78,13 @@ class AplicationDetailController extends Controller
     {
         if ( $solicitud->closed) {
             throw new AplicationClosed;
+        }
+    }
+
+    public static function isEvaluador()
+    {
+        if (!Evaluator::where('user_id',auth()->user()->id)->first()) {
+            throw new NotPermissions;
         }
     }
 }

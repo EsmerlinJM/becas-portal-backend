@@ -10,6 +10,7 @@ use App\Http\Resources\FormacionAcademicaResourceFull;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\NotCandidate;
 use App\Exceptions\NotBelongsTo;
+use App\Exceptions\ArrayEmpty;
 use App\Tools\Tools;
 use Carbon\Carbon;
 

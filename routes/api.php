@@ -54,6 +54,8 @@ use App\Http\Controllers\UserFavoritesController;
 
 use App\Http\Controllers\ExperienciaLaboralController;
 use App\Http\Controllers\FormacionAcademicaController;
+use App\Http\Controllers\NotificacionController;
+use App\Http\Controllers\SocioEconomicoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -295,7 +297,6 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('solicitudes/details/evaluate', [AplicationDetailController::class, 'evaluate']);
 
         #Solicitudes Contestar Formularios
-        Route::post('solicitudes/forms/answerMultiple', [AplicationFormController::class, 'answerMultiple']);
         Route::post('solicitudes/forms/answer', [AplicationFormController::class, 'answer']);
         Route::post('solicitudes/forms/show', [AplicationFormController::class, 'show']);
 
@@ -399,6 +400,16 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/candidatos/formacion/create', [FormacionAcademicaController::class, 'store']);
         Route::post('/candidatos/formacion/update', [FormacionAcademicaController::class, 'update']);
         Route::post('/candidatos/formacion/delete', [FormacionAcademicaController::class, 'destroy']);
+
+        #Notificaciones
+        Route::get('/notificaciones/getAll', [NotificacionController::class, 'index']);
+        Route::get('/notificaciones/show', [NotificacionController::class, 'show']);
+        Route::post('/notificaciones/update', [NotificacionController::class, 'update']);
+        Route::post('/notificaciones/delete', [NotificacionController::class, 'destroy']);
+
+        #SocioEconomicos
+        Route::get('/candidatos/economicos/get', [SocioEconomicoController::class, 'index']);
+        Route::post('/candidatos/economicos/update', [SocioEconomicoController::class, 'update']);
     });
 
 

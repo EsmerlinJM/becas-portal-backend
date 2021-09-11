@@ -33,7 +33,8 @@ class CandidateResource extends JsonResource
             'province_id' => $this->province_id,
             'country_id' => $this->country_id,
             'formacion_academica' => FormacionAcademicaResource::collection($this->formacionAcademica),
-            'experiencia_laboral' => ExperienciaLaboralResource::collection($this->experienciaLaboral)
+            'experiencia_laboral' => ExperienciaLaboralResource::collection($this->experienciaLaboral),
+            'socio_economico' => new SocioEconomicoResource($this->economico)
         ];
     }
 }
