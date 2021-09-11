@@ -91,7 +91,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   deploy:
-    needs: ["build", "versioning"]
+    needs: ["build"]
     runs-on: ubuntu-latest
 
     steps:
@@ -102,7 +102,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@main
         with:
           image: ${{ env.GAR_BASE}}/${{env.PROJECT_NAME}}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_HEAD_REF_SLUG || env.GITHUB_REF_SLUG }}
-          service: ${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}-${{ needs.versioning.outputs.version }}
+          service: ${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}-${{ env.GITHUB_HEAD_REF_SLUG || env.GITHUB_REF_SLUG }}
           credentials: ${{ secrets.GAR_JSON_KEY }}
           region: ${{ secrets.GCP_REGION }}
           env_vars: |
