@@ -36,6 +36,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+
         // Roles
         $this->call(RolesSeeder::class);
 
@@ -50,8 +52,6 @@ class DatabaseSeeder extends Seeder
 
         // Role Modules
         $this->call(RoleModulosSeeder::class);
-
-
 
         // Countries
         $this->call(CountriesSeeder::class);
@@ -74,45 +74,63 @@ class DatabaseSeeder extends Seeder
         // User::factory()->count(50)->oferente()->create();
         // User::factory()->count(100)->usuario()->create();
 
-        // Candidates
-        // Candidate::factory()->count(100)->create();
-        SocioEconomico::factory()->count(100)->create(); //Se Crean los Candidatos en Base al Modelo SocioEconomico on the Fly
+        if(env('APP_ENV') != 'production') {
 
-        // Messages
-        Message::factory()->count(200)->create();
+            // Candidates
+            // Candidate::factory()->count(100)->create();
+            SocioEconomico::factory()->count(100)->create(); //Se Crean los Candidatos en Base al Modelo SocioEconomico on the Fly
+
+            // Messages
+            Message::factory()->count(200)->create();
+
+        }
+
 
         // Audiences
         $this->call(AudiencesSeeder::class);
 
         // Institutions (Types, Institutions)
         $this->call(InstitutionTypesSeeder::class);
-        Institution::factory()->count(20)->universidad()->create();
-        Institution::factory()->count(20)->politecnico()->create();
-        Institution::factory()->count(20)->negocio()->create();
-        Institution::factory()->count(20)->itecnico()->create();
-        Institution::factory()->count(20)->idioma()->create();
 
-        // Offerers
-        Offerer::factory()->count(100)->create();
+        if(env('APP_ENV') != 'production') {
 
-        // Campuses
-        Campus::factory()->count(100)->create();
+            Institution::factory()->count(20)->universidad()->create();
+            Institution::factory()->count(20)->politecnico()->create();
+            Institution::factory()->count(20)->negocio()->create();
+            Institution::factory()->count(20)->itecnico()->create();
+            Institution::factory()->count(20)->idioma()->create();
 
+            // Offerers
+            Offerer::factory()->count(100)->create();
+
+            // Campuses
+            Campus::factory()->count(100)->create();
+
+        }
         // Development Areas
         $this->call(DevelopmentAreasSeeder::class);
 
-        // Education Levels
-        EducationLevel::factory()->count(50)->create();
+        if(env('APP_ENV') != 'production') {
+            // Education Levels
+            EducationLevel::factory()->count(50)->create();
+
+        }
 
         // Schedules
         $this->call(SchedulesSeeder::class);
 
         // Academic Offers (Types, Academic Offers)
         $this->call(AcademicOfferTypesSeeder::class);
-        AcademicOffer::factory()->count(100)->create();
 
-        // Institutions Offers
-        InstitutionOffer::factory()->count(200)->create();
+        if(env('APP_ENV') != 'production') {
+            AcademicOffer::factory()->count(100)->create();
+
+            // Institutions Offers
+            InstitutionOffer::factory()->count(200)->create();
+        }
+
+
+
 
         // Evaluations, requeriments
         $this->call(EvaluationsSeeder::class);
@@ -127,30 +145,37 @@ class DatabaseSeeder extends Seeder
 
         // Convocatorias, details
         $this->call(ConvocatoriaTypesSeeder::class);
-        Convocatoria::factory()->count(20)->create();
-        ConvocatoriaDetail::factory()->count(400)->create();
+
+        if(env('APP_ENV') != 'production') {
+            Convocatoria::factory()->count(20)->create();
+            ConvocatoriaDetail::factory()->count(400)->create();
+
+        }
+
 
         // Aplications (Status, Aplication, Details)
         $this->call(AplicationStatusesSeeder::class);
-        Aplication::factory()->count(100)->create();
-        AplicationDetail::factory()->count(200)->create();
 
-        // Scholarship, details
-        Scholarship::factory()->count(100)->create();
-        ScholarshipDetail::factory()->count(1000)->create();
+        if(env('APP_ENV') != 'production') {
+            Aplication::factory()->count(100)->create();
+            AplicationDetail::factory()->count(200)->create();
 
-        // Favoritos
-        UserFavorites::factory()->count(200)->create();
+            // Scholarship, details
+            Scholarship::factory()->count(100)->create();
+            ScholarshipDetail::factory()->count(1000)->create();
 
-        // Experiencia Laboral, Formacion Academica y Datos Socio Economicos
-        ExperienciaLaboral::factory()->count(300)->create();
-        FormacionAcademica::factory()->count(300)->create();
+            // Favoritos
+            UserFavorites::factory()->count(200)->create();
 
-        //Creo un SocioEconomico para el Candidato #1
-        SocioEconomico::factory()->count(1)->candidato()->create();
+            // Experiencia Laboral, Formacion Academica y Datos Socio Economicos
+            ExperienciaLaboral::factory()->count(300)->create();
+            FormacionAcademica::factory()->count(300)->create();
+
+            //Creo un SocioEconomico para el Candidato #1
+            SocioEconomico::factory()->count(1)->candidato()->create();
 
 
-        Notificacion::factory()->count(600)->create();
-
+            Notificacion::factory()->count(600)->create();
+        }
     }
 }
