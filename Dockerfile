@@ -112,7 +112,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer install \
         --ignore-platform-reqs \
         --no-ansi \
-        --no-dev \
+        # --no-dev \ # TODO: allow to have a stage for dev
         --no-interaction
 
 RUN composer dump-autoload
