@@ -31,6 +31,11 @@ class Candidate extends Model
         return $this->hasOne(Municipality::class, 'id', 'municipality_id');
     }
 
+    public function economico()
+    {
+        return $this->hasOne(SocioEconomico::class, 'candidate_id', 'id');
+    }
+
     public function documents()
     {
         return $this->hasmany(Document::class);

@@ -98,9 +98,11 @@ class ProfileController extends Controller
             try {
                 $profile = Profile::where('user_id', $user->id)->first();
                 if($profile) {
-                    $profile->image_url = $image['url'];
-                    $profile->image_ext = $image['ext'];
-                    $profile->image_size = $image['size'];
+                    if(isset($request->image)) {
+                        $profile->image_url = $image['url'];
+                        $profile->image_ext = $image['ext'];
+                        $profile->image_size = $image['size'];
+                    }
                     $profile->name = $request->name;
                     $profile->contact_phone = $request->contact_phone;
                     $profile->contact_email = $request->contact_email;
@@ -120,9 +122,11 @@ class ProfileController extends Controller
             try {
                 $evaluator = Evaluator::where('user_id', $user->id)->first();
                 if($evaluator) {
-                    $evaluator->image_url = $image['url'];
-                    $evaluator->image_ext = $image['ext'];
-                    $evaluator->image_size = $image['size'];
+                    if(isset($request->image)) {
+                        $evaluator->image_url = $image['url'];
+                        $evaluator->image_ext = $image['ext'];
+                        $evaluator->image_size = $image['size'];
+                    }
                     $evaluator->name = $request->name;
                     $evaluator->contact_phone = $request->contact_phone;
                     $evaluator->contact_email = $request->contact_email;
@@ -140,9 +144,11 @@ class ProfileController extends Controller
             try {
                 $coordinator = Coordinator::where('user_id', $user->id)->first();
                 if($coordinator) {
-                    $coordinator->image_url = $image['url'];
-                    $coordinator->image_ext = $image['ext'];
-                    $coordinator->image_size = $image['size'];
+                    if(isset($request->image)) {
+                        $coordinator->image_url = $image['url'];
+                        $coordinator->image_ext = $image['ext'];
+                        $coordinator->image_size = $image['size'];
+                    }
                     $coordinator->name = $request->name;
                     $coordinator->contact_phone = $request->contact_phone;
                     $coordinator->contact_email = $request->contact_email;
@@ -170,9 +176,11 @@ class ProfileController extends Controller
                     $candidate->province_id = $request->province_id;
                     $candidate->municipality_id = $request->municipality_id;
                     $candidate->address = $request->address;
-                    $candidate->image_url = $image['url'];
-                    $candidate->image_ext = $image['ext'];
-                    $candidate->image_size = $image['size'];
+                    if(isset($request->image)) {
+                        $candidate->image_url = $image['url'];
+                        $candidate->image_ext = $image['ext'];
+                        $candidate->image_size = $image['size'];
+                    }
                     $candidate->document_id = $request->document_id;
                     $candidate->name = $request->name;
                     $candidate->last_name = $request->last_name;

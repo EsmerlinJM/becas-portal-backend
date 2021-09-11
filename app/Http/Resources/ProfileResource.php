@@ -23,6 +23,7 @@ class ProfileResource extends JsonResource
             'name' => $this->name,
             'contact_phone' => $this->contact_phone,
             'contact_email' => $this->contact_email,
+            'notificaciones' => NotificacionResource::collection($this->user->notificaciones),
         ];
     }
 }
