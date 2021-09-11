@@ -69,35 +69,21 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 RUN composer install
 
-# TODO: TEST environment needs variable setup acordingly
-#####################################
-##              TEST               ##
-#####################################
-FROM php AS test
-
-ENV APP_ENV=local
-ENV APP_DEBUG=true
-ENV LOG_CHANNEL=stack
-ENV LOG_LEVEL=debug
-
-COPY --chown=www-data --from=assets-builder /var/www/html /var/www/html
-WORKDIR /var/www/html
-
-COPY --from=composer /usr/bin/composer /usr/bin/composer
-
-COPY entrypoint.sh /usr/local/bin/
-
-ENTRYPOINT ["entrypoint.sh"]
-
 #####################################
 ##              PROD               ##
 #####################################
-FROM php AS prod
+FROM php AS release
 
-ENV APP_ENV=production
-ENV LOG_CHANNEL=stack
+ARG APP_ENV
+ENV APP_ENV ${APP_ENV:-production}
 
-COPY --chown=www-data --from=assets-builder /var/www/html /var/www/html
+ARG APP_DEBUG
+ENV APP_DEBUG ${APP_DEBUG:-false}
+
+ARG LOG_LEVEL
+ENV LOG_LEVEL ${LOG_LEVEL:-info}
+
+COPY --from=assets-builder --chown=www-data /var/www/html /var/www/html
 WORKDIR /var/www/html
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
