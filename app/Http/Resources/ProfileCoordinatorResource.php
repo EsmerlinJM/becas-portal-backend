@@ -21,7 +21,6 @@ class ProfileCoordinatorResource extends JsonResource
             'role' => new RoleResource($this->user->role),
             'institution' => new InstitutionResourceUser($this->user->institution),
             'offerer' => new OffererResourceUser($this->user->offerer),
-            'notificaciones' => NotificacionResource::collection($this->user->notificaciones),
             'profile' => [
                 'id' => $this->id,
                 'coordinator_id' => $this->id,
@@ -31,6 +30,7 @@ class ProfileCoordinatorResource extends JsonResource
                 'name' => $this->name,
                 'contact_phone' => $this->contact_phone,
                 'contact_email' => $this->contact_email,
+                'notificaciones' => NotificacionResource::collection($this->user->notificaciones),
             ]
         ];
     }

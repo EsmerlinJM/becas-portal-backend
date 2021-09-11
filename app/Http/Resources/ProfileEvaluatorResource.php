@@ -21,7 +21,6 @@ class ProfileEvaluatorResource extends JsonResource
             'role' => new RoleResource($this->user->role),
             'institution' => new InstitutionResourceUser($this->user->institution),
             'offerer' => new OffererResourceUser($this->user->offerer),
-            'notificaciones' => NotificacionResource::collection($this->user->notificaciones),
             'profile' => [
                 'id' => $this->id,
                 'evaluator_id' => $this->id,
@@ -33,6 +32,7 @@ class ProfileEvaluatorResource extends JsonResource
                 'contact_email' => $this->contact_email,
                 'coordinator_id' => $this->coordinator->id,
                 'coordinator_name' => $this->coordinator->name,
+                'notificaciones' => NotificacionResource::collection($this->user->notificaciones),
             ]
         ];
     }
