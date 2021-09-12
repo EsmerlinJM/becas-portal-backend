@@ -10,6 +10,8 @@ env:
   PROJECT_NAME: becas-portal
   GAR_BASE: us-docker.pkg.dev/${{ secrets.GCP_PROJECT }}
   APP_ENV: production
+  APP_DEBUG: false
+  LOG_LEVEL: info
 
 jobs:
   versioning:
@@ -64,10 +66,9 @@ jobs:
           target: release
           tags: ${{ env.GAR_BASE }}/${{env.PROJECT_NAME}}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_HEAD_REF_SLUG || env.GITHUB_REF_SLUG }}
           build-args: |
-            APP_KEY=${{ secrets.APP_KEY }}
-            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            PASSPORT_PRIVATE_KEY=${{ secrets.PASSPORT_PRIVATE_KEY }}
-            PASSPORT_PUBLIC_KEY=${{ secrets.PASSPORT_PUBLIC_KEY }}
+            APP_ENV=${{ env.APP_ENV }}
+            APP_DEBUG=${{ env.APP_DEBUG }}
+            LOG_LEVEL=${{ env.LOG_LEVEL }}
           push: true
           cache-from: type=registry,ref=${{ env.GAR_BASE }}/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}:${{ env.GITHUB_HEAD_REF_SLUG || env.GITHUB_REF_SLUG }}
           cache-to: type=inline
@@ -103,6 +104,9 @@ jobs:
             DB_PORT=${{ secrets.DB_PORT }},
             DB_DATABASE=${{ secrets.DB_DATABASE }},
             DB_USERNAME=${{ secrets.DB_USERNAME }},
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }},
+            PASSPORT_PRIVATE_KEY=${{ secrets.PASSPORT_PRIVATE_KEY }},
+            PASSPORT_PUBLIC_KEY=${{ secrets.PASSPORT_PUBLIC_KEY }},
             MAIL_HOST=${{ secrets.MAIL_HOST }},
             MAIL_PORT=${{ secrets.MAIL_PORT }},
             MAIL_ENCRYPTION=${{ secrets.MAIL_ENCRYPTION }},
