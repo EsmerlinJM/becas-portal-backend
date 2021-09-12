@@ -17,8 +17,12 @@ use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\GoogleBucketTrait;
+
 class ConvocatoriaDetailController extends Controller
 {
+
+    use GoogleBucketTrait;
     /**
      * Display a listing of the resource.
      *
@@ -89,9 +93,6 @@ class ConvocatoriaDetailController extends Controller
             'coverage' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         $convocatoria = Convocatoria::findOrFail($request->convocatoria_id); //Valido si la convocatoria existe
         $oferente = Offerer::findOrFail($request->offerer_id); //Valido si el oferente existe
         $oferta = InstitutionOffer::findOrFail($request->institution_offer_id); //Valido si la oferta existe
@@ -100,21 +101,7 @@ class ConvocatoriaDetailController extends Controller
         try {
 
             //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => null,
-                "ext" => null,
-                "size" => null,
-            );
-        }
+            $image = $this->upload($request, "image");
 
             $detalle = new ConvocatoriaDetail;
             $detalle->convocatoria_id = $convocatoria->id;
@@ -174,9 +161,6 @@ class ConvocatoriaDetailController extends Controller
             'coverage' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         $detalle = ConvocatoriaDetail::findOrFail($request->convocatoria_detail_id); //Valido si el Detalle Existe
         $oferente = Offerer::findOrFail($request->offerer_id); //Valido si el oferente existe
         $oferta = InstitutionOffer::findOrFail($request->institution_offer_id); //Valido si la oferta existe
@@ -184,30 +168,18 @@ class ConvocatoriaDetailController extends Controller
 
         try {
             //Image Handling
-            if (isset($request->image)) {
-                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-                $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-                $image = array(
-                    "url" => $disk->url($fileName),
-                    "ext" => $request->file('image')->getClientOriginalExtension(),
-                    "size" => $request->file('image')->getSize(),
-                );
-            } else {
-                $image = array(
-                    "url" => $detalle->image_url,
-                    "ext" => $detalle->image_ext,
-                    "size" => $detalle->image_size,
-                );
-            }
+            $image = $this->upload($request, "image");
 
             $detalle->institution_offer_id = $oferta->id;
             $detalle->institution_id = $oferta->institution->id;
             $detalle->formulario_id = $formulario->id;
             $detalle->offerer_id = $oferente->id;
             $detalle->coverage = $request->coverage;
-            $detalle->image_url = $image['url'];
-            $detalle->image_ext = $image['ext'];
-            $detalle->image_size = $image['size'];
+            if (isset($request->image)) {
+                $detalle->image_url = $image['url'];
+                $detalle->image_ext = $image['ext'];
+                $detalle->image_size = $image['size'];
+            }
             $detalle->save();
 
             return new ConvocatoriaDetailResource($detalle);

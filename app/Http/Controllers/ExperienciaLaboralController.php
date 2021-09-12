@@ -59,16 +59,12 @@ class ExperienciaLaboralController extends Controller
             'fecha_entrada' => 'required',
         ]);
 
-        // // Initialize Google Storage
-        // $disk = \Storage::disk('google');
-
         $candidato = auth()->user()->candidate;
 
 
         if($candidato) {
             //Image Handling
-
-            $image = $this->upload($request, 'documento');
+            $documento = $this->upload($request, 'documento');
 
             try {
                 $experiencia = new ExperienciaLaboral();
@@ -80,9 +76,9 @@ class ExperienciaLaboralController extends Controller
                 $experiencia->fecha_entrada = Carbon::parse($request->fecha_entrada);
                 $experiencia->rango_salarial = $request->rango_salarial;
                 $experiencia->fecha_salida = isset($request->fecha_salida) ? Carbon::parse($request->fecha_salida) : null;
-                $experiencia->documento_url = $image['url'];
-                $experiencia->documento_ext = $image['ext'];
-                $experiencia->documento_size = $image['size'];
+                $experiencia->documento_url = $documento['url'];
+                $experiencia->documento_ext = $documento['ext'];
+                $experiencia->documento_size = $documento['size'];
                 $experiencia->save();
 
             } catch (\Throwable $th) {
@@ -133,16 +129,13 @@ class ExperienciaLaboralController extends Controller
             'fecha_entrada' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         $experiencia = ExperienciaLaboral::findOrFail($request->experiencia);
 
         $this->belongsToUser($experiencia);
 
 
         //Image Handling
-        $image = $this->upload($request, 'documento');
+        $documento = $this->upload($request, 'documento');
 
         try {
             $experiencia->empresa = $request->empresa;
@@ -153,9 +146,9 @@ class ExperienciaLaboralController extends Controller
             $experiencia->rango_salarial = $request->rango_salarial;
             $experiencia->fecha_salida = isset($request->fecha_salida) ? Carbon::parse($request->fecha_salida) : null;
             if(isset($request->documento)) {
-                $experiencia->documento_url = $image['url'];
-                $experiencia->documento_ext = $image['ext'];
-                $experiencia->documento_size = $image['size'];
+                $experiencia->documento_url = $documento['url'];
+                $experiencia->documento_ext = $documento['ext'];
+                $experiencia->documento_size = $documento['size'];
             }
             $experiencia->save();
 

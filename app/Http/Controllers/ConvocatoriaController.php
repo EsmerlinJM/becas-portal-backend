@@ -21,12 +21,14 @@ use App\Exceptions\AplicationNotClosed;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\GoogleBucketTrait;
 use App\Tools\NotificacionTrait;
 
 class ConvocatoriaController extends Controller
 {
 
     use NotificacionTrait;
+    use GoogleBucketTrait;
     /**
      * Display a listing of the resource.
      *
@@ -127,30 +129,13 @@ class ConvocatoriaController extends Controller
             'end_date' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
 
         Audience::findOrFail($request->audience_id); //Valido si la audiencia existe
 
         try {
 
             //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => null,
-                "ext" => null,
-                "size" => null,
-            );
-        }
+            $image = $this->upload($request, "image");
 
             $convocatoria = new Convocatoria;
             $convocatoria->coordinator_id = $request->coordinator_id;
@@ -220,29 +205,13 @@ class ConvocatoriaController extends Controller
             'end_date' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         $convocatoria = Convocatoria::findOrFail($request->convocatoria_id);
 
         try {
 
-                //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => $convocatoria->image_url,
-                "ext" => $convocatoria->image_ext,
-                "size" => $convocatoria->image_size,
-            );
-        }
+            //Image Handling
+            $image = $this->upload($request, "image");
+
             $convocatoria->coordinator_id = $request->coordinator_id;
             $convocatoria->convocatoria_type_id = $request->convocatoria_type_id;
             $convocatoria->audience_id = $request->audience_id;
@@ -250,9 +219,11 @@ class ConvocatoriaController extends Controller
             $convocatoria->name = $request->name;
             $convocatoria->start_date = Carbon::parse($request->start_date);
             $convocatoria->end_date = Carbon::parse($request->end_date);
-            $convocatoria->image_url = $image['url'];
-            $convocatoria->image_ext = $image['ext'];
-            $convocatoria->image_size = $image['size'];
+            if (isset($request->image)) {
+                $convocatoria->image_url = $image['url'];
+                $convocatoria->image_ext = $image['ext'];
+                $convocatoria->image_size = $image['size'];
+            }
             $convocatoria->save();
 
             foreach (User::where('role_id', 1)->get() as $user) {
