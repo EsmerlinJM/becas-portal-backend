@@ -15,7 +15,7 @@ env:
   # Deployment variables
   PROJECT_NAME: becas-portal
   GAR_BASE: us-docker.pkg.dev/${{ secrets.GCP_PROJECT }}
-  APP_ENV: production
+  APP_ENV: local
   APP_DEBUG: false
   LOG_LEVEL: debug
 
