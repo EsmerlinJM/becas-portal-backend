@@ -17,6 +17,8 @@ class CreateMunicipalitiesTable extends Migration
             $table->id();
             $table->integer('province_code');
             $table->integer('code');
+            $table->integer('identifier');
+            $table->integer('region_code');
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
