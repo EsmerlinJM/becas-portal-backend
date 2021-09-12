@@ -15,8 +15,13 @@ use App\Exceptions\EmailNotValid;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\GoogleBucketTrait;
+
 class CoordinatorController extends Controller
 {
+
+    use GoogleBucketTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -47,25 +52,8 @@ class CoordinatorController extends Controller
             'phone' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => null,
-                "ext" => null,
-                "size" => null,
-            );
-        }
+        $image = $this->upload($request, "image");
 
         try {
             $user = new User;
@@ -135,25 +123,8 @@ class CoordinatorController extends Controller
             'contact_phone' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => null,
-                "ext" => null,
-                "size" => null,
-            );
-        }
+        $image = $this->upload($request, "image");
 
         $coordinator = Coordinator::findOrFail($request->coordinator_id);
 

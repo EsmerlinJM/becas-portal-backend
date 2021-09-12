@@ -16,8 +16,12 @@ use App\Exceptions\EmailNotValid;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\GoogleBucketTrait;
+
 class EvaluatorController extends Controller
 {
+
+    use GoogleBucketTrait;
     /**
      * Display a listing of the resource.
      *
@@ -49,25 +53,8 @@ class EvaluatorController extends Controller
             'phone' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => null,
-                "ext" => null,
-                "size" => null,
-            );
-        }
+        $image = $this->upload($request, "image");
 
         $coordinator = Coordinator::findOrFail($request->coordinator_id);
 
@@ -142,34 +129,19 @@ class EvaluatorController extends Controller
             'contact_phone' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => null,
-                "ext" => null,
-                "size" => null,
-            );
-        }
+        $image = $this->upload($request, "image");
 
         $coordinator = Coordinator::findOrFail($request->coordinator_id);
         $evaluator = Evaluator::findOrFail($request->evaluator_id);
 
         try {
             $evaluator->coordinator_id = $coordinator->id;
-            $evaluator->image_url = $image['url'];
-            $evaluator->image_ext = $image['ext'];
-            $evaluator->image_size = $image['size'];
+            if (isset($request->image)) {
+                $evaluator->image_url = $image['url'];
+                $evaluator->image_ext = $image['ext'];
+                $evaluator->image_size = $image['size'];
+            }
             $evaluator->name = $request->name;
             $evaluator->contact_phone = $request->contact_phone;
             $evaluator->contact_email = $request->contact_email;

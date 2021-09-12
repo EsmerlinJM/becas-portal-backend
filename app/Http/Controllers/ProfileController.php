@@ -22,8 +22,12 @@ use App\Exceptions\NotProfile;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\GoogleBucketTrait;
+
 class ProfileController extends Controller
 {
+
+    use GoogleBucketTrait;
 
     //Roles Usuarios
     // const ADMIN = 1; Profile
@@ -64,25 +68,8 @@ class ProfileController extends Controller
     //Metodo para actualizar usuario
     function update(Request $request)
     {
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => null,
-                "ext" => null,
-                "size" => null,
-            );
-        }
+        $image = $this->upload($request, 'image');
 
         //Tomamos el Usuario Logeado
         $user = auth()->user();
