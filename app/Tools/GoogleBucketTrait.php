@@ -29,8 +29,10 @@ trait GoogleBucketTrait
             // Initialize Google Storage
             $disk = \Storage::disk('google');
 
+            $folder = (env('APP_ENV') != 'production') ? "DESARROLLO" : "PRODUCCION";
+
             $name = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file($fileName)->getClientOriginalExtension());
-            $disk->write($name, file_get_contents($request->file($fileName)), ['visibility' => 'public']);
+            $disk->write($folder."/".$name, file_get_contents($request->file($fileName)), ['visibility' => 'public']);
 
             $file = array(
                 "name" => $name,

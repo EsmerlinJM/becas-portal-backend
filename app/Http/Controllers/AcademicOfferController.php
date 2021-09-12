@@ -14,10 +14,13 @@ use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
 use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
+use App\Tools\GoogleBucketTrait;
 use Carbon\Carbon;
 
 class AcademicOfferController extends Controller
 {
+
+    use GoogleBucketTrait;
     /**
      * Display a listing of the resource.
      *
@@ -98,33 +101,15 @@ class AcademicOfferController extends Controller
             'language' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
-
-
         Institution::findOrFail($request->institution_id); //Valido si existe
         AcademicOfferType::findOrFail($request->academic_offer_type_id); //Valido si existe
         EducationLevel::findOrFail($request->education_level_id); //Valido si existe
 
         try {
 
-                //PDF or Image Handling
-            if (isset($request->pensum)) {
-                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('pensum')->getClientOriginalExtension());
-                $disk->write($fileName, file_get_contents($request->file('pensum')), ['visibility' => 'public']);
-                $pensum = array(
-                    "url" => $disk->url($fileName),
-                    "ext" => $request->file('pensum')->getClientOriginalExtension(),
-                    "size" => $request->file('pensum')->getSize(),
-                );
-            } else {
-                $pensum = array(
-                    "url" => null,
-                    "ext" => null,
-                    "size" => null,
-                );
-            }
+            //PDF or Image Handling
+            $pensum = $this->upload($request, "pensum");
+
 
             $aoffer = new AcademicOffer;
             $aoffer->active = 1; //Activo por Defecto
@@ -187,9 +172,6 @@ class AcademicOfferController extends Controller
             'language' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
 
         AcademicOfferType::findOrFail($request->academic_offer_type_id); //Valido si existe
@@ -198,21 +180,8 @@ class AcademicOfferController extends Controller
         try {
 
             //PDF or Image Handling
-            if (isset($request->pensum)) {
-                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('pensum')->getClientOriginalExtension());
-                $disk->write($fileName, file_get_contents($request->file('pensum')), ['visibility' => 'public']);
-                $pensum = array(
-                    "url" => $disk->url($fileName),
-                    "ext" => $request->file('pensum')->getClientOriginalExtension(),
-                    "size" => $request->file('pensum')->getSize(),
-                );
-            } else {
-                $pensum = array(
-                    "url" => null,
-                    "ext" => null,
-                    "size" => null,
-                );
-            }
+            $pensum = $this->upload($request, "pensum");
+
 
             $aoffer->academic_offer_type_id = $request->academic_offer_type_id;
             $aoffer->education_level_id = $request->education_level_id;

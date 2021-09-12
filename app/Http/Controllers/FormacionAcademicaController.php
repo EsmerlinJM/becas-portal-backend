@@ -14,8 +14,12 @@ use App\Exceptions\ArrayEmpty;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\GoogleBucketTrait;
+
 class FormacionAcademicaController extends Controller
 {
+
+    use GoogleBucketTrait;
     /**
      * Display a listing of the resource.
      *
@@ -58,29 +62,11 @@ class FormacionAcademicaController extends Controller
             'fecha_entrada' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         $candidato = auth()->user()->candidate;
 
 
         if($candidato) {
-            //Image Handling
-            if (isset($request->certificado)) {
-                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('certificado')->getClientOriginalExtension());
-                $disk->write($fileName, file_get_contents($request->file('certificado')), ['visibility' => 'public']);
-                $image = array(
-                    "url" => $disk->url($fileName),
-                    "ext" => $request->file('certificado')->getClientOriginalExtension(),
-                    "size" => $request->file('certificado')->getSize(),
-                );
-            } else {
-                $image = array(
-                    "url" => null,
-                    "ext" => null,
-                    "size" => null,
-                );
-            }
+            $certificado = $this->upload($request, 'certificado');
 
             try {
                 $formacion = new FormacionAcademica();
@@ -91,9 +77,9 @@ class FormacionAcademicaController extends Controller
                 $formacion->indice = $request->indice;
                 $formacion->fecha_entrada = Carbon::parse($request->fecha_entrada);
                 $formacion->fecha_salida = isset($request->fecha_salida) ? Carbon::parse($request->fecha_salida) : null;
-                $formacion->certificacion_url = $image['url'];
-                $formacion->certificacion_ext = $image['ext'];
-                $formacion->certificacion_size = $image['size'];
+                $formacion->certificacion_url = $certificado['url'];
+                $formacion->certificacion_ext = $certificado['ext'];
+                $formacion->certificacion_size = $certificado['size'];
                 $formacion->save();
 
             } catch (\Throwable $th) {
@@ -143,9 +129,6 @@ class FormacionAcademicaController extends Controller
             'fecha_entrada' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         $candidato = auth()->user()->candidate;
 
         $formacion = FormacionAcademica::findOrFail($request->formacion);
@@ -154,23 +137,8 @@ class FormacionAcademicaController extends Controller
 
 
         if($candidato) {
-            //Image Handling
-            if (isset($request->certificado)) {
-                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('certificado')->getClientOriginalExtension());
-                $disk->write($fileName, file_get_contents($request->file('certificado')), ['visibility' => 'public']);
-                $image = array(
-                    "url" => $disk->url($fileName),
-                    "ext" => $request->file('certificado')->getClientOriginalExtension(),
-                    "size" => $request->file('certificado')->getSize(),
-                );
-            } else {
-                $image = array(
-                    "url" => null,
-                    "ext" => null,
-                    "size" => null,
-                );
-            }
 
+            $certificado = $this->upload($request, 'certificado');
             try {
                 $formacion->carrera = $request->carrera;
                 $formacion->institucion = $request->institucion;
@@ -179,9 +147,9 @@ class FormacionAcademicaController extends Controller
                 $formacion->fecha_entrada = Carbon::parse($request->fecha_entrada);
                 $formacion->fecha_salida = isset($request->fecha_salida) ? Carbon::parse($request->fecha_salida) : null;
                 if(isset($request->certificado)) {
-                    $formacion->certificacion_url = $image['url'];
-                    $formacion->certificacion_ext = $image['ext'];
-                    $formacion->certificacion_size = $image['size'];
+                    $formacion->certificacion_url = $certificado['url'];
+                    $formacion->certificacion_ext = $certificado['ext'];
+                    $formacion->certificacion_size = $certificado['size'];
                 }
                 $formacion->save();
 
