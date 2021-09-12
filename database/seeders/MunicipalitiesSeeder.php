@@ -19,7 +19,7 @@ class MunicipalitiesSeeder extends Seeder
     public function run()
     {
         DB::table('municipalities')->insert([
-            ["province_code" => '1',"code" => '101',"name" => "SANTO DOMINGO CENTRO (DN)",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ["province_code" => '1',"code" => '101',"name" => "Distrito Nacional",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ["province_code" => '71',"code" => '201',"name" => "AZUA",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ["province_code" => '71',"code" => '202',"name" => "LAS CHARCAS",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ["province_code" => '71',"code" => '203',"name" => "LAS YAYAS DE VIAJAMA",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
@@ -167,13 +167,13 @@ class MunicipalitiesSeeder extends Seeder
             ["province_code" => '93',"code" => '3101',"name" => "SAN JOSE DE OCOA",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ["province_code" => '93',"code" => '3102',"name" => "SABANA LARGA",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ["province_code" => '93',"code" => '3103',"name" => "RANCHO ARRIBA",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ["province_code" => '1',"code" => '3201',"name" => "SANTO DOMINGO ESTE",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ["province_code" => '1',"code" => '3202',"name" => "SANTO DOMINGO OESTE",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ["province_code" => '1',"code" => '3203',"name" => "SANTO DOMINGO NORTE",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ["province_code" => '1',"code" => '3204',"name" => "BOCA CHICA",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ["province_code" => '1',"code" => '3205',"name" => "SAN ANTONIO DE GUERRA",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ["province_code" => '1',"code" => '3206',"name" => "LOS ALCARRIZOS",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ["province_code" => '1',"code" => '3207',"name" => "PEDRO BRAND",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ["province_code" => '2',"code" => '3201',"name" => "SANTO DOMINGO ESTE",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ["province_code" => '2',"code" => '3202',"name" => "SANTO DOMINGO OESTE",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ["province_code" => '2',"code" => '3203',"name" => "SANTO DOMINGO NORTE",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ["province_code" => '2',"code" => '3204',"name" => "BOCA CHICA",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ["province_code" => '2',"code" => '3205',"name" => "SAN ANTONIO DE GUERRA",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ["province_code" => '2',"code" => '3206',"name" => "LOS ALCARRIZOS",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ["province_code" => '2',"code" => '3207',"name" => "PEDRO BRAND",'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
     }
 }

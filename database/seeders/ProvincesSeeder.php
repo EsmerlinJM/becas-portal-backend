@@ -20,6 +20,7 @@ class ProvincesSeeder extends Seeder
     {
         DB::table('provinces')->insert([
             [ "country_id" => '62', "code" => '1', "name" => "Distrito Nacional", "created_at" => Carbon::now(), "updated_at" => Carbon::now()],
+            [ "country_id" => '62', "code" => '2', "name" => "Santo Domingo", "created_at" => Carbon::now(), "updated_at" => Carbon::now()],
             [ "country_id" => '62', "code" => '21', "name" => "San Pedro de Macorís", "created_at" => Carbon::now(), "updated_at" => Carbon::now()],
             [ "country_id" => '62', "code" => '22', "name" => "La Romana", "created_at" => Carbon::now(), "updated_at" => Carbon::now()],
             [ "country_id" => '62', "code" => '23', "name" => "La Altagracia", "created_at" => Carbon::now(), "updated_at" => Carbon::now()],
