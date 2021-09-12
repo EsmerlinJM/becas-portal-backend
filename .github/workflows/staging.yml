@@ -115,7 +115,7 @@ jobs:
             APP_URL=${{ secrets.APP_URL_DEV }},
             DB_HOST=${{ secrets.DB_HOST }},
             DB_PORT=${{ secrets.DB_PORT }},
-            DB_DATABASE=${{ secrets.DB_DATABASE_DEV }},
+            DB_DATABASE=${{ secrets.DB_DATABASE_STAGING }},
             DB_USERNAME=${{ secrets.DB_USERNAME }},
             DB_PASSWORD=${{ secrets.DB_PASSWORD }},
             PASSPORT_PRIVATE_KEY=${{ secrets.PASSPORT_PRIVATE_KEY }},
