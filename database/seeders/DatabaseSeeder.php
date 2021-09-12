@@ -147,9 +147,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ConvocatoriaTypesSeeder::class);
 
         if(env('APP_ENV') != 'production') {
-            Convocatoria::factory()->count(20)->create();
+            // Convocatoria::factory()->count(20)->create();
+            $this->call(ConvocatoriasSeeder::class);
             ConvocatoriaDetail::factory()->count(400)->create();
-
         }
 
 
