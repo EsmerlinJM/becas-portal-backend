@@ -14,8 +14,12 @@ use App\Tools\ResponseCodes;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\GoogleBucketTrait;
+
 class DocumentController extends Controller
 {
+
+    use GoogleBucketTrait;
 
     /**
      * Display a listing of the resource.
@@ -86,16 +90,7 @@ class DocumentController extends Controller
             Aplication::findOrFail($request->aplication_id);
         }
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
-
-        $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('document')->getClientOriginalExtension());
-        $disk->write($fileName, file_get_contents($request->file('document')), ['visibility' => 'public']);
-
-        $url = $disk->url($fileName);
-        $ext = $request->file('document')->getClientOriginalExtension();
-        $size = $request->file('document')->getSize();
+        $documento = $this->upload($request, "document");
 
             try {
                 $document = new Document;
@@ -103,9 +98,9 @@ class DocumentController extends Controller
                 $document->aplication_id = isset($request->aplication_id) ? $request->aplication_id : null;
                 $document->name = $request->name;
                 $document->notes = isset($request->notes) ? $request->notes : null;
-                $document->url = $url;
-                $document->ext = $ext;
-                $document->size = $size;
+                $document->url = $documento['url'];
+                $document->ext = $documento['ext'];
+                $document->size = $documento['size'];
                 $document->save();
                 return new DocumentResource($document);
             } catch (\Throwable $th) {

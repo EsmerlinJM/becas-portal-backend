@@ -13,8 +13,12 @@ use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\GoogleBucketTrait;
+
 class OffererController extends Controller
 {
+
+    use GoogleBucketTrait;
     /**
      * Display a listing of the resource.
      *
@@ -47,27 +51,10 @@ class OffererController extends Controller
             'contact_email' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         try {
 
             //Image Handling
-            if (isset($request->image)) {
-                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-                $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-                $image = array(
-                    "url" => $disk->url($fileName),
-                    "ext" => $request->file('image')->getClientOriginalExtension(),
-                    "size" => $request->file('image')->getSize(),
-                );
-            } else {
-                $image = array(
-                    "url" => null,
-                    "ext" => null,
-                    "size" => null,
-                );
-            }
+            $image = $this->upload($request, 'image');
 
             $oferente = new Offerer;
             $oferente->name = $request->name;
@@ -127,29 +114,12 @@ class OffererController extends Controller
             'contact_email' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         $oferente = Offerer::findOrFail($request->offerer_id);
 
         try {
 
             //Image Handling
-            if (isset($request->image)) {
-                $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-                $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-                $image = array(
-                    "url" => $disk->url($fileName),
-                    "ext" => $request->file('image')->getClientOriginalExtension(),
-                    "size" => $request->file('image')->getSize(),
-                );
-            } else {
-                $image = array(
-                    "url" => $oferente->image_url,
-                    "ext" => $oferente->image_ext,
-                    "size" => $oferente->image_size,
-                );
-            }
+            $image = $this->upload($request, 'image');
 
             $oferente->name = $request->name;
             $oferente->document_id = $request->document_id;
@@ -157,9 +127,11 @@ class OffererController extends Controller
             $oferente->contact_person = $request->contact_person;
             $oferente->contact_number = $request->contact_number;
             $oferente->contact_email = $request->contact_email;
-            $oferente->image_url = $image['url'];
-            $oferente->image_ext = $image['ext'];
-            $oferente->image_size = $image['size'];
+            if (isset($request->image)) {
+                $oferente->image_url = $image['url'];
+                $oferente->image_ext = $image['ext'];
+                $oferente->image_size = $image['size'];
+            }
             $oferente->save();
 
             return new OffererResource($oferente);

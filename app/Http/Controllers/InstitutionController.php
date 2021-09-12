@@ -16,8 +16,12 @@ use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
 use Carbon\Carbon;
 
+use App\Tools\GoogleBucketTrait;
+
 class InstitutionController extends Controller
 {
+
+    use GoogleBucketTrait;
     /**
      * Display a listing of the resource.
      *
@@ -47,29 +51,12 @@ class InstitutionController extends Controller
             'name' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
         InstitutionType::findOrFail($request->institution_type_id); //Valido si el tipo de institucion existe
 
         try {
 
             //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => null,
-                "ext" => null,
-                "size" => null,
-            );
-        }
+            $image = $this->upload($request, 'image');
 
             $institucion = new Institution;
             $institucion->institution_type_id = $request->institution_type_id;
@@ -130,10 +117,6 @@ class InstitutionController extends Controller
             'name' => 'required',
         ]);
 
-        // Initialize Google Storage
-        $disk = \Storage::disk('google');
-
-
         $institucion = Institution::findOrFail($request->institution_id); //Valido si la institucion existe
         InstitutionType::findOrFail($request->institution_type_id); //Valido si el tipo de institucion existe
 
@@ -141,21 +124,8 @@ class InstitutionController extends Controller
         try {
 
             //Image Handling
-        if (isset($request->image)) {
-            $fileName = strtoupper('PNB-'.Carbon::now()->format('Y-m-d')."-".time().".".$request->file('image')->getClientOriginalExtension());
-            $disk->write($fileName, file_get_contents($request->file('image')), ['visibility' => 'public']);
-            $image = array(
-                "url" => $disk->url($fileName),
-                "ext" => $request->file('image')->getClientOriginalExtension(),
-                "size" => $request->file('image')->getSize(),
-            );
-        } else {
-            $image = array(
-                "url" => $institution->image_url,
-                "ext" => $institution->image_ext,
-                "size" => $institution->image_size,
-            );
-        }
+            $image = $this->upload($request, 'image');
+
 
             $institucion->institution_type_id = $request->institution_type_id;
             $institucion->name = $request->name;
@@ -167,9 +137,11 @@ class InstitutionController extends Controller
             $institucion->contacto_persona = $request->contacto_persona;
             $institucion->contacto_email = $request->contacto_email;
             $institucion->contacto_telefono = $request->contacto_telefono;
-            $institucion->image_url = $image['url'];
-            $institucion->image_ext = $image['ext'];
-            $institucion->image_size = $image['size'];
+            if (isset($request->image)) {
+                $institucion->image_url = $image['url'];
+                $institucion->image_ext = $image['ext'];
+                $institucion->image_size = $image['size'];
+            }
             $institucion->save();
             return new InstitutionResource($institucion);
         } catch (\Throwable $th) {
