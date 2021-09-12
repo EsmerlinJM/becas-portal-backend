@@ -19,6 +19,7 @@ env:
   APP_ENV: local
   APP_DEBUG: true
   LOG_LEVEL: debug
+  FRESH_INSTALL: 1
 
 jobs:
   test:
@@ -136,7 +137,7 @@ jobs:
             GOOGLE_CLOUD_PROJECT_ID=${{ secrets.GCP_PROJECT }},
             GOOGLE_CLOUD_STORAGE_BUCKET=${{ secrets.GCP_BUCKET_DEV }},
             TOKEN_SECRET=${{ secrets.TOKEN_SECRET }},
-            FRESH_INSTALL=${{ secrets.FRESH_INSTALL }}
+            FRESH_INSTALL=${{ env.FRESH_INSTALL }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
