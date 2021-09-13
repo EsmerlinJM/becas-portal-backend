@@ -6,7 +6,7 @@
 @if ($level === 'error')
 # @lang('Whoops!')
 @else
-# @lang('Hola!') {{ $user['email'] }}
+# @lang('Hola!')
 @endif
 @endif
 
