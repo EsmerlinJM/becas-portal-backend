@@ -37,11 +37,12 @@ class MunicipalityController extends Controller
     public function show(Request $request)
     {
         $request->validate([
-            'municipality_code' => 'required',
+            'identifier' => 'required',
         ]);
 
         try {
-            $municipality = Municipality::where('code',$request->municipality_code)->get()->first();
+            $municipality = Municipality::where('identifier',$request->identifier)->get()->first();
+
             if($municipality){
                 return new MunicipalityResource($municipality);
             } else {

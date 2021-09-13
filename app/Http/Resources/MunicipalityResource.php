@@ -19,10 +19,14 @@ class MunicipalityResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
+            'identifier' => $this->identifier,
+            'region_code' => $this->region_code,
             'name' => $this->name,
             'province' => [
                 'id' => $this->province->id,
                 'code' => $this->province->code,
+                'identifier' => $this->province->identifier,
+                'region_code' => $this->province->region_code,
                 'name' => $this->province->name,
             ],
 

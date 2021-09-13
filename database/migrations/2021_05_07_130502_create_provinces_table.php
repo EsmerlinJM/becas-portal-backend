@@ -17,6 +17,8 @@ class CreateProvincesTable extends Migration
             $table->id();
             $table->foreignId('country_id')->unsigned()->index()->references('id')->on('countries');
             $table->integer('code');
+            $table->integer('identifier');
+            $table->integer('region_code');
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();
