@@ -168,6 +168,7 @@ class ProfileController extends Controller
                         $candidate->image_ext = $image['ext'];
                         $candidate->image_size = $image['size'];
                     }
+                    return $image;
                     $candidate->document_id = $request->document_id;
                     $candidate->name = $request->name;
                     $candidate->last_name = $request->last_name;
