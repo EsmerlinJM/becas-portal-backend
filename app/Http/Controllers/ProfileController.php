@@ -207,12 +207,12 @@ class ProfileController extends Controller
             try {
                 $user->password = bcrypt($request->password);
                 $user->save();
-                return response()->json(['status' => 'successful','message' => 'Password cambiado correctamente'], ResponseCodes::OK);
+                return response()->json(['status' => 'successful','message' => 'Contraseña cambiada correctamente'], ResponseCodes::OK);
             } catch (\Throwable $th) {
                 throw new SomethingWentWrong($th);
             }
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Password actual incorrecto'], ResponseCodes::UNAUTHORIZED);
+            return response()->json(['status' => 'error', 'message' => 'Contraseña actual incorrecta'], ResponseCodes::UNAUTHORIZED);
         }
 
     }
