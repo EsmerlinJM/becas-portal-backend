@@ -40,6 +40,7 @@ trait GoogleBucketTrait
                 "ext" => $request->file($fileName)->getClientOriginalExtension(),
                 "size" => $request->file($fileName)->getSize(),
             );
+
             return $file;
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);

@@ -55,13 +55,13 @@ class AuthController extends Controller
 
         // $accessToken = $user->createToken('authToken')->accessToken;
 
-        try {
+        // try {
             event(new Registered($user));
-        } catch (\Throwable $th) {
-                $candidate->forceDelete();
-                $user->forceDelete();
-                throw new EmailNotValid;
-        }
+        // } catch (\Throwable $th) {
+        //         $candidate->forceDelete();
+        //         $user->forceDelete();
+        //         throw new EmailNotValid;
+        // }
 
         return response([ 'user' => new RegisterResource($user), 'status' => 'Por favor verificar su email'], ResponseCodes::OK);
     }
