@@ -70,7 +70,7 @@ class MunicipalitiesSeeder extends Seeder
             [ "name" => 'Cayetano Germosen', "code" => '2', "identifier" => '10902', "province_code" => '9', "region_code" => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             [ "name" => 'Gaspar Hernandez', "code" => '3', "identifier" => '10903', "province_code" => '9', "region_code" => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             [ "name" => 'Jamao Al Norte', "code" => '4', "identifier" => '10904', "province_code" => '9', "region_code" => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            [ "name" => 'San V√≠ctor', "code" => '5', "identifier" => '10905', "province_code" => '9', "region_code" => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            [ "name" => 'San Victor', "code" => '5', "identifier" => '10905', "province_code" => '9', "region_code" => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             [ "name" => 'Jimani', "code" => '1', "identifier" => '61001', "province_code" => '10', "region_code" => '6', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             [ "name" => 'Duverge', "code" => '2', "identifier" => '61002', "province_code" => '10', "region_code" => '6', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             [ "name" => 'La Descubierta', "code" => '3', "identifier" => '61003', "province_code" => '10', "region_code" => '6', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
