@@ -13,10 +13,13 @@ use App\Http\Resources\RegisterResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\EmailNotValid;
 use App\Tools\ResponseCodes;
+use App\Tools\NotificacionTrait;
 use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
+
+    use NotificacionTrait;
 
     public function register(Request $request)
     {
@@ -62,6 +65,10 @@ class AuthController extends Controller
                 $user->forceDelete();
                 throw new EmailNotValid;
         }
+
+        $this->notificar($user, "Bienvenido al Portal Unico de Becas", "¡Hola!  En el portal Beca tu futuro podrás encontrar las ofertas académicas que te ayudarán a desarrollar tu talento y desarrollar el país.");
+
+
 
         return response([ 'user' => new RegisterResource($user), 'status' => 'Por favor verificar su email'], ResponseCodes::OK);
     }
