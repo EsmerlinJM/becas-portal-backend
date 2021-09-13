@@ -33,7 +33,8 @@ class VerificationController extends Controller
                 return response()->json(['status' => 'successful' ,'message' => 'Email ha sido verificado'], ResponseCodes::OK);
             }
         } else {
-            return response()->json(['status' => 'error' ,'message' => 'Email ya ha sido verificado anteriormente'], ResponseCodes::UNPROCESSABLE_ENTITY);
+            return redirect(env('LADING_AFTER_EMAIL_CONFIRMATION'));
+            // return response()->json(['status' => 'error' ,'message' => 'Email ya ha sido verificado anteriormente'], ResponseCodes::UNPROCESSABLE_ENTITY);
         }
     }
 
