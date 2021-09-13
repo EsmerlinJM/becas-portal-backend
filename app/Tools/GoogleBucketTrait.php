@@ -36,10 +36,11 @@ trait GoogleBucketTrait
 
             $file = array(
                 "name" => $name,
-                "url" => $disk->url($name),
+                "url" => $disk->url($folder."/".$name),
                 "ext" => $request->file($fileName)->getClientOriginalExtension(),
                 "size" => $request->file($fileName)->getSize(),
             );
+
             return $file;
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);

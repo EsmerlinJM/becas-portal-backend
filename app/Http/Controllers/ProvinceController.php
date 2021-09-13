@@ -38,11 +38,11 @@ class ProvinceController extends Controller
     public function show(Request $request)
     {
         $request->validate([
-            'province_code' => 'required',
+            'code' => 'required',
         ]);
 
         try {
-            $province = Province::where('code',$request->province_code)->get()->first();
+            $province = Province::where('code',$request->code)->get()->first();
             if($province){
                 return new ProvinceResource($province);
             } else {

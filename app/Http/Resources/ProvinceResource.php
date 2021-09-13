@@ -19,6 +19,8 @@ class ProvinceResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
+            'identifier' => $this->identifier,
+            'region_code' => $this->region_code,
             'name' => $this->name,
             'country' => [
                 'id' => $this->country_id,
