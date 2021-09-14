@@ -69,8 +69,6 @@ class AuthController extends Controller
 
         $this->notificar($user, "Bienvenido al Portal Unico de Becas", "¡Hola!  En el portal Beca tu futuro podrás encontrar las ofertas académicas que te ayudarán a desarrollar tu talento y desarrollar el país.");
 
-
-
         return response([ 'user' => new RegisterResource($user), 'status' => 'Por favor verificar su email'], ResponseCodes::OK);
     }
 
@@ -99,7 +97,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return response()->json(['status' => 'ok','message' => 'Usuario has sido deslogeado del sistema'], ResponseCodes::OK);
+        return response()->json(['status' => 'successful','message' => 'Usuario has sido deslogeado del sistema'], ResponseCodes::OK);
     }
 
 
