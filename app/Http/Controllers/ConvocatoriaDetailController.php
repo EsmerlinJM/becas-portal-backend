@@ -15,6 +15,7 @@ use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
 use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
+use App\Tools\ResponseCodes;
 use Carbon\Carbon;
 
 use App\Tools\GoogleBucketTrait;
@@ -69,10 +70,14 @@ class ConvocatoriaDetailController extends Controller
             }
         }
 
-        try {
-            return ConvocatoriaDetailResource::collection($detalles);
-        } catch (\Throwable $th) {
-            throw new SomethingWentWrong($th);
+        if($detalles) {
+            try {
+                return ConvocatoriaDetailResource::collection($detalles);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+        } else {
+            return response()->json(['status' => 'successfull', 'message' => 'Nada que mostrar'], ResponseCodes::NOT_FOUND);
         }
 
     }

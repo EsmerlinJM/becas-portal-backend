@@ -63,6 +63,7 @@ class AuthController extends Controller
         } catch (\Throwable $th) {
                 $candidate->forceDelete();
                 $user->forceDelete();
+                throw new SomethingWentWrong($th);
                 throw new EmailNotValid;
         }
 
