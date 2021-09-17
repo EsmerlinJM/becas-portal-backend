@@ -87,6 +87,9 @@ Archivo .env
 - APP_DEBUG= { true } #true or false
 - APP_URL= { full_url } #http://localhost
 
+#### QUEUES
+- QUEUE_CONNECTION=database
+
 #### DATABASE CONNECTION
 - DB_HOST={ host }
 - DB_PORT={ port }

@@ -51,7 +51,7 @@ class VerificationController extends Controller
                 return response()->json(['status' => 'error' ,'message' => 'Email ya ha sido verificado anteriormente'], ResponseCodes::UNPROCESSABLE_ENTITY);
             }
             $user->sendEmailVerificationNotification();
-            return response()->json(['status' => 'successful' ,'message' => 'Vinculo de vericaficacion enviado a su email'], ResponseCodes::OK);
+            return response()->json(['status' => 'successful' ,'message' => 'Enlace de verificación enviado a su email'], ResponseCodes::OK);
 
         } else {
             return response()->json(['status' => 'error' ,'message' => 'Email no se encuentra registrado con nosotros'], ResponseCodes::UNPROCESSABLE_ENTITY);
@@ -68,7 +68,7 @@ class VerificationController extends Controller
             $request->only('email')
         );
 
-        return response()->json(['status' => 'successful' ,'message' => 'Email reestablecimiento de contraseña enviado'], ResponseCodes::OK);
+        return response()->json(['status' => 'successful' ,'message' => 'Email restablecimiento de contraseña enviado'], ResponseCodes::OK);
     }
 
     public function reset(Request $request) {
