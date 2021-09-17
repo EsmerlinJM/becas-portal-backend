@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 
-class RoleResource extends JsonResource
+class MensajesConvocatoriaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,8 +18,11 @@ class RoleResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            // 'modulos' => RoleModuloResource::collection($this->modulos),
-            // 'permisos' => PermissionResource::collection($this->permisos),
+            'iniciada' => $this->iniciada,
+            'aprobada' => $this->aprobada,
+            'rechazada' => $this->rechazada,
+            'evaluacion' => $this->evaluacion,
+            'credito' => $this->credito,
         ];
     }
 }

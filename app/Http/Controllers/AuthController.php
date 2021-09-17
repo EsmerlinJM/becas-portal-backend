@@ -97,7 +97,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return response()->json(['status' => 'successful','message' => 'Usuario has sido deslogeado del sistema'], ResponseCodes::OK);
+        return response()->json(['status' => 'successful','message' => 'El usuario ha cerrado sesión'], ResponseCodes::OK);
     }
 
 

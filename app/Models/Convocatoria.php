@@ -16,6 +16,11 @@ class Convocatoria extends Model
         return $this->hasOne(Coordinator::class, 'id', 'coordinator_id');
     }
 
+    public function mensajes()
+    {
+        return $this->hasOne(MensajesConvocatoria::class, 'id', 'mensajes_convocatoria_id');
+    }
+
     public function audience()
     {
         return $this->hasOne(Audience::class, 'id', 'audience_id');

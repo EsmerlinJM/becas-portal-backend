@@ -173,6 +173,7 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/profile/changepassword', [ProfileController::class, 'changePassword']);
         Route::post('/profile/getProfile', [ProfileController::class, 'getProfile']);
         Route::post('/profile/update', [ProfileController::class, 'update']);
+        Route::post('/profile/updatePicture', [ProfileController::class, 'updatePicture']);
 
         #Favoritos
         Route::get('/favoritos/getAll', [UserFavoritesController::class, 'index']);

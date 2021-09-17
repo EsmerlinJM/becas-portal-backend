@@ -27,6 +27,7 @@ class ConvocatoriaMin2Resource extends JsonResource
             'image_size' => $this->image_size,
             'requisitos' => $this->requisitos,
             'creada'    => $this->created_at->toFormattedDateString(),
+            'mensajes'  => new MensajesConvocatoria($this->mensajes),
             'type'  => new ConvocatoriaTypeResource($this->type),
         ];
     }

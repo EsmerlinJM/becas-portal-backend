@@ -122,6 +122,7 @@ class ConvocatoriaController extends Controller
         $request->validate([
             'coordinator_id' => 'required',
             'convocatoria_type_id' => 'required',
+            'mensajes' => 'required',
             'evaluation_id' => 'required',
             'audience_id' => 'required',
             'name' => 'required',
@@ -139,6 +140,7 @@ class ConvocatoriaController extends Controller
 
             $convocatoria = new Convocatoria;
             $convocatoria->coordinator_id = $request->coordinator_id;
+            $convocatoria->mensajes_convocatoria_id = $request->mensajes;
             $convocatoria->convocatoria_type_id = $request->convocatoria_type_id;
             $convocatoria->audience_id = $request->audience_id;
             $convocatoria->evaluation_id = $request->evaluation_id;
@@ -198,6 +200,7 @@ class ConvocatoriaController extends Controller
             'coordinator_id' => 'required',
             'convocatoria_id' => 'required',
             'evaluation_id' => 'required',
+            'mensajes' => 'required',
             'convocatoria_type_id' => 'required',
             'audience_id' => 'required',
             'name' => 'required',
@@ -214,6 +217,7 @@ class ConvocatoriaController extends Controller
 
             $convocatoria->coordinator_id = $request->coordinator_id;
             $convocatoria->convocatoria_type_id = $request->convocatoria_type_id;
+            $convocatoria->mensajes_convocatoria_id = $request->mensajes;
             $convocatoria->audience_id = $request->audience_id;
             $convocatoria->evaluation_id = $request->evaluation_id;
             $convocatoria->name = $request->name;

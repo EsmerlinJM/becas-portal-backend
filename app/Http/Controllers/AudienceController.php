@@ -85,6 +85,8 @@ class AudienceController extends Controller
             'name' => 'required',
         ]);
 
+        $bago = 0;
+
         $audience = Audience::findOrFail($request->audience_id);
 
         try {
