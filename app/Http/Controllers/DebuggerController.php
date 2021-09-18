@@ -15,7 +15,18 @@ class DebuggerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getData(Request $request) {
-        $data = $request;
+        echo $request;
+        return $request;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postData(Request $request) {
+        echo $request;
         return $request;
     }
 

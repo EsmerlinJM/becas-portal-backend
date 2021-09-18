@@ -74,7 +74,9 @@ use App\Http\Controllers\DebuggerController;
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
-Route::post('debugger/getData', [DebuggerController::class, 'getData'])->middleware('log.route');
+#Debugger
+Route::get('debugger/getData', [DebuggerController::class, 'getData'])->middleware('log.route');
+Route::post('debugger/postData', [DebuggerController::class, 'postData'])->middleware('log.route');
 
 
 Route::get('email/forgotPassword', [VerificationController::class, 'forgot'])->name('password.forgot');
