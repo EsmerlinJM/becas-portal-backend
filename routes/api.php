@@ -57,6 +57,8 @@ use App\Http\Controllers\FormacionAcademicaController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\SocioEconomicoController;
 
+use App\Http\Controllers\DebuggerController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -71,6 +73,8 @@ use App\Http\Controllers\SocioEconomicoController;
 // Verify email
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+
+Route::post('debugger/getData', [DebuggerController::class, 'getData'])->middleware('log.route');
 
 
 Route::get('email/forgotPassword', [VerificationController::class, 'forgot'])->name('password.forgot');

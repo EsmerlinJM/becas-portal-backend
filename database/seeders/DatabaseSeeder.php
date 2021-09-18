@@ -65,6 +65,9 @@ class DatabaseSeeder extends Seeder
         // Sectors
         $this->call(SectorsSeeder::class);
 
+        // Mensajes Convocatorias Base
+        $this->call(MensajesConvocatoriaSeeder::class);
+
         // Users
         $this->call(UsersSeeder::class);
         // User::factory()->count(5)->admin()->create();

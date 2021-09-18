@@ -17,7 +17,6 @@ class CreateConvocatoriasTable extends Migration
             $table->id();
             $table->foreignId('coordinator_id')->unsigned()->index()->references('id')->on('coordinators');
             $table->foreignId('convocatoria_type_id')->unsigned()->index()->references('id')->on('convocatoria_types');
-            $table->foreignId('mensajes_convocatoria_id')->unsigned()->index()->references('id')->on('mensajes_convocatorias');
             $table->foreignId('evaluation_id')->unsigned()->index()->references('id')->on('evaluations');
             $table->foreignId('audience_id')->unsigned()->index()->references('id')->on('audiences');
             $table->string('name');

@@ -6,6 +6,7 @@ use App\Models\Convocatoria;
 use App\Models\Coordinator;
 use App\Models\Audience;
 use App\Models\Evaluation;
+use App\Models\MensajesConvocatoria;
 use App\Models\ConvocatoriaType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas Nacionales 2020',
                 'start_date' => '2020-01-01',
                 'end_date' => '2020-12-01',
@@ -49,6 +51,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas Lenguas 2021',
                 'start_date' => '2021-01-01',
                 'end_date' => '2021-06-01',
@@ -68,6 +71,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas Internacionales 2021',
                 'start_date' => '2021-10-01',
                 'end_date' => '2021-12-20',
@@ -87,6 +91,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas de Investigacion 2022',
                 'start_date' => '2022-10-01',
                 'end_date' => '2022-12-20',
@@ -109,6 +114,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas Nacionales 2019',
                 'start_date' => '2019-01-01',
                 'end_date' => '2019-12-01',
@@ -128,6 +134,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas Europeas 2021',
                 'start_date' => '2021-01-01',
                 'end_date' => '2021-06-01',
@@ -147,6 +154,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas Nacionales 2021',
                 'start_date' => '2021-10-01',
                 'end_date' => '2021-12-20',
@@ -166,6 +174,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas de Investigacion 2023',
                 'start_date' => '2023-10-01',
                 'end_date' => '2023-12-20',
@@ -187,6 +196,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas Nacionales 2018',
                 'start_date' => '2018-01-01',
                 'end_date' => '2018-12-01',
@@ -206,6 +216,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas Boston 2021',
                 'start_date' => '2021-01-01',
                 'end_date' => '2021-06-01',
@@ -225,6 +236,7 @@ class ConvocatoriasSeeder extends Seeder
                 'convocatoria_type_id' => ConvocatoriaType::all()->random()->id,
                 'audience_id'   => Audience::all()->random()->id,
                 'evaluation_id'     => Evaluation::all()->random()->id,
+                'mensajes_convocatoria_id' => MensajesConvocatoria::all()->random()->id,
                 'name'  => 'Convocatoria Becas de Investigacion 2024',
                 'start_date' => '2024-10-01',
                 'end_date' => '2024-12-20',
