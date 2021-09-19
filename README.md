@@ -104,6 +104,13 @@ Archivo .env
 
 #### TOKEN SECRET
 - TOKEN_SECRET={ 'token_secret_pass' }
+
+#### MAILCHIMP
+MAIL_CHIMP_ENABLE=true
+MAIL_CHIMP_AUDIENCE_ID={ audience_id }
+MAIL_CHIMP_TAG={ your_awesome_tag }
+MAIL_CHIMP_API_KEY={ your_api_key_from_mail_chimp }
+MAIL_CHIMP_SERVER={ your_server_prefix_from_mail_chimp }
 #### LANDINGS
 LADING_AFTER_EMAIL_CONFIRMATION={ 'url_where_to_land' }
 LADING_AFTER_PASSWORD_RESET={ 'url_where_to_land' }

@@ -7,6 +7,7 @@ use App\Models\Candidate;
 use App\Models\SocioEconomico;
 use Illuminate\Http\Request;
 
+
 use App\Http\Resources\UserResource;
 use App\Http\Resources\ProfileUserResource;
 use App\Http\Resources\RegisterResource;
@@ -14,12 +15,13 @@ use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\EmailNotValid;
 use App\Tools\ResponseCodes;
 use App\Tools\NotificacionTrait;
+use App\Tools\MailChimpTrait;
 use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
 
-    use NotificacionTrait;
+    use NotificacionTrait, MailChimpTrait;
 
     public function register(Request $request)
     {
@@ -68,6 +70,10 @@ class AuthController extends Controller
         }
 
         $this->notificar($user, "Bienvenido al Portal Unico de Becas", "¡Hola!  En el portal Beca tu futuro podrás encontrar las ofertas académicas que te ayudarán a desarrollar tu talento y desarrollar el país.");
+
+        //AQUI VAMOS A REGISTRAR EL USUARIO CON MAILCHIMP
+        $this->createContact($candidate);
+        $this->tagContact($candidate);
 
         return response([ 'user' => new RegisterResource($user), 'status' => 'Por favor verificar su email'], ResponseCodes::OK);
     }
