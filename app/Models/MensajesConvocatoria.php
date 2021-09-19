@@ -9,4 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class MensajesConvocatoria extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'name',
+        'iniciada',
+        'aprobada',
+        'rechazada',
+        'evaluacion',
+        'credito',
+    ];
 }

@@ -59,6 +59,8 @@ use App\Http\Controllers\SocioEconomicoController;
 
 use App\Http\Controllers\DebuggerController;
 
+use App\Http\Controllers\MensajesConvocatoriaController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -245,6 +247,13 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
 
         Route::post('/ievaluators/add', [InstitutionEvaluatorController::class, 'add']);
         Route::post('/ievaluators/remove', [InstitutionEvaluatorController::class, 'remove']);
+
+        #Mensajes Convocatorias
+        Route::get('/convocatorias/mensajes/getAll', [MensajesConvocatoriaController::class, 'index']);
+        Route::post('/convocatorias/mensajes/show', [MensajesConvocatoriaController::class, 'show']);
+        Route::post('/convocatorias/mensajes/create', [MensajesConvocatoriaController::class, 'store']);
+        Route::post('/convocatorias/mensajes/update', [MensajesConvocatoriaController::class, 'update']);
+        Route::post('/convocatorias/mensajes/delete', [MensajesConvocatoriaController::class, 'destroy']);
 
         #Convocatorias Tipos
         Route::post('convocatorias/tipos/create', [ConvocatoriaTypeController::class, 'store']);
