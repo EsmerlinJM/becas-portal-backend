@@ -60,6 +60,7 @@ use App\Http\Controllers\SocioEconomicoController;
 use App\Http\Controllers\DebuggerController;
 
 use App\Http\Controllers\MensajesConvocatoriaController;
+use App\Http\Controllers\MensajeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,7 +86,7 @@ Route::get('email/forgotPassword', [VerificationController::class, 'forgot'])->n
 Route::get('email/resetPassword', [VerificationController::class, 'reset'])->name('password.reset');
 
 //Parametros
-Route::get('/parametros/getAll', [ParametroController::class, 'index']);
+Route::get('/parametros/getAll', [ParametroController::class, 'parametros']);
 
 #Paises
 Route::get('/paises/getAll', [CountryController::class, 'index']);
@@ -189,7 +190,8 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/favoritos/delete', [UserFavoritesController::class, 'destroy']);
 
         #Estadisticas
-        Route::get('/estadisticas', [ParametroController::class, 'estadisticas']);
+        Route::get('/estadisticas/convocatoria', [ParametroController::class, 'estadisticas_convocatoria']);
+        Route::get('/estadisticas/generales', [ParametroController::class, 'estadisticas_generales']);
 
         #Usuarios
         Route::post('/users/getAll', [UserController::class, 'index']);
@@ -204,6 +206,15 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/mensajes/markRead', [MessageController::class, 'markRead']);
         Route::post('/mensajes/markUnRead', [MessageController::class, 'markUnRead']);
         Route::post('/mensajes/delete', [MessageController::class, 'destroy']);
+
+        #Mensajes Internos
+        Route::get('/mensajes/internos/getAll', [MensajeController::class, 'index']);
+        Route::post('/mensajes/internos/show', [MensajeController::class, 'show']);
+        Route::post('/mensajes/internos/compose_office', [MensajeController::class, 'composeBackOffice']);
+        Route::post('/mensajes/internos/compose_candidate', [MensajeController::class, 'composeCandidato']);
+        Route::post('/mensajes/internos/setRead', [MensajeController::class, 'setRead']);
+        Route::post('/mensajes/internos/setUnread', [MensajeController::class, 'setUnread']);
+        Route::post('/mensajes/internos/delete', [MensajeController::class, 'destroy']);
 
         #Evaluadores
         Route::post('/evaluators/getAll', [EvaluatorController::class, 'index']);

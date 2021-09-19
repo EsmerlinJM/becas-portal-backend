@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMensajesTable extends Migration
+class CreateMensajeCandidatosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateMensajesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mensajes', function (Blueprint $table) {
+        Schema::create('mensaje_candidatos', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->nullable();
-            $table->integer('candidate_id')->nullable();
-            $table->string('subject')->default('Solicitud Informacion');
+            $table->integer('user_id');
+            $table->integer('candidate_id');
+            $table->string('subject');
             $table->text('message');
             $table->boolean('read')->default(0);
-            $table->boolean('sentByCandidato')->default(0);
-            $table->boolean('sentByBackOffice')->default(0);
+            $table->enum('type', ['enviado','recibido']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +33,6 @@ class CreateMensajesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mensajes');
+        Schema::dropIfExists('mensaje_candidatos');
     }
 }
