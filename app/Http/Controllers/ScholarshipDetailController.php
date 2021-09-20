@@ -7,6 +7,7 @@ use App\Models\ScholarshipDetail;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\ScholarshipDetailResource;
+use App\Http\Resources\CalificacionesResourceCandidato;
 use App\Exceptions\RatingInferior;
 use App\Exceptions\RatingOverFlow;
 use App\Exceptions\RatingUnderFlow;
@@ -30,6 +31,32 @@ class ScholarshipDetailController extends Controller
             return ScholarshipDetailResource::collection($detalles);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
+        }
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function becado(Request $request)
+    {
+        $request->validate([
+            'beca' => 'required',
+        ]);
+
+        $usuario = auth()->user();
+        if($usuario->candidate){
+            $detalles = ScholarshipDetail::where('candidate_id', $usuario->candidate->id)->where('scholarship_id', $request->beca)->get();
+            try {
+                return CalificacionesResourceCandidato::collection($detalles);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+        } else {
+            throw new NotCandidate();
         }
     }
 

@@ -338,6 +338,10 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::get('becados/activos', [ScholarshipController::class, 'activos']);
         Route::get('becados/suspendidos', [ScholarshipController::class, 'suspendidos']);
 
+        #Becados Portal Candidatos
+        Route::get('becados/getMisBecas', [ScholarshipController::class, 'becado']);
+        Route::get('becados/getMisCalificaciones', [ScholarshipDetailController::class, 'becado']);
+
         #Becados Details
         Route::get('becados/detalles/getAll', [ScholarshipDetailController::class, 'index']);
         Route::post('becados/detalles/filtros', [ScholarshipDetailController::class, 'filter']);
