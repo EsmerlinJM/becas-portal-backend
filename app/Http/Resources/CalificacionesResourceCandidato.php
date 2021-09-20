@@ -21,7 +21,9 @@ class CalificacionesResourceCandidato extends JsonResource
             'rango_minimo' => $this->min_rating,
             'periodo' => $this->period,
             'calificacion'   => $this->rating,
-            'created_at' => $this->created_at->toDateTimeString(),
+            'created_at' => $this->created_at->toFormattedDateString(),
+            'convocatoria' => new ConvocatoriaResourceCandidato($this->convocatoria),
+            'solicitud' => new SolicitudResourceCandidato($this->aplication)
         ];
     }
 }

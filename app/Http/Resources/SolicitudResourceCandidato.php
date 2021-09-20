@@ -21,7 +21,7 @@ class SolicitudResourceCandidato extends JsonResource
             'score' => $this->score,
             'notes' => $this->notes,
             'closed'   => $this->closed ? "true" : "false",
-            'created' => $this->created_at->toDateTimeString(),
+            'created' => $this->created_at->toFormattedDateString(),
         ];
     }
 }
