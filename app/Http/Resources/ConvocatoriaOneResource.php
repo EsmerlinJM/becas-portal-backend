@@ -27,6 +27,7 @@ class ConvocatoriaOneResource extends JsonResource
             'image_size' => $this->image_size,
             'requisitos' => $this->requisitos,
             'creada'    => $this->created_at->toFormattedDateString(),
+            'mensajes'  => new MensajesConvocatoriaResource($this->mensajes),
             'coordinator' => new CoordinatorResource2($this->coordinator),
             'evaluation' => new EvaluationResource($this->evaluation),
             'audience'  => new AudienceResource($this->audience),

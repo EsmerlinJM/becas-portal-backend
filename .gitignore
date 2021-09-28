@@ -224,4 +224,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#Google Credentials
+google_credentials.json
+
 # End of https://www.toptal.com/developers/gitignore/api/phpunit,phpcodesniffer,laravel,visualstudiocode,jetbrains,windows,macos

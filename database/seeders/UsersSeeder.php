@@ -25,9 +25,9 @@ class UsersSeeder extends Seeder
                 [   'role_id'=>'1',
                     'institution_id' => null,
                     'offerer_id' => null,
-                    'email'=>'alexander.hilario@ogtic.gob.do',
+                    'email'=> env('DEFAULT_USER_EMAIL'),
                     'email_verified_at'=> $date,
-                    'password' => bcrypt('qLLNv9U287LYHAxK2Nz9'),
+                    'password' => bcrypt(env('DEFAULT_USER_PASSWORD')),
                     'created_at' => $date
                 ],
             ]);
@@ -35,34 +35,12 @@ class UsersSeeder extends Seeder
             DB::table('profiles')->insert([
                 [
                     'user_id'=>'1',
-                    'name'=>'Alexander Hilario',
-                    'contact_phone'=>'+1 (809) 998-6610',
-                    'contact_email'=>'alexander.hilario@ogtic.gob.do',
+                    'name'=> env('DEFAULT_USER_NAME'),
+                    'contact_phone'=> env('DEFAULT_USER_PHONE'),
+                    'contact_email'=> env('DEFAULT_USER_EMAIL'),
                     'created_at' => $date
                 ],
             ]);
-
-            DB::table('users')->insert([
-                [   'role_id'=>'1',
-                    'institution_id' => null,
-                    'offerer_id' => null,
-                    'email'=>'ivan.firestone@ogtic.gob.do',
-                    'email_verified_at'=> $date,
-                    'password' => bcrypt('2Un2a8MjJqrkuMpqJN6D'),
-                    'created_at' => $date
-                ],
-            ]);
-
-            DB::table('profiles')->insert([
-                [
-                    'user_id'=>'2',
-                    'name'=>'Ivan Firestone',
-                    'contact_phone'=>'+1 (829) 705-2424',
-                    'contact_email'=>'ivan.firestone@ogtic.gob.do',
-                    'created_at' => $date
-                ],
-            ]);
-
         } else {
             DB::table('users')->insert([
                 [   'role_id'=>'1',

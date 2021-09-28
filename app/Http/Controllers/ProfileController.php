@@ -71,7 +71,7 @@ class ProfileController extends Controller
         //Image Handling
         $image = $this->upload($request, 'image');
 
-        //Tomamos el Usuario Logeado
+        //Tomamos el Usuario Actual
         $user = auth()->user();
 
         if($user->role->id == Tools::ADMIN || $user->role->id == Tools::INSTITUCION || $user->role->id == Tools::OFERTANTE) { //Profile
@@ -183,12 +183,90 @@ class ProfileController extends Controller
             } catch (\Throwable $th) {
                 throw new SomethingWentWrong($th);
             }
-
-
         } else {
             return response()->json(['status' => 'error', 'message' => 'Role de Usuario no reconocido'], ResponseCodes::UNPROCESSABLE_ENTITY);
         }
+    }
 
+    //Metodo para actualizar usuario
+    function updatePicture(Request $request)
+    {
+        //Image Handling
+        $image = $this->upload($request, 'image');
+
+        //Tomamos el Usuario Actual
+        $user = auth()->user();
+
+        if($user->role->id == Tools::ADMIN || $user->role->id == Tools::INSTITUCION || $user->role->id == Tools::OFERTANTE) { //Profile
+            try {
+                $profile = Profile::where('user_id', $user->id)->first();
+                if($profile) {
+                    $profile->image_url = $image['url'];
+                    $profile->image_ext = $image['ext'];
+                    $profile->image_size = $image['size'];
+                    $profile->save();
+                    return new ProfileUserResource($user);
+                } else {
+                    throw new NotProfile;
+                }
+
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+
+
+        } elseif($user->role->id == Tools::EVALUADOR) { //Evaluator
+
+            try {
+                $evaluator = Evaluator::where('user_id', $user->id)->first();
+                if($evaluator) {
+                    $evaluator->image_url = $image['url'];
+                    $evaluator->image_ext = $image['ext'];
+                    $evaluator->image_size = $image['size'];
+                    $evaluator->save();
+                    return new ProfileEvaluatorResource($evaluator);
+                } else {
+                    throw new NotProfile;
+                }
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+
+
+        } elseif($user->role->id == Tools::COORDINADOR) { //Coordinator
+            try {
+                $coordinator = Coordinator::where('user_id', $user->id)->first();
+                if($coordinator) {
+                    $coordinator->image_url = $image['url'];
+                    $coordinator->image_ext = $image['ext'];
+                    $coordinator->image_size = $image['size'];
+                    $coordinator->save();
+                    return new ProfileCoordinatorResource($coordinator);
+                } else {
+                    throw new NotProfile;
+                }
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+
+        } elseif($user->role->id == Tools::USUARIO) {//Candidate
+            try {
+                $candidate = Candidate::where('user_id', $user->id)->first();
+                if($candidate) {
+                    $candidate->image_url = $image['url'];
+                    $candidate->image_ext = $image['ext'];
+                    $candidate->image_size = $image['size'];
+                    $candidate->save();
+                    return new ProfileCandidateResource($candidate);
+                } else {
+                    throw new NotProfile;
+                }
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Role de Usuario no reconocido'], ResponseCodes::UNPROCESSABLE_ENTITY);
+        }
     }
 
 

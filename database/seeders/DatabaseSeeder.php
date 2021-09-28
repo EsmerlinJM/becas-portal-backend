@@ -65,26 +65,20 @@ class DatabaseSeeder extends Seeder
         // Sectors
         $this->call(SectorsSeeder::class);
 
+        // Mensajes Convocatorias Base
+        $this->call(MensajesConvocatoriaSeeder::class);
+
         // Users
         $this->call(UsersSeeder::class);
-        // User::factory()->count(5)->admin()->create();
-        // User::factory()->count(30)->evaluador()->create();
-        // User::factory()->count(10)->coordinador()->create();
-        // User::factory()->count(200)->ies()->create();
-        // User::factory()->count(50)->oferente()->create();
-        // User::factory()->count(100)->usuario()->create();
 
         if(env('APP_ENV') != 'production') {
 
             // Candidates
-            // Candidate::factory()->count(100)->create();
             SocioEconomico::factory()->count(100)->create(); //Se Crean los Candidatos en Base al Modelo SocioEconomico on the Fly
 
             // Messages
             Message::factory()->count(200)->create();
-
         }
-
 
         // Audiences
         $this->call(AudiencesSeeder::class);

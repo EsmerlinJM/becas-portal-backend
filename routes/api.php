@@ -57,6 +57,11 @@ use App\Http\Controllers\FormacionAcademicaController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\SocioEconomicoController;
 
+use App\Http\Controllers\DebuggerController;
+
+use App\Http\Controllers\MensajesConvocatoriaController;
+use App\Http\Controllers\MensajeController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -72,12 +77,16 @@ use App\Http\Controllers\SocioEconomicoController;
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
+#Debugger
+Route::get('debugger/getData', [DebuggerController::class, 'getData'])->middleware('log.route');
+Route::post('debugger/postData', [DebuggerController::class, 'postData'])->middleware('log.route');
+
 
 Route::get('email/forgotPassword', [VerificationController::class, 'forgot'])->name('password.forgot');
 Route::get('email/resetPassword', [VerificationController::class, 'reset'])->name('password.reset');
 
 //Parametros
-Route::get('/parametros/getAll', [ParametroController::class, 'index']);
+Route::get('/parametros/getAll', [ParametroController::class, 'parametros']);
 
 #Paises
 Route::get('/paises/getAll', [CountryController::class, 'index']);
@@ -173,6 +182,7 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/profile/changepassword', [ProfileController::class, 'changePassword']);
         Route::post('/profile/getProfile', [ProfileController::class, 'getProfile']);
         Route::post('/profile/update', [ProfileController::class, 'update']);
+        Route::post('/profile/updatePicture', [ProfileController::class, 'updatePicture']);
 
         #Favoritos
         Route::get('/favoritos/getAll', [UserFavoritesController::class, 'index']);
@@ -180,7 +190,8 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/favoritos/delete', [UserFavoritesController::class, 'destroy']);
 
         #Estadisticas
-        Route::get('/estadisticas', [ParametroController::class, 'estadisticas']);
+        Route::get('/estadisticas/convocatoria', [ParametroController::class, 'estadisticas_convocatoria']);
+        Route::get('/estadisticas/generales', [ParametroController::class, 'estadisticas_generales']);
 
         #Usuarios
         Route::post('/users/getAll', [UserController::class, 'index']);
@@ -195,6 +206,15 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::post('/mensajes/markRead', [MessageController::class, 'markRead']);
         Route::post('/mensajes/markUnRead', [MessageController::class, 'markUnRead']);
         Route::post('/mensajes/delete', [MessageController::class, 'destroy']);
+
+        #Mensajes Internos
+        Route::get('/mensajes/internos/getAll', [MensajeController::class, 'index']);
+        Route::post('/mensajes/internos/show', [MensajeController::class, 'show']);
+        Route::post('/mensajes/internos/compose_office', [MensajeController::class, 'composeBackOffice']);
+        Route::post('/mensajes/internos/compose_candidate', [MensajeController::class, 'composeCandidato']);
+        Route::post('/mensajes/internos/setRead', [MensajeController::class, 'setRead']);
+        Route::post('/mensajes/internos/setUnread', [MensajeController::class, 'setUnread']);
+        Route::post('/mensajes/internos/delete', [MensajeController::class, 'destroy']);
 
         #Evaluadores
         Route::post('/evaluators/getAll', [EvaluatorController::class, 'index']);
@@ -238,6 +258,13 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
 
         Route::post('/ievaluators/add', [InstitutionEvaluatorController::class, 'add']);
         Route::post('/ievaluators/remove', [InstitutionEvaluatorController::class, 'remove']);
+
+        #Mensajes Convocatorias
+        Route::get('/convocatorias/mensajes/getAll', [MensajesConvocatoriaController::class, 'index']);
+        Route::post('/convocatorias/mensajes/show', [MensajesConvocatoriaController::class, 'show']);
+        Route::post('/convocatorias/mensajes/create', [MensajesConvocatoriaController::class, 'store']);
+        Route::post('/convocatorias/mensajes/update', [MensajesConvocatoriaController::class, 'update']);
+        Route::post('/convocatorias/mensajes/delete', [MensajesConvocatoriaController::class, 'destroy']);
 
         #Convocatorias Tipos
         Route::post('convocatorias/tipos/create', [ConvocatoriaTypeController::class, 'store']);
@@ -310,6 +337,10 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         Route::get('becados/expulsados', [ScholarshipController::class, 'expulsados']);
         Route::get('becados/activos', [ScholarshipController::class, 'activos']);
         Route::get('becados/suspendidos', [ScholarshipController::class, 'suspendidos']);
+
+        #Becados Portal Candidatos
+        Route::get('becados/getMisBecas', [ScholarshipController::class, 'becado']);
+        Route::get('becados/getMisCalificaciones', [ScholarshipDetailController::class, 'becado']);
 
         #Becados Details
         Route::get('becados/detalles/getAll', [ScholarshipDetailController::class, 'index']);

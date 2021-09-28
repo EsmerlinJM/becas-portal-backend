@@ -6,8 +6,10 @@ use App\Models\Scholarship;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\ScholarshipResource;
+use App\Http\Resources\BecasResourceCandidato;
 use App\Http\Resources\EstadosBecaResource;
 use App\Exceptions\SomethingWentWrong;
+use App\Exceptions\NotCandidate;
 use App\Tools\Tools;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
@@ -44,6 +46,26 @@ class ScholarshipController extends Controller
             return ScholarshipResource::collection($becas);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function becado()
+    {
+        $usuario = auth()->user();
+        if($usuario->candidate){
+            $becas = Scholarship::where('candidate_id', $usuario->candidate->id)->get();
+            try {
+                return BecasResourceCandidato::collection($becas);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+        } else {
+            throw new NotCandidate();
         }
     }
 

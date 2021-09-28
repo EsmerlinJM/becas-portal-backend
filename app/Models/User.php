@@ -82,7 +82,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function profile()
     {
-
         if ( auth()->user()->role->id == Tools::EVALUADOR) {
             return $this->belongsTo(Evaluator::class, 'id', 'user_id');
 
@@ -97,11 +96,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
         } elseif ( auth()->user()->role->id == Tools::USUARIO) {
             return $this->belongsTo(Candidate::class, 'id', 'user_id');
-
         } else {
             return $this->belongsTo(Profile::class, 'id', 'user_id');
         }
-
     }
 
     //PERMISSIONS
