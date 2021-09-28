@@ -87,8 +87,11 @@ Archivo .env
 - APP_DEBUG= { true } #true or false
 - APP_URL= { full_url } #http://localhost
 
-#### QUEUES
-- QUEUE_CONNECTION=database
+#### DEFAULT USER FOR SYSTEM
+- DEFAULT_USER_EMAIL='user-email'
+- DEFAULT_USER_NAME='user-name'
+- DEFAULT_USER_PASSWORD='user-password'
+- DEFAULT_USER_PHONE='user-number'
 
 #### DATABASE CONNECTION
 - DB_HOST={ host }
@@ -111,6 +114,7 @@ MAIL_CHIMP_AUDIENCE_ID={ audience_id }
 MAIL_CHIMP_TAG={ your_awesome_tag }
 MAIL_CHIMP_API_KEY={ your_api_key_from_mail_chimp }
 MAIL_CHIMP_SERVER={ your_server_prefix_from_mail_chimp }
+
 #### LANDINGS
 LADING_AFTER_EMAIL_CONFIRMATION={ 'url_where_to_land' }
 LADING_AFTER_PASSWORD_RESET={ 'url_where_to_land' }

@@ -38,14 +38,16 @@ class NotificarCierreConvocatoria implements ShouldQueue
      */
     public function handle()
     {
-        $candidatos = Candidate::all();
-
-        foreach ($candidatos as $candidato) {
-            $notificacion = new Notificacion();
-            $notificacion->user_id = $candidato->user->id;
-            $notificacion->name = "Cierre Convocatoria";
-            $notificacion->description = "La convocatoria ".$this->convocatoria->name." se ha cerrado y no recibirá más solicitudes.";
-            $notificacion->save();
+        #VALIDA QUE SOLO CORRE SI ES A-SINCRONICO
+        if(env('QUEUE_CONNECTION') != 'sync') {
+            $candidatos = Candidate::all();
+            foreach ($candidatos as $candidato) {
+                $notificacion = new Notificacion();
+                $notificacion->user_id = $candidato->user->id;
+                $notificacion->name = "Cierre Convocatoria";
+                $notificacion->description = "La convocatoria ".$this->convocatoria->name." se ha cerrado y no recibirá más solicitudes.";
+                $notificacion->save();
+            }
         }
     }
 }

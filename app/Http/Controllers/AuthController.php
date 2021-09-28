@@ -91,6 +91,10 @@ class AuthController extends Controller
 
         $user = auth()->user();
 
+        if($user->candidate) {
+            return response(['status' => 'error' ,'message' => 'Usuario candidato imposible proceder'], ResponseCodes::UNPROCESSABLE_ENTITY);
+        }
+
         if ($user->hasVerifiedEmail()) {
 
             $accessToken = auth()->user()->createToken(env('TOKEN_SECRET'))->accessToken;

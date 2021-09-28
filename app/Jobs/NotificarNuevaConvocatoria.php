@@ -38,14 +38,15 @@ class NotificarNuevaConvocatoria implements ShouldQueue
      */
     public function handle()
     {
-        $candidatos = Candidate::all();
-
-        foreach ($candidatos as $candidato) {
-            $notificacion = new Notificacion();
-            $notificacion->user_id = $candidato->user->id;
-            $notificacion->name = "Nueva Convocatoria";
-            $notificacion->description = "Esta disponible la nueva convocatoria: ".$this->convocatoria->name;
-            $notificacion->save();
+        if(env('QUEUE_CONNECTION') != 'sync') {
+            $candidatos = Candidate::all();
+            foreach ($candidatos as $candidato) {
+                $notificacion = new Notificacion();
+                $notificacion->user_id = $candidato->user->id;
+                $notificacion->name = "Nueva Convocatoria";
+                $notificacion->description = "Esta disponible la nueva convocatoria: ".$this->convocatoria->name;
+                $notificacion->save();
+            }
         }
     }
 }
