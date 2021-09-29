@@ -11,6 +11,16 @@ class Role extends Model
     use HasFactory;
     use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
     public function permisos(){
         return $this->hasMany(RolePermission::class);
     }

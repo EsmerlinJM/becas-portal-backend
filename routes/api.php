@@ -196,7 +196,10 @@ Route::group(['middleware' => ['auth:api', 'verified']], function()
         #Usuarios
         Route::post('/users/getAll', [UserController::class, 'index']);
         Route::post('/users/show', [UserController::class, 'show']);
-        Route::post('/users/create', [UserController::class, 'store']);
+        Route::post('/users/createAdmin', [UserController::class, 'storeAdmin']);
+        Route::post('/users/createInstitucion', [UserController::class, 'storeInstitucion']);
+        Route::post('/users/createOferente', [UserController::class, 'storeOferente']);
+        Route::post('/users/createSoloLectura', [UserController::class, 'storeSoloLectura']);
         Route::post('/users/update', [UserController::class, 'update']);
         Route::post('/users/resetpassword', [UserController::class, 'resetPassword']);
 

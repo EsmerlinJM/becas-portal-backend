@@ -29,30 +29,22 @@ class ProfileController extends Controller
 
     use GoogleBucketTrait;
 
-    //Roles Usuarios
-    // const ADMIN = 1; Profile
-    // const EVALUADOR = 2; Evaluador
-    // const COORDINADOR = 3; Coordinador
-    // const INSTITUCION = 4; Profile
-    // const OFERTANTE = 5; Profile
-    // const USUARIO = 6; Candidato
-
     function getProfile(){
         try {
             $user = auth()->user();
 
-            if($user->role->id == Tools::ADMIN || $user->role->id == Tools::INSTITUCION || $user->role->id == Tools::OFERTANTE) {
+            if($this->isProfileUser($user)) {
                 return new ProfileUserResource($user);
 
-            } elseif($user->role->id == Tools::EVALUADOR) {
+            } elseif($this->isEvaluador($user)) {
                 $evaluator = Evaluator::where('user_id', $user->id)->first();
                 return new ProfileEvaluatorResource($evaluator);
 
-            } elseif($user->role->id == Tools::COORDINADOR) {
+            } elseif($this->isCoordinador($user)) {
                 $coordinator = Coordinator::where('user_id', $user->id)->first();
                 return new ProfileCoordinatorResource($coordinator);
 
-            } elseif($user->role->id == Tools::USUARIO) {
+            } elseif($this->isCandidato($user)) {
                 $candidate = Candidate::where('user_id', $user->id)->first();
                 return new ProfileCandidateResource($candidate);
 
@@ -74,8 +66,8 @@ class ProfileController extends Controller
         //Tomamos el Usuario Actual
         $user = auth()->user();
 
-        if($user->role->id == Tools::ADMIN || $user->role->id == Tools::INSTITUCION || $user->role->id == Tools::OFERTANTE) { //Profile
-
+        if($this->isProfileUser($user)) {
+            //Profile
             $request->validate([
                 'name' => 'required',
                 'contact_phone' => 'required',
@@ -104,7 +96,7 @@ class ProfileController extends Controller
             }
 
 
-        } elseif($user->role->id == Tools::EVALUADOR) { //Evaluator
+        } elseif($this->isEvaluador($user)) {
 
             try {
                 $evaluator = Evaluator::where('user_id', $user->id)->first();
@@ -127,7 +119,7 @@ class ProfileController extends Controller
             }
 
 
-        } elseif($user->role->id == Tools::COORDINADOR) { //Coordinator
+        } elseif($this->isCoordinador($user)) {
             try {
                 $coordinator = Coordinator::where('user_id', $user->id)->first();
                 if($coordinator) {
@@ -148,7 +140,7 @@ class ProfileController extends Controller
                 throw new SomethingWentWrong($th);
             }
 
-        } elseif($user->role->id == Tools::USUARIO) {//Candidate
+        } elseif($this->isCandidato($user)) {
             $request->validate([
                 'name' => 'required',
                 'last_name' => 'required',
@@ -197,7 +189,8 @@ class ProfileController extends Controller
         //Tomamos el Usuario Actual
         $user = auth()->user();
 
-        if($user->role->id == Tools::ADMIN || $user->role->id == Tools::INSTITUCION || $user->role->id == Tools::OFERTANTE) { //Profile
+        if(isProfileUser($user)) {
+            //Profile
             try {
                 $profile = Profile::where('user_id', $user->id)->first();
                 if($profile) {
@@ -213,9 +206,7 @@ class ProfileController extends Controller
             } catch (\Throwable $th) {
                 throw new SomethingWentWrong($th);
             }
-
-
-        } elseif($user->role->id == Tools::EVALUADOR) { //Evaluator
+        } elseif($this->isEvaluador($user)) {
 
             try {
                 $evaluator = Evaluator::where('user_id', $user->id)->first();
@@ -233,7 +224,7 @@ class ProfileController extends Controller
             }
 
 
-        } elseif($user->role->id == Tools::COORDINADOR) { //Coordinator
+        } elseif($this->isCoordinador($user)) {
             try {
                 $coordinator = Coordinator::where('user_id', $user->id)->first();
                 if($coordinator) {
@@ -249,7 +240,7 @@ class ProfileController extends Controller
                 throw new SomethingWentWrong($th);
             }
 
-        } elseif($user->role->id == Tools::USUARIO) {//Candidate
+        } elseif($this->isCandidato($user)) {
             try {
                 $candidate = Candidate::where('user_id', $user->id)->first();
                 if($candidate) {
@@ -293,5 +284,45 @@ class ProfileController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Contraseña actual incorrecta'], ResponseCodes::UNAUTHORIZED);
         }
 
+    }
+
+    function isProfileUser(User $user)
+    {
+        if($user->role->id != Tools::EVALUADOR && $user->role->id != Tools::COORDINADOR && $user->role->id != Tools::USUARIO)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function isEvaluador(User $user)
+    {
+        if($user->role->id == Tools::EVALUADOR)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function isCoordinador(User $user)
+    {
+        if($user->role->id == Tools::COORDINADOR)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function isCandidato(User $user)
+    {
+        if($user->role->id == Tools::USUARIO)
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
