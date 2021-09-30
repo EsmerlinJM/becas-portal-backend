@@ -302,7 +302,7 @@ class AcademicOfferController extends Controller
 
     public static function belongsToUser(AcademicOffer $oferta)
     {
-        if(auth()->user()->institution->id) {
+        if(auth()->user()->institution) {
             if ( auth()->user()->institution->id == $oferta->id) {
                 return true;
             } else {
