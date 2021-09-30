@@ -36,7 +36,7 @@ class MensajeController extends Controller
             }
         } else {
             try {
-                $mensajes = MensajeBackOffice::paginate(30);
+                $mensajes = MensajeBackOffice::where('user_id', $usuario->id)->paginate(30);
                 return MensajesBackOfficeResource::collection($mensajes);
             } catch (\Throwable $th) {
                 throw new SomethingWentWrong($th);
