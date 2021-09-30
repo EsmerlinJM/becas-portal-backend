@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Evaluator;
-use App\Models\Coordinator;
+use App\Models\Role;
+use App\Models\Institution;
+use App\Models\Offerer;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -12,6 +13,8 @@ use Illuminate\Auth\Events\Registered;
 use Hash;
 use App\Tools\ResponseCodes;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\ProfileUserResource;
+use App\Http\Resources\ProfileCandidateResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
 use App\Exceptions\EmailNotValid;
@@ -23,7 +26,7 @@ class UserController extends Controller
     // Metodo para traer todos los usuarios
     function index(){
         try {
-            $user = User::all();
+            $user = User::where('role_id','!=','6')->get();
             return UserResource::collection($user);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
@@ -46,23 +49,22 @@ class UserController extends Controller
         }
     }
 
+
+
     // Metodo para crear usuario
-    function store(Request $request)
+    function storeAdmin(Request $request)
     {
         // Validaciones
         $request->validate([
             'email'=>'required|unique:users',
             'name'=>'required',
             'password'=>'required|confirmed',
-            'role_id' => 'required',
         ]);
-
-        $role = Role::findOrFail($request->role_id);
 
         try {
             $user = new User;
             $user->email = $request->email;
-            $user->role_id = $role->id;
+            $user->role_id = 1; //Administrator
             $user->password = Hash::make($request->password);
             $user->save();
 
@@ -73,66 +75,145 @@ class UserController extends Controller
                     throw new EmailNotValid;
             }
 
-            //Roles Usuarios
-            // const ADMIN = 1; Profile
-            // const EVALUADOR = 2; Evaluador
-            // const COORDINADOR = 3; Coordinador
-            // const INSTITUCION = 4; Profile
-            // const OFERTANTE = 5; Profile
-            // const USUARIO = 6; Candidato
+            //Hacer un Profile Normal
+            $profile = new Profile;
+            $profile->user_id = $user->id;
+            $profile->name = $request->name;
+            $profile->contact_phone = "pending";
+            $profile->contact_email = $user->email;
+            $profile->save();
 
-            if ( $role->id == Tools::EVALUADOR) {
-                //Hacer un Evaluador
-                $request->validate([
-                    'coordinator_id' => 'required',
-                ]);
+            return new ProfileUserResource($user);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+    }
 
-                $evaluador = new Evaluator;
-                $evaluator->user_id = $user->id;
-                $evaluador->coordinator_id = $request->coordinator_id;
-                $evaluator->name = $request->name;
-                $evaluator->contact_phone = "pending";
-                $evaluator->contact_email = "pending";
-                $evaluator->save();
+    // Metodo para crear usuario Institucional
+    function storeInstitucion(Request $request)
+    {
+        // Validaciones
+        $request->validate([
+            'email'=>'required|unique:users',
+            'name'=>'required',
+            'institucion'=>'required',
+            'password'=>'required|confirmed',
+        ]);
 
-            } elseif ( $role->id == Tools::COORDINADOR) {
-                //Hacer un Coordinador
-                $coordinador = new Coordinator;
-                $coordinador->user_id = $user->id;
-                $coordinador->name = $request->name;
-                $coordinador->contact_phone = "pending";
-                $coordinador->contact_email = "pending";
-                $coordinador->save();
+        $institucion = Institution::findOrFail($request->institucion);
 
-            } elseif ( $role->id == Tools::USUARIO) {
-                //Hacer un Candidato
-                $request->validate([
-                    'last_name'=>'required',
-                ]);
-                $candidate = new Candidate;
-                $candidate->user_id = $user->id;
-                $candidate->name = $request->name;
-                $candidate->last_name = $request->last_name;
-                $candidate->country_id = '62';
-                $candidate->province_id = '1';
-                $candidate->municipality_id = '1';
-                $candidate->save();
+        try {
+            $user = new User;
+            $user->email = $request->email;
+            $user->role_id = 4; //Role Institucion
+            $user->institution_id = $institucion->id; //Institucion
+            $user->password = Hash::make($request->password);
+            $user->save();
 
-            } else {
-                //Hacer un Profile Normal
-                $profile = new Profile;
-                $profile->user_id = $user->id;
-                $profile->name = $request->name;
-                $profile->contact_phone = "pending";
-                $profile->contact_email = "pending";
-                $profile->save();
+            try {
+                event(new Registered($user));
+            } catch (\Throwable $th) {
+                    $user->forceDelete();
+                    throw new EmailNotValid;
             }
 
+            //Hacer un Profile Normal
+            $profile = new Profile;
+            $profile->user_id = $user->id;
+            $profile->name = $request->name;
+            $profile->contact_phone = "pending";
+            $profile->contact_email = $user->email;
+            $profile->save();
 
-            return new UserResource($user);
-        } catch (\Throwable $th) {
-            throw new SomethingWentWrong($th);
-        }
+            return new ProfileUserResource($user);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+    }
+
+    // Metodo para crear usuario Institucional
+    function storeOferente(Request $request)
+    {
+        // Validaciones
+        $request->validate([
+            'email'=>'required|unique:users',
+            'name'=>'required',
+            'oferente'=>'required',
+            'password'=>'required|confirmed',
+        ]);
+
+        $oferente = Offerer::findOrFail($request->oferente);
+
+        try {
+            $user = new User;
+            $user->email = $request->email;
+            $user->role_id = 5; //Role Oferente
+            $user->offerer_id = $oferente->id; //Oferente
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            try {
+                event(new Registered($user));
+            } catch (\Throwable $th) {
+                    $user->forceDelete();
+                    throw new EmailNotValid;
+            }
+
+            //Hacer un Profile Normal
+            $profile = new Profile;
+            $profile->user_id = $user->id;
+            $profile->name = $request->name;
+            $profile->contact_phone = "pending";
+            $profile->contact_email = $user->email;
+            $profile->save();
+
+            return new ProfileUserResource($user);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+    }
+
+    // Metodo para crear usuario Institucional
+    function storeSoloLectura(Request $request)
+    {
+        // Validaciones
+        $request->validate([
+            'email'=>'required|unique:users',
+            'name'=>'required',
+            'password'=>'required|confirmed',
+        ]);
+
+        $role = Role::firstOrCreate(
+            ['name' => 'lectura'],
+            ['description' => 'Role de Solo Lectura']
+        );
+
+        try {
+            $user = new User;
+            $user->email = $request->email;
+            $user->role_id = $role->id; //Role de Solo Lectura
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            try {
+                event(new Registered($user));
+            } catch (\Throwable $th) {
+                    $user->forceDelete();
+                    throw new EmailNotValid;
+            }
+
+            //Hacer un Profile Normal
+            $profile = new Profile;
+            $profile->user_id = $user->id;
+            $profile->name = $request->name;
+            $profile->contact_phone = "pending";
+            $profile->contact_email = $user->email;
+            $profile->save();
+
+            return new ProfileUserResource($user);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
     }
 
     //Metodo para actualizar usuario
@@ -156,7 +237,6 @@ class UserController extends Controller
 
         try {
             $user->email = $request->email;
-            // $user->role_id = $request->role_id;
             $user->save();
             return new UserResource($user);
         } catch (\Throwable $th) {

@@ -23,9 +23,6 @@ class PermissionsSeeder extends Seeder
             ['name' => 'create', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'update', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'delete', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['name' => 'assign', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['name' => 'publish', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['name' => 'unpublish', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
     }
 }

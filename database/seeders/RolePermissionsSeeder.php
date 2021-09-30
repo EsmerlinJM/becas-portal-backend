@@ -25,10 +25,6 @@ class RolePermissionsSeeder extends Seeder
             ['role_id' => '1', 'permission_id' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['role_id' => '1', 'permission_id' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['role_id' => '1', 'permission_id' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['role_id' => '1', 'permission_id' => '5', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['role_id' => '1', 'permission_id' => '6', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['role_id' => '1', 'permission_id' => '7', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-
 
             //Evaluators
             ['role_id' => '2', 'permission_id' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
