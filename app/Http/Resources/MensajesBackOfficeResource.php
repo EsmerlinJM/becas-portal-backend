@@ -35,6 +35,7 @@ class MensajesBackOfficeResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'id_candidato' => $this->candidato->id,
             ($this->type == 'recibido') ? 'from' : 'to' => $this->candidato->name . " " . $this->candidato->last_name,
             ($this->type == 'recibido') ? 'to' : 'from' => $user->name,
             // 'from' => Profile::find($this->usuario->id)->first()->name,

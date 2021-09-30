@@ -36,6 +36,7 @@ class MensajesCandidatoResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'user_id' => $user->id,
             ($this->type == 'recibido') ? 'from' : 'to' => $user->name,
             ($this->type == 'recibido') ? 'to' : 'from' => $this->candidato->name . " " . $this->candidato->last_name,
             'subject' => $this->subject,
