@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\AcademicOfferResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
+use App\Exceptions\NotBelongsTo;
 use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
 use App\Tools\GoogleBucketTrait;
@@ -33,6 +34,9 @@ class AcademicOfferController extends Controller
         ]);
 
         $aoffers = AcademicOffer::where('institution_id', $request->institution_id)->get();
+
+
+
         try {
             return AcademicOfferResource::collection($aoffers);
         } catch (\Throwable $th) {
@@ -147,6 +151,8 @@ class AcademicOfferController extends Controller
 
         $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
 
+        $this->belongsToUser($aoffer);
+
         try {
             return new AcademicOfferResource($aoffer);
         } catch (\Throwable $th) {
@@ -173,6 +179,8 @@ class AcademicOfferController extends Controller
         ]);
 
         $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
+
+        $this->belongsToUser($aoffer);
 
         AcademicOfferType::findOrFail($request->academic_offer_type_id); //Valido si existe
         EducationLevel::findOrFail($request->education_level_id); //Valido si existe
@@ -218,6 +226,8 @@ class AcademicOfferController extends Controller
 
         $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
 
+        $this->belongsToUser($aoffer);
+
             if($aoffer->active) {
                 throw new AlreadyActive;
             } else {
@@ -243,6 +253,8 @@ class AcademicOfferController extends Controller
         $request->validate([
             'academic_offer_id' => 'required',
         ]);
+
+        $this->belongsToUser($aoffer);
 
         $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
 
@@ -274,6 +286,8 @@ class AcademicOfferController extends Controller
 
         $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
 
+        $this->belongsToUser($aoffer);
+
         if(InstitutionOffer::where('academic_offer_id', $aoffer->id)->count() > 0) {
             return Tools::notAllowed();
         } else {
@@ -283,6 +297,15 @@ class AcademicOfferController extends Controller
             } catch (\Throwable $th) {
                 throw new SomethingWentWrong($th);
             }
+        }
+    }
+
+    public static function belongsToUser(AcademicOffer $oferta)
+    {
+        if ( auth()->user()->institution->id == $oferta->id) {
+            return true;
+        } else {
+            throw new NotBelongsTo;
         }
     }
 }

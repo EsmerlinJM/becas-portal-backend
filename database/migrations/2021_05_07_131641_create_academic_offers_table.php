@@ -24,7 +24,7 @@ class CreateAcademicOffersTable extends Migration
             $table->string('language');
             $table->integer('creditos')->nullable();
             $table->string('esfuerzo')->nullable();
-            $table->float('costo')->nullable();
+            $table->decimal('costo', 20, 2)->nullable();
             $table->string('pensum_url')->nullable();
             $table->string('pensum_ext')->nullable();
             $table->string('pensum_size')->nullable();
