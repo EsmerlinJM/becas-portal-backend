@@ -13,6 +13,7 @@ use App\Http\Resources\AcademicOfferResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
 use App\Exceptions\NotBelongsTo;
+use App\Exceptions\NotPermissions;
 use App\Exceptions\AlreadyDeActivated;
 use App\Tools\Tools;
 use App\Tools\GoogleBucketTrait;
@@ -33,12 +34,12 @@ class AcademicOfferController extends Controller
             'institution_id' => 'required'
         ]);
 
-        $aoffers = AcademicOffer::where('institution_id', $request->institution_id)->get();
+        $carreras = AcademicOffer::where('institution_id', $request->institution_id)->get();
 
 
 
         try {
-            return AcademicOfferResource::collection($aoffers);
+            return AcademicOfferResource::collection($carreras);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -57,10 +58,10 @@ class AcademicOfferController extends Controller
             'education_level_id' => 'required',
         ]);
 
-        $aoffers = AcademicOffer::where('education_level_id',$request->education_level_id)->where('institution_id', $request->institution_id)->get();
+        $carreras = AcademicOffer::where('education_level_id',$request->education_level_id)->where('institution_id', $request->institution_id)->get();
 
         try {
-            return AcademicOfferResource::collection($aoffers);
+            return AcademicOfferResource::collection($carreras);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -79,10 +80,10 @@ class AcademicOfferController extends Controller
             'academic_offer_type_id' => 'required',
         ]);
 
-        $aoffers = AcademicOffer::where('academic_offer_type_id',$request->academic_offer_type_id)->where('institution_id', $request->institution_id)->get();
+        $carreras = AcademicOffer::where('academic_offer_type_id',$request->academic_offer_type_id)->where('institution_id', $request->institution_id)->get();
 
         try {
-            return AcademicOfferResource::collection($aoffers);
+            return AcademicOfferResource::collection($carreras);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -97,7 +98,6 @@ class AcademicOfferController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'institution_id' => 'required',
             'academic_offer_type_id' => 'required',
             'education_level_id' => 'required',
             'career' => 'required',
@@ -105,36 +105,44 @@ class AcademicOfferController extends Controller
             'language' => 'required',
         ]);
 
-        Institution::findOrFail($request->institution_id); //Valido si existe
-        AcademicOfferType::findOrFail($request->academic_offer_type_id); //Valido si existe
-        EducationLevel::findOrFail($request->education_level_id); //Valido si existe
 
-        try {
+        $usuario = auth()->user();
 
-            //PDF or Image Handling
-            $pensum = $this->upload($request, "pensum");
+        if($usuario->institution) {
+            AcademicOfferType::findOrFail($request->academic_offer_type_id); //Valido si existe
+            EducationLevel::findOrFail($request->education_level_id); //Valido si existe
 
+            try {
 
-            $aoffer = new AcademicOffer;
-            $aoffer->active = 1; //Activo por Defecto
-            $aoffer->institution_id = $request->institution_id;
-            $aoffer->academic_offer_type_id = $request->academic_offer_type_id;
-            $aoffer->education_level_id = $request->education_level_id;
-            $aoffer->career = $request->career;
-            $aoffer->duration = $request->duration;
-            $aoffer->language = $request->language;
-            $aoffer->creditos = $request->creditos;
-            $aoffer->esfuerzo = $request->esfuerzo;
-            $aoffer->costo = $request->costo;
-            $aoffer->pensum_url = $pensum['url'];
-            $aoffer->pensum_ext = $pensum['ext'];
-            $aoffer->pensum_size = $pensum['size'];
-            $aoffer->save();
+                //PDF or Image Handling
+                $pensum = $this->upload($request, "pensum");
 
-            return new AcademicOfferResource($aoffer);
-        } catch (\Throwable $th) {
-            throw new SomethingWentWrong($th);
+                $carrera = new AcademicOffer;
+                $carrera->active = 1; //Activo por Defecto
+                $carrera->institution_id = $usuario->institution->id;
+                $carrera->academic_offer_type_id = $request->academic_offer_type_id;
+                $carrera->education_level_id = $request->education_level_id;
+                $carrera->career = $request->career;
+                $carrera->duration = $request->duration;
+                $carrera->language = $request->language;
+                $carrera->creditos = $request->creditos;
+                $carrera->esfuerzo = $request->esfuerzo;
+                $carrera->costo = $request->costo;
+                $carrera->pensum_url = $pensum['url'];
+                $carrera->pensum_ext = $pensum['ext'];
+                $carrera->pensum_size = $pensum['size'];
+                $carrera->save();
+
+                return new AcademicOfferResource($carrera);
+            } catch (\Throwable $th) {
+                throw new SomethingWentWrong($th);
+            }
+
+        } else {
+            throw new NotPermissions();
         }
+
+
     }
 
     /**
@@ -149,12 +157,10 @@ class AcademicOfferController extends Controller
             'academic_offer_id' => 'required',
         ]);
 
-        $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
-
-        $this->belongsToUser($aoffer);
+        $carrera = AcademicOffer::findOrFail($request->academic_offer_id);
 
         try {
-            return new AcademicOfferResource($aoffer);
+            return new AcademicOfferResource($carrera);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -178,9 +184,9 @@ class AcademicOfferController extends Controller
             'language' => 'required',
         ]);
 
-        $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
+        $carrera = AcademicOffer::findOrFail($request->academic_offer_id);
 
-        $this->belongsToUser($aoffer);
+        $this->belongsToUser($carrera);
 
         AcademicOfferType::findOrFail($request->academic_offer_type_id); //Valido si existe
         EducationLevel::findOrFail($request->education_level_id); //Valido si existe
@@ -191,22 +197,22 @@ class AcademicOfferController extends Controller
             $pensum = $this->upload($request, "pensum");
 
 
-            $aoffer->academic_offer_type_id = $request->academic_offer_type_id;
-            $aoffer->education_level_id = $request->education_level_id;
-            $aoffer->career = $request->career;
-            $aoffer->duration = $request->duration;
-            $aoffer->language = $request->language;
-            $aoffer->creditos = $request->creditos;
-            $aoffer->esfuerzo = $request->esfuerzo;
-            $aoffer->costo = $request->costo;
+            $carrera->academic_offer_type_id = $request->academic_offer_type_id;
+            $carrera->education_level_id = $request->education_level_id;
+            $carrera->career = $request->career;
+            $carrera->duration = $request->duration;
+            $carrera->language = $request->language;
+            $carrera->creditos = $request->creditos;
+            $carrera->esfuerzo = $request->esfuerzo;
+            $carrera->costo = $request->costo;
             if (isset($request->pensum)) {
-                $aoffer->pensum_url = $pensum['url'];
-                $aoffer->pensum_ext = $pensum['ext'];
-                $aoffer->pensum_size = $pensum['size'];
+                $carrera->pensum_url = $pensum['url'];
+                $carrera->pensum_ext = $pensum['ext'];
+                $carrera->pensum_size = $pensum['size'];
             }
-            $aoffer->save();
+            $carrera->save();
 
-            return new AcademicOfferResource($aoffer);
+            return new AcademicOfferResource($carrera);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
@@ -224,17 +230,17 @@ class AcademicOfferController extends Controller
             'academic_offer_id' => 'required',
         ]);
 
-        $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
+        $carrera = AcademicOffer::findOrFail($request->academic_offer_id);
 
-        $this->belongsToUser($aoffer);
+        $this->belongsToUser($carrera);
 
-            if($aoffer->active) {
+            if($carrera->active) {
                 throw new AlreadyActive;
             } else {
                 try {
-                 $aoffer->active = 1; //Activamos
-                 $aoffer->save();
-                 return new AcademicOfferResource($aoffer);
+                 $carrera->active = 1; //Activamos
+                 $carrera->save();
+                 return new AcademicOfferResource($carrera);
                 } catch (\Throwable $th) {
                     throw new SomethingWentWrong($th);
                 }
@@ -254,17 +260,17 @@ class AcademicOfferController extends Controller
             'academic_offer_id' => 'required',
         ]);
 
-        $this->belongsToUser($aoffer);
+        $this->belongsToUser($carrera);
 
-        $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
+        $carrera = AcademicOffer::findOrFail($request->academic_offer_id);
 
-            if(!$aoffer->active) {
+            if(!$carrera->active) {
                 throw new AlreadyDeactivated;
             } else {
                 try {
-                    $aoffer->active = 0; //Desactivamos
-                    $aoffer->save();
-                    return new AcademicOfferResource($aoffer);
+                    $carrera->active = 0; //Desactivamos
+                    $carrera->save();
+                    return new AcademicOfferResource($carrera);
                 } catch (\Throwable $th) {
                     throw new SomethingWentWrong($th);
                 }
@@ -284,15 +290,15 @@ class AcademicOfferController extends Controller
             'academic_offer_id' => 'required',
         ]);
 
-        $aoffer = AcademicOffer::findOrFail($request->academic_offer_id);
+        $carrera = AcademicOffer::findOrFail($request->academic_offer_id);
 
-        $this->belongsToUser($aoffer);
+        $this->belongsToUser($carrera);
 
-        if(InstitutionOffer::where('academic_offer_id', $aoffer->id)->count() > 0) {
+        if(InstitutionOffer::where('academic_offer_id', $carrera->id)->count() > 0) {
             return Tools::notAllowed();
         } else {
             try {
-                $aoffer->delete();
+                $carrera->delete();
                 return Tools::deleted();
             } catch (\Throwable $th) {
                 throw new SomethingWentWrong($th);
@@ -303,7 +309,7 @@ class AcademicOfferController extends Controller
     public static function belongsToUser(AcademicOffer $oferta)
     {
         if(auth()->user()->institution) {
-            if ( auth()->user()->institution->id == $oferta->id) {
+            if ( auth()->user()->institution->id == $oferta->institution_id) {
                 return true;
             } else {
                 throw new NotBelongsTo;
