@@ -29,6 +29,7 @@ class InstitutionController extends Controller
      */
     public function index()
     {
+
         $instituciones = Institution::all();
         try {
             return InstitutionResource::collection($instituciones);
