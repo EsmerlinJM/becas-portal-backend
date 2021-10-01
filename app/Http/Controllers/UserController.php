@@ -7,14 +7,20 @@ use App\Models\Role;
 use App\Models\Institution;
 use App\Models\Offerer;
 use App\Models\Profile;
+use App\Models\Evaluator;
+use App\Models\Coordinator;
+use App\Models\Candidate;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 
 use Hash;
 use App\Tools\ResponseCodes;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UserListResource;
 use App\Http\Resources\ProfileUserResource;
 use App\Http\Resources\ProfileCandidateResource;
+use App\Http\Resources\ProfileEvaluatorResource;
+use App\Http\Resources\ProfileCoordinatorResource;
 use App\Exceptions\SomethingWentWrong;
 use App\Exceptions\AlreadyActive;
 use App\Exceptions\EmailNotValid;
@@ -26,12 +32,12 @@ class UserController extends Controller
     // Metodo para traer todos los usuarios
     function index(){
         try {
-            $user = User::where('role_id','!=','6')->get();
-            return UserResource::collection($user);
+            $usuarios = User::where('role_id','!=','6')->get();
+            // return UserResource::collection($user);
+            return UserListResource::collection($usuarios);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
         }
-
     }
 
     function show(Request $request){
@@ -40,7 +46,23 @@ class UserController extends Controller
         ]);
 
         $user = User::findOrFail($request->user_id);
-        // return $user;
+
+        if($this->isProfileUser($user)) {
+            return new ProfileUserResource($user);
+
+        } elseif($this->isEvaluador($user)) {
+            $evaluator = Evaluator::where('user_id', $user->id)->first();
+            return new ProfileEvaluatorResource($evaluator);
+
+        } elseif($this->isCoordinador($user)) {
+            $coordinator = Coordinator::where('user_id', $user->id)->first();
+            return new ProfileCoordinatorResource($coordinator);
+
+        } elseif($this->isCandidato($user)) {
+            $candidate = Candidate::where('user_id', $user->id)->first();
+            return new ProfileCandidateResource($candidate);
+
+        }
 
         try {
             return new UserResource($user);
@@ -259,6 +281,46 @@ class UserController extends Controller
             return response()->json(['status' => 'successful' ,'message' => 'Password cambiado correctamente'], ResponseCodes::OK);
         } catch (\Throwable $th) {
             throw new SomethingWentWrong($th);
+        }
+    }
+
+    function isProfileUser(User $user)
+    {
+        if($user->role->id != Tools::EVALUADOR && $user->role->id != Tools::COORDINADOR && $user->role->id != Tools::USUARIO)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function isEvaluador(User $user)
+    {
+        if($user->role->id == Tools::EVALUADOR)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function isCoordinador(User $user)
+    {
+        if($user->role->id == Tools::COORDINADOR)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function isCandidato(User $user)
+    {
+        if($user->role->id == Tools::USUARIO)
+        {
+            return true;
+        } else {
+            return false;
         }
     }
 }
