@@ -20,7 +20,8 @@ class VerificationController extends Controller
 {
     public function verify($user_id, Request $request) {
         if (!$request->hasValidSignature()) {
-            return response()->json(['status' => 'error' ,'message' => 'Url invalida o expirada'], ResponseCodes::UNPROCESSABLE_ENTITY);
+            return redirect(env('LADING_AFTER_TOKEN_EXPIRED'));
+            // return response()->json(['status' => 'error' ,'message' => 'Url invalida o expirada'], ResponseCodes::UNPROCESSABLE_ENTITY);
         }
 
         $user = User::findOrFail($user_id);
